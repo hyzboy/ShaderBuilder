@@ -1,0 +1,17 @@
+[gbuffer]
+vec3 Color;
+vec2 NormalXY;
+
+[gb2pmc]
+void GB2PMC(inout PMC pmc,in GBuffer gb)
+{
+    pmc.Color           =gb.Color;
+    pmc.Normal          =Normal2to3(gb.NormalXY);
+}
+
+[pmc2gb]
+void PMC2GB(inout GBuffer gb,in PMC pmc)
+{
+    gb.Color.rgb        =pmc.Color;
+    gb.NormalXY.xy      =Normal3to2(pmc.Normal);
+}

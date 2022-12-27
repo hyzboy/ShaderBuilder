@@ -1,0 +1,18 @@
+[pmc]
+ColorNormal
+
+[sdr]
+vec3 SDRMain(in PMC pmc)
+{
+    return vec4(pmc.Color,1.0f);
+}
+
+[hdr]
+vec3 HDRMain(in PMC pmc)
+{
+    return vec4(pmc.Color,1.0f);
+}
+
+[depth]
+
+[alpha]

@@ -1,0 +1,23 @@
+[pmc]
+BlinnPhong          //引用BlinnPhong.pmc
+
+[Vertex Shader/Input]
+vec3 Position;      //顶点坐标
+vec3 Color;         //顶点颜色
+vec3 Normal;        //顶点法线
+
+[Vertex Shader/Output]
+vec3 Color;
+vec3 Normal;
+
+[Vertex Shader]
+void VSMain()
+{
+    Output.Color=Color;
+    Output.Normal=Normal;
+}
+
+[Fragment Shader/Output]
+vec4 Color;
+float Depth;
+float Stencil;

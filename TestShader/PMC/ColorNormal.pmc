@@ -1,0 +1,2 @@
+vec3 Color;
+vec3 Normal;

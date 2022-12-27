@@ -1,0 +1,13 @@
+[pmc]                               //PMC配置
+                                    //注：一个.mat可对应任意不同的.pmc配置，但必须保含以下属性
+Color                               //需要包含Color属性
+
+//该材质没有包含任何顶点shader字段，表明使用默认顶点shader
+
+[Fragment Shader]
+UBO PureColorMaterial color_material;   //定义UBO，类型名称对应UBO/ColorMaterial/PureColorMaterial.ubo的主文件名
+
+vec4 main()
+{
+    return color_material.Color;
+}

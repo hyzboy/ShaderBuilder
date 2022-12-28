@@ -20,3 +20,8 @@ SOURCE_GROUP("Vulkan Shader Common" FILES ${VK_SHADER_COMMON_SOURCE})
 add_executable(ShaderBuilder ShaderBuilder.cpp ${GLSL_COMPILER_SOURCE} ${VK_SHADER_COMMON_SOURCE})
 
 set_property(TARGET ShaderBuilder PROPERTY FOLDER "CM/Tools/ShaderBuilder")
+
+target_link_libraries(ShaderBuilder PRIVATE CMCore
+                                            CMPlatform
+                                            CMUtil
+                                            CMSceneGraph)

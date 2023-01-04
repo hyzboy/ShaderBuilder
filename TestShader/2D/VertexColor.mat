@@ -1,4 +1,4 @@
-[pmc]                               //PMC配置
+﻿[pmc]                               //PMC配置
                                     //注：一个.mat可对应任意不同的.pmc配置，但必须保含以下属性
 Color                               //需要包含Color属性
 

@@ -73,6 +73,8 @@ void SaveConfig()
     LOG_INFO(OS_TEXT("Save config file success."));
 }
 
+bool LoadMat(const OSString &filename);
+
 int os_main(int argc,os_char **argv)
 {
     LOG_INFO(OS_TEXT("ShaderBuilder v1.0\nCopyright 2022 www.hyzgame.com\n\n"));
@@ -112,5 +114,6 @@ int os_main(int argc,os_char **argv)
     LOG_INFO(OS_TEXT("Input File: ") + input_filename);
     LOG_INFO(OS_TEXT("Output File: ") + output_filename);
 
+    LoadMat(input_filename);
     return 0;
 }

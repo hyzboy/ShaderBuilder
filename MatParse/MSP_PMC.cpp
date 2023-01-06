@@ -7,14 +7,14 @@ class MSP_PMC:public MatSectionParse
 
 public:
 
-    const MatSection GetSection()const
+    const MatSection GetSection()const override
     {
         return MatSection::PMC;
     }
 
 public:
 
-    void Add(const UTF8String &str)
+    void Add(const UTF8String &str,const UTF8String &)
     {
         if(str.IsEmpty())return;
 

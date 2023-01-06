@@ -54,14 +54,14 @@ bool LoadMat(const OSString &filename)
             mat_section = ParseMatSection(line);
 
             SAFE_CLEAR(msp)
-            
+
             msp=CreateMSP(mat_section);
         }
         else
         {
             if(msp)
             {
-                msp->Add(line);
+                msp->Add(line,raw_line);
             }
             else
             {

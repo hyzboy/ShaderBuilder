@@ -1,32 +1,8 @@
 ﻿#include<hgl/type/LoadStringList.h>
 #include"MatParse/MatSection.h"
+#include"MatParse/MatSectionParse.h"
 
 using namespace hgl;
-
-namespace
-{
-    class MatPMCParse:public MatSectionParse
-    {
-    public:
-
-        const MatSection GetSection()const
-        {
-            return MatSection::PMC;
-        }
-        
-    public:
-
-        MatPMCParse(MatSource *ms) :MatSectionParse(ms)
-        {}
-        ~MatPMCParse()
-        {}
-
-        void Add(const UTF8String &str)
-        {
-            
-        }
-    };//class MatPMCParse
-}//namespace
 
 bool LoadMat(const OSString &filename)
 {
@@ -39,6 +15,7 @@ bool LoadMat(const OSString &filename)
     }
     
     MatSection mat_section=MatSection::Unknow;
+    MatSectionParse *msp=nullptr;
 
     for(uint i = 0;i < sl.GetCount();i++)
     {
@@ -54,7 +31,7 @@ bool LoadMat(const OSString &filename)
 
             if(comment_pos!=-1)
             {   
-                line=raw_line;
+                line=raw_line; 
                 line.ClipLeft(comment_pos);
             }
             else
@@ -75,13 +52,24 @@ bool LoadMat(const OSString &filename)
             LOG_INFO("section: "+line);
 
             mat_section = ParseMatSection(line);
+
+            SAFE_CLEAR(msp)
+            
+            msp=CreateMSP(mat_section);
         }
         else
         {
-            
-            LOG_INFO(line);
+            if(msp)
+            {
+                msp->Add(line);
+            }
+            else
+            {
+                LOG_INFO(line);
+            }
         }
     }
 
+    SAFE_CLEAR(msp);
     return(true);
 }

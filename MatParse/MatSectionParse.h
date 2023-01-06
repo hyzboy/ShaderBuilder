@@ -12,8 +12,10 @@ public:
 
 public:
 
-    MatSectionParse(){}
-    virtual ~MatSectionParse()=0;
+    MatSectionParse()=default;
+    virtual ~MatSectionParse() = default;
 
     virtual void Add(const UTF8String &str) = 0;
 };//class MatSectionParse
+
+MatSectionParse *CreateMSP(const MatSection &);

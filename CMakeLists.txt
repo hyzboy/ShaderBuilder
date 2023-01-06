@@ -16,8 +16,8 @@ SOURCE_GROUP("GLSL Compiler" FILES ${GLSL_COMPILER_SOURCE})
 
 SET(GLSL_Parse_SOURCE   GLSLParse/GLSLToken.h
                         GLSLParse/GLSLTokenizer.h
-                        GLSLParse/GLSLTokenizer.cpp
-                        GLSLParse/GLSLParse.cpp)
+                        GLSLParse/GLSLTokenizer.cpp)
+#                        GLSLParse/GLSLParse.cpp)
 source_group("GLSL Parse" FILES ${GLSL_Parse_SOURCE})
 
 SET(VK_SHADER_COMMON_SOURCE vulkan/VKShaderCommon.h
@@ -27,6 +27,8 @@ SOURCE_GROUP("Vulkan Shader Common" FILES ${VK_SHADER_COMMON_SOURCE})
 SET(MAT_PARSE_SOURCE    MatParse/MatSection.h
                         MatParse/MatSection.cpp
                         MatParse/MatSectionParse.h
+                        MatParse/MatSectionParse.cpp
+                        MatParse/MSP_PMC.cpp
 )
 
 SOURCE_GROUP("MatParse" FILES ${MAT_PARSE_SOURCE})

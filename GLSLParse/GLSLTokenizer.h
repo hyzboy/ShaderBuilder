@@ -2,33 +2,30 @@
 
 #include"GLSLToken.h"
 
-namespace shader_lib
+class GLSLTokenizer
 {
-	class GLSLTokenizer
-	{
-        const char *source;
-        int source_length;
+    const char *source;
+    int source_length;
 
-        GLSLToken token_type;
-        int token_length;
+    GLSLToken token_type;
+    int token_length;
 
-	private:
+private:
 
-		int ParseToken();
+	int ParseToken();
 
-        bool IsWhiteSpace();
-        bool IsLine();
-        bool IsComment();
-        bool IsConstant();
-        bool IsKeyWord();
-        bool IsIdentifier();
+    bool IsWhiteSpace();
+    bool IsLine();
+    bool IsComment();
+    bool IsConstant();
+    bool IsKeyWord();
+    bool IsIdentifier();
 
-	public:
+public:
 
-        GLSLTokenizer(const char *,int);
+    GLSLTokenizer(const char *,int);
 
-        const int GetLeftLength()const{return source_length;}                   ///<取得剩余代码总长度
+    const int GetLeftLength()const{return source_length;}                   ///<取得剩余代码总长度
 
-		const char *GetToken(GLSLToken *,int *);
-	};//class GLSLTokenizer
-}//namespace shader_lib
+	const char *GetToken(GLSLToken *,int *);
+};//class GLSLTokenizer

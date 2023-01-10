@@ -24,18 +24,19 @@ SET(VK_SHADER_COMMON_SOURCE vulkan/VKShaderCommon.h
                             vulkan/VKShaderCommon.cpp)
 SOURCE_GROUP("Vulkan Shader Common" FILES ${VK_SHADER_COMMON_SOURCE})
 
-SET(MAT_PARSE_SOURCE    MatParse/MatSection.h
-                        MatParse/MatSection.cpp
-                        MatParse/MatSectionParse.h
-                        MatParse/MatSectionParse.cpp
-                        MatParse/MSP_PMC.cpp
+SET(SHADER_PARSE_SOURCE ShaderParse/ShaderSection.h
+                        ShaderParse/ShaderSection.cpp
+                        ShaderParse/ShaderSectionParse.h
+                        ShaderParse/ShaderSectionParse.cpp
+                        ShaderParse/SSP_Code.cpp
+                        ShaderParse/SSP_Varying.cpp
 )
 
-SOURCE_GROUP("MatParse" FILES ${MAT_PARSE_SOURCE})
+SOURCE_GROUP("ShaderParse" FILES ${SHADER_PARSE_SOURCE})
 
 add_executable(ShaderBuilder    ShaderBuilder.cpp 
                                 LoadMat.cpp
-                                ${MAT_PARSE_SOURCE}
+                                ${SHADER_PARSE_SOURCE}
                                 ${GLSL_Parse_SOURCE}
                                 ${GLSL_COMPILER_SOURCE}
                                 ${VK_SHADER_COMMON_SOURCE})

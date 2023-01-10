@@ -1,22 +1,3 @@
-﻿[pmc]                               //PMC配置
-                                    //注：一个.mat可对应任意不同的.pmc配置，但必须保含以下属性
-Color                               //需要包含Color属性
-
-[Vertex Shader/Input]
-vec4 Position;      //顶点坐标
-vec4 Color;         //顶点颜色
-
-[Vertex Shader/Output]
-vec4 Color;
-
-[Vertex Shader]
-void main()
-{
-    Output.Color=Color;
-}
-
-[Fragment Shader]
-vec4 main()
-{
-    return Input.Color;     //这个Input的结构对应上面Vertex Shader/Output的结构
-}
+﻿pmc: Color
+vert: VertexColor
+frag: VertexColor

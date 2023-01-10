@@ -1,1 +1,4 @@
-vec4 Color;
+uniform PureColorMaterial
+{
+    vec4 Color;
+};

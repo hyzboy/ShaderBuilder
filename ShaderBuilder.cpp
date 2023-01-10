@@ -3,6 +3,7 @@
 #include<hgl/util/plist/PList.h>
 #include<hgl/util/cmd/CmdParse.h>
 #include<hgl/Endian.h>
+#include"GLSLCompiler/GLSLCompiler.h"
 
 using namespace hgl;
 using namespace hgl::filesystem;
@@ -114,6 +115,10 @@ int os_main(int argc,os_char **argv)
     LOG_INFO(OS_TEXT("Input File: ") + input_filename);
     LOG_INFO(OS_TEXT("Output File: ") + output_filename);
 
+    glsl_compiler::Init();
+
     LoadMat(input_filename);
+
+    glsl_compiler::Close();
     return 0;
 }

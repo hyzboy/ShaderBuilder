@@ -1,4 +1,4 @@
-#include"MatSection.h"
+#include"ShaderSection.h"
 #include<hgl/type/StrChar.h>
 
 namespace
@@ -17,13 +17,13 @@ namespace
     };
 }//namespace
 
-MatSection ParseMatSection(const char *str)
+ShaderSection ParseShaderSection(const char *str)
 {
     for(int i = 1;i < sizeof(mat_section_name) / sizeof(mat_section_name[0]);i++)
     {
         if(stricmp(str,mat_section_name[i])==0)
-            return(MatSection(i));
+            return(ShaderSection(i));
     }        
 
-    return MatSection::Unknow;
+    return ShaderSection::Unknow;
 }

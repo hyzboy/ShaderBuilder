@@ -7,13 +7,14 @@ namespace
     {
         "Unknow",
         
-        "PMC",
+        "Input",
+        "Output",
+        
+        "Global",
+        "PerFrame",
+        "PerObject",
 
-        "Vertex Shader",
-        "Vertex Shader/Input",
-        "Vertex Shader/Output",
-
-        "Fragment Shader",        
+        "Main",
     };
 }//namespace
 

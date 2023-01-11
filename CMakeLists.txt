@@ -30,6 +30,7 @@ SET(SHADER_PARSE_SOURCE ShaderParse/ShaderSection.h
                         ShaderParse/ShaderSectionParse.cpp
                         ShaderParse/SSP_Code.cpp
                         ShaderParse/SSP_Varying.cpp
+                        ShaderParse/SSP_Data.cpp
 )
 
 SOURCE_GROUP("ShaderParse" FILES ${SHADER_PARSE_SOURCE})

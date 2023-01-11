@@ -6,7 +6,10 @@ enum class ShaderSection
 
     Input,
     Output,
-    UBO,
+    
+    Global,
+    PerFrame,
+    PerObject,
 
     Main
 };

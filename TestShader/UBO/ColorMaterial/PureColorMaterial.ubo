@@ -1,4 +1,4 @@
-uniform PureColorMaterial
+struct PureColorMaterial
 {
     vec4 Color;
 };

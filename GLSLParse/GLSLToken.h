@@ -5,7 +5,6 @@
 enum class GLSLToken
 {
 	None=0,
-    End,
 		
 	WhiteSpace,			// ' ','\t'
 	NewLine,			// '\r\n'
@@ -176,4 +175,6 @@ enum class GLSLToken
 	depth_greater,
 	depth_less,
 	depth_unchanged,
+
+    End
 };//enum class GLSLToken

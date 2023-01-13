@@ -47,7 +47,7 @@ bool LoadShader(vk_shader::ShaderStageBits ssb,const OSString &filename)
         if(line.IsEmpty())continue;
 
         if(line.GetFirstChar()=='['
-            &&line.GetLastChar()==']')
+          &&line.GetLastChar()==']')
         {
             line=line.SubString(1, line.Length()-2);
 

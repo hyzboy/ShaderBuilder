@@ -31,13 +31,13 @@ class SSP_Data:public ShaderSectionParse
 {
 private:
     
-    ShaderSection mat_section;
+    ShaderSection shader_section;
     
 public:
     
     const ShaderSection GetSection()const override
     {
-        return mat_section;
+        return shader_section;
     };
 
 private:
@@ -163,9 +163,9 @@ private:
 
 public:
 
-    SSP_Data()
+    SSP_Data(ShaderSection ss)
     {
-        mat_section = ShaderSection::Main;
+        shader_section = ss;
     }
 
     virtual ~SSP_Data() = default;
@@ -208,7 +208,7 @@ public:
     }
 };//class SSP_Code:public ShaderSectionParse
 
-ShaderSectionParse *CreateSSP_Data(ShaderSection)
+ShaderSectionParse *CreateSSP_Data(ShaderSection ss)
 {    
-    return(new SSP_Data());
+    return(new SSP_Data(ss));
 }

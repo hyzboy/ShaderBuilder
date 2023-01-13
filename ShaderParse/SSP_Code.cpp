@@ -5,21 +5,21 @@ class SSP_Code:public ShaderSectionParse
 {
 private:
     
-    ShaderSection mat_section;
+    ShaderSection shader_section;
     UTF8StringList code_list;
 
 public:
     
     const ShaderSection GetSection()const override
     {
-        return mat_section;
+        return shader_section;
     };
 
 public:
 
     SSP_Code()
     {
-        mat_section = ShaderSection::Main;
+        shader_section = ShaderSection::Code;
     }
 
     virtual ~SSP_Code() = default;

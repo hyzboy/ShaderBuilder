@@ -7,7 +7,7 @@ class SSP_Varying:public ShaderSectionParse
 {
 private:
     
-    ShaderSection mat_section;
+    ShaderSection shader_section;
     
     UTF8StringList varying_names;
     VaryingList varying_list;
@@ -16,7 +16,7 @@ public:
     
     const ShaderSection GetSection()const override
     {
-        return mat_section;
+        return shader_section;
     };
 
 private:
@@ -108,7 +108,7 @@ public:
 
     SSP_Varying(const ShaderSection &ms)
     {
-        mat_section = ms;
+        shader_section = ms;
     }
 
     ~SSP_Varying()=default;

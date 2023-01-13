@@ -9,7 +9,7 @@ ShaderSectionParse *CreateSSP(const ShaderSection &ms)
 {
     switch(ms)
     {
-        case ShaderSection::Main:       return CreateSSP_Code(ms);
+        case ShaderSection::Code:       return CreateSSP_Code(ms);
             
         case ShaderSection::Input:
         case ShaderSection::Output:     return CreateSSP_Varying(ms);

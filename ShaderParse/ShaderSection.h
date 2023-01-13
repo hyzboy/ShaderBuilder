@@ -11,7 +11,7 @@ enum class ShaderSection
     PerFrame,
     PerObject,
 
-    Main
+    Code
 };
 
 ShaderSection ParseShaderSection(const char *str);

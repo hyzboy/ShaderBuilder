@@ -35,8 +35,9 @@ SET(SHADER_PARSE_SOURCE ShaderParse/ShaderSection.h
 
 SOURCE_GROUP("ShaderParse" FILES ${SHADER_PARSE_SOURCE})
 
-add_executable(ShaderBuilder    ShaderBuilder.cpp 
+add_executable(ShaderBuilder    ShaderBuilder.cpp
                                 LoadMat.cpp
+                                LoadShader.cpp
                                 ${SHADER_PARSE_SOURCE}
                                 ${GLSL_Parse_SOURCE}
                                 ${GLSL_COMPILER_SOURCE}

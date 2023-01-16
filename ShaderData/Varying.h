@@ -13,4 +13,3 @@ struct Varying
 };//
 
 using VaryingList=ObjectList<Varying>;
-

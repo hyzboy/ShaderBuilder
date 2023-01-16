@@ -24,6 +24,11 @@ SET(VK_SHADER_COMMON_SOURCE vulkan/VKShaderCommon.h
                             vulkan/VKShaderCommon.cpp)
 SOURCE_GROUP("Vulkan Shader Common" FILES ${VK_SHADER_COMMON_SOURCE})
 
+SET(SHADER_DATA_SOURCE  ShaderData/pmc.h
+                        ShaderData/Varying.h)
+
+SOURCE_GROUP("Shader Data" FILES ${SHADER_DATA_SOURCE})
+
 SET(SHADER_PARSE_SOURCE ShaderParse/ShaderSection.h
                         ShaderParse/ShaderSection.cpp
                         ShaderParse/ShaderSectionParse.h
@@ -38,6 +43,7 @@ SOURCE_GROUP("ShaderParse" FILES ${SHADER_PARSE_SOURCE})
 add_executable(ShaderBuilder    ShaderBuilder.cpp
                                 LoadMat.cpp
                                 LoadShader.cpp
+                                ${SHADER_DATA_SOURCE}
                                 ${SHADER_PARSE_SOURCE}
                                 ${GLSL_Parse_SOURCE}
                                 ${GLSL_COMPILER_SOURCE}

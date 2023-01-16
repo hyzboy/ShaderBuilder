@@ -1,5 +1,5 @@
 #include"ShaderSectionParse.h"
-#include"MatData/Varying.h"
+#include"ShaderData/Varying.h"
 #include"GLSLParse/GLSLTokenizer.h"
 #include<hgl/type/StringList.h>
 

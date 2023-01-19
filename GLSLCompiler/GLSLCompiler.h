@@ -21,28 +21,6 @@ namespace glsl_compiler
     using namespace hgl;
     using namespace vk_shader;
     
-    struct ShaderStage
-    {
-        char name[SHADER_RESOURCE_NAME_MAX_LENGTH];
-        uint8_t location;
-        uint32_t basetype;      //现在改对应hgl/graph/VertexAttrib中的enum class VertexAttribBaseType
-        uint32_t vec_size;
-    };//
-
-    struct ShaderStageData
-    {
-        uint32_t count;
-        ShaderStage *items;
-    };
-
-    struct ShaderResourceData
-    {
-        uint32_t count;
-        ShaderResource *items;
-    };
-
-    using ShaderFullResourceData=ShaderResourceData[size_t(DescriptorType::RANGE_SIZE)];
-
     struct SPVData
     {
         bool result;
@@ -52,14 +30,14 @@ namespace glsl_compiler
         uint32_t *spv_data;
         uint32_t spv_length;
 
-        ShaderStageData input,output;
-        ShaderFullResourceData resource;
+        ShaderStageSet input,output;
+        ShaderDescriptorSet descriptor_sets[size_t(DescriptorType::RANGE_SIZE)];
     };
 
     bool Init();
     void Close();
 
-    void        AddGLSLIncludePath(const char *);    
+    void        AddGLSLIncludePath(const char *);
     void        RebuildGLSLIncludePath();
 
     ShaderType  GetType (const char *ext_name);

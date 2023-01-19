@@ -132,6 +132,8 @@ public:
         varying_list.Add(v);
         varying_names.Add(v->name);
     }
+
+    const VaryingList &GetVaryingList()const { return varying_list; }
 };//class SSP_Varying:public ShaderSectionParse
 
 ShaderSectionParse *CreateSSP_Varying(ShaderSection ms)

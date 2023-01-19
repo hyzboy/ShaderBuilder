@@ -4,34 +4,15 @@
 #include<hgl/type/Map.h>
 #include"GLSLParse/GLSLTokenizer.h"
 
-struct ShaderBindingData
-{
-    int sets=-1;
-    int binding=-1;
-};
-
-struct UBOData:public ShaderBindingData
-{
-    UTF8String name;
-    UTF8String type;
-    UTF8String value;
-};
-
-struct ConstValue:public ShaderBindingData
-{
-    UTF8String type;
-    UTF8String name;
-};
-
-struct PushConstant:public ShaderBindingData
-{
-};
-
 class SSP_Data:public ShaderSectionParse
 {
 private:
     
     ShaderSection shader_section;
+
+    ObjectList<UBOData> ubo_list;
+    ObjectList<UBOData> data_list;
+    ObjectList<ConstValue> const_value_list;
     
 public:
     
@@ -58,6 +39,14 @@ private:
                 name.SetString(str,length);
 
                 LOG_INFO("Find UBO: "+type_name+" "+name);
+
+                UBOData *ubo=new UBOData;
+
+                ubo->type=type_name;
+                ubo->name=name;
+
+                ubo_list.Add(ubo);
+
                 return(true);
             }
         }while(str);
@@ -81,6 +70,14 @@ private:
                 name.SetString(str,length);
 
                 LOG_INFO("Find data: "+type_name+" "+name);
+
+                UBOData *ubo=new UBOData;
+
+                ubo->type=type_name;
+                ubo->name=name;
+
+                data_list.Add(ubo);
+                
                 return(true);
             }
         }while(str);
@@ -157,7 +154,13 @@ private:
         }while(str);
         
         LOG_INFO("Find const: "+type_name+" "+name+" = "+default_value);
-        
+
+        ConstValue *cv=new ConstValue;
+
+        cv->type=type_name;
+        cv->name=name;
+        cv->value=default_value;
+
         return(true);
     }
 
@@ -206,6 +209,10 @@ public:
 
         LOG_ERROR("Parse error£º"+raw_line);
     }
+
+    const ObjectList<UBOData> *GetUBOList()const { return &ubo_list; }
+    const ObjectList<UBOData> *GetDataList()const { return &data_list; }
+    const ObjectList<ConstValue> *GetConstValueList()const { return &const_value_list; }
 };//class SSP_Code:public ShaderSectionParse
 
 ShaderSectionParse *CreateSSP_Data(ShaderSection ss)

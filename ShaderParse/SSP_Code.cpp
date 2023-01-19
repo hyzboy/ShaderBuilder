@@ -28,6 +28,8 @@ public:
     {
         code_list.Add(raw_str);
     }
+
+    const UTF8StringList &GetCodes()const{return code_list;}
 };//class SSP_Code:public ShaderSectionParse
 
 ShaderSectionParse *CreateSSP_Code(ShaderSection)

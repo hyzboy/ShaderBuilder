@@ -3,6 +3,9 @@
 #include<stdint.h>
 #include<hgl/TypeFunc.h>
 #include<hgl/CompOperator.h>
+#include<hgl/type/List.h>
+
+using namespace hgl;
 
 namespace vk_shader
 {
@@ -80,25 +83,50 @@ namespace vk_shader
         "input_attachment"
     };
     
-    constexpr size_t SHADER_RESOURCE_NAME_MAX_LENGTH=128;
-
-    struct ShaderResource
+    enum class DescriptorSetsType
     {
-        char name[SHADER_RESOURCE_NAME_MAX_LENGTH];
+        Global=0,   ///<全局参数(如太阳光等)
+        PerFrame,   ///<每帧参数(如摄像机等)
+        PerObject,  ///<每个物体参数(如模型矩阵等)
 
-        uint8_t set;
-        uint8_t binding;
+        ENUM_CLASS_RANGE(Global,PerObject)
+    };//enum class DescriptorSetsType
+    
+    constexpr size_t DESCRIPTOR_NAME_MAX_LENGTH=128;
+
+    struct ShaderDescriptor
+    {
+        char name[DESCRIPTOR_NAME_MAX_LENGTH];
+        vk_shader::DescriptorType type;
+        DescriptorSetsType set_type;
+
+        int set;
+        int binding;
+        uint32_t stage_flag;
 
     public:
 
-        ShaderResource(const ShaderResource *sr)
+        ShaderDescriptor()
         {
-            memcpy(name,sr->name,SHADER_RESOURCE_NAME_MAX_LENGTH);
-            set=sr->set;
-            binding=sr->binding;
+            hgl_zero(*this);
+            set=-1;
+            binding=-1;
+        }
+        
+        ShaderDescriptor(const ShaderDescriptor *sr)
+        {
+            if(!sr)
+            {
+                hgl_zero(*this);
+
+                set=-1;
+                binding=-1;
+            }
+            else
+                hgl_cpy(*this,*sr);
         }
 
-        const int Comp(const ShaderResource &sr)const
+        const int Comp(const ShaderDescriptor &sr)const
         {
             if(set!=sr.set)return sr.set-set;
             if(binding!=sr.binding)return sr.binding-binding;
@@ -106,6 +134,51 @@ namespace vk_shader
             return strcmp(name,sr.name);
         }
 
-        CompOperator(const ShaderResource &,Comp);
-    };//struct ShaderResource
+        CompOperator(const ShaderDescriptor &,Comp);
+    };//struct ShaderDescriptor
+    
+    struct ShaderStage
+    {
+        char name[DESCRIPTOR_NAME_MAX_LENGTH];
+        uint8_t location;
+        uint32_t basetype;      //现在改对应hgl/graph/VertexAttrib中的enum class VertexAttribBaseType
+        uint32_t vec_size;
+    };//
+    
+    struct ShaderStageIO
+    {
+        uint prev,cur,next;
+        ObjectList<ShaderStage> input,output;
+
+    public:
+        
+        ShaderStageIO()
+        {
+            prev=cur=next=0;
+        }
+    };
+    
+    struct ShaderUBOData:public ShaderDescriptor
+    {
+        UTF8String type;
+        UTF8String name;
+    };
+
+    struct ShaderObjectData:public ShaderDescriptor
+    {
+        UTF8String type;
+        UTF8String name;
+    };
+
+    struct ShaderConstValue:public ShaderDescriptor
+    {
+        UTF8String type;
+        UTF8String name;
+        UTF8String value;
+    };
+
+    struct ShaderPushConstant
+    {
+    };
+
 };//namespace vk_shader

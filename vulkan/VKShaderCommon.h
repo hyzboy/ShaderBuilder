@@ -80,7 +80,10 @@ namespace vk_shader
         "storage_buffer",
         "uniform_buffer_dynamic",
         "storage_buffer_dynamic",
-        "input_attachment"
+        "input_attachment",
+
+        "push_constant",
+        "subpass_input"
     };
     
     enum class DescriptorSetsType
@@ -177,8 +180,16 @@ namespace vk_shader
         UTF8String value;
     };
 
-    struct ShaderPushConstant
+    struct ShaderSubpassInput
     {
+        UTF8String name;
+        uint8_t input_attachment_index;
     };
 
+    struct ShaderPushConstant
+    {
+        UTF8String name;
+        uint8_t offset;
+        uint8_t size;
+    };
 };//namespace vk_shader

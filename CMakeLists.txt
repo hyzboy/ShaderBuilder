@@ -4,15 +4,19 @@ project(ShaderBuilder)
 
 add_definitions(-DUNICODE -D_UNICODE)
 
+include_directories(${CMAKE_CURRENT_SOURCE_DIR})
+
 SET(SHADER_COMPILER_LIBRARY CMCore
                             CMPlatform
                             CMUtil
-                            CMSceneGraph)
+                            CMSceneGraph
+                            ${HGL_MATH_LIB})
 
 SET(GLSL_COMPILER_SOURCE	GLSLCompiler/GLSLCompiler.h
-                            GLSLCompiler/GLSLCompiler.cpp)
+                            GLSLCompiler/GLSLCompiler.cpp
+                            GLSLCompiler/glsl2spv.cpp
+                            GLSLCompiler/VKShaderParse.h)
 SOURCE_GROUP("GLSL Compiler" FILES ${GLSL_COMPILER_SOURCE})
-
 
 SET(GLSL_Parse_SOURCE   GLSLParse/GLSLToken.h
                         GLSLParse/GLSLTokenizer.h
@@ -42,6 +46,16 @@ SET(SHADER_PARSE_SOURCE ShaderParse/ShaderSection.h
 
 SOURCE_GROUP("ShaderParse" FILES ${SHADER_PARSE_SOURCE})
 
+set(VULKAN_SPIRV_LIBS   GenericCodeGen
+                        glslang
+                        MachineIndependent
+                        OGLCompiler
+                        OSDependent
+                        SPIRV
+                        SPIRV-Tools
+                        SPIRV-Tools-opt
+                        spirv-cross-core)
+
 add_executable(ShaderBuilder    ShaderBuilder.cpp
                                 LoadMat.cpp
                                 LoadShader.cpp
@@ -53,10 +67,7 @@ add_executable(ShaderBuilder    ShaderBuilder.cpp
 
 set_property(TARGET ShaderBuilder PROPERTY FOLDER "CM/Tools/ShaderBuilder")
 
-target_link_libraries(ShaderBuilder PRIVATE CMCore
-                                            CMPlatform
-                                            CMUtil
-                                            CMSceneGraph)
+target_link_libraries(ShaderBuilder PRIVATE ${SHADER_COMPILER_LIBRARY} ${VULKAN_SPIRV_LIBS})
 
 IF(WIN32)
     set_debugger_directory(ShaderBuilder ${CMAKE_CURRENT_SOURCE_DIR})

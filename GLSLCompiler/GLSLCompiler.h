@@ -30,8 +30,10 @@ namespace glsl_compiler
         uint32_t *spv_data;
         uint32_t spv_length;
 
-        ShaderStageSet input,output;
-        ShaderDescriptorSet descriptor_sets[size_t(DescriptorType::RANGE_SIZE)];
+        ShaderStageIO stage_io;
+        ShaderSubpassInput subpass_input;
+        ShaderPushConstant push_constant;
+        ObjectList<ShaderDescriptor> descriptor_sets[size_t(DescriptorType::RANGE_SIZE)];
     };
 
     bool Init();

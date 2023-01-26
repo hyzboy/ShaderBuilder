@@ -3,6 +3,9 @@
 #include<hgl/type/SplitString.h>
 #include<hgl/type/Map.h>
 #include"GLSLParse/GLSLTokenizer.h"
+#include"vulkan/VKShaderCommon.h"
+
+using namespace vk_shader;
 
 class SSP_Data:public ShaderSectionParse
 {
@@ -10,9 +13,9 @@ private:
     
     ShaderSection shader_section;
 
-    ObjectList<UBOData> ubo_list;
-    ObjectList<UBOData> data_list;
-    ObjectList<ConstValue> const_value_list;
+    ObjectList<ShaderUBOData> ubo_list;
+    ObjectList<ShaderUBOData> data_list;
+    ObjectList<ShaderConstValue> const_value_list;
     
 public:
     

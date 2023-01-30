@@ -2,91 +2,52 @@
 
 #include"vulkan/VKShaderCommon.h"
 #include<hgl/type/Map.h>
+#include<hgl/type/StringList.h>
 
 using namespace hgl;
 using namespace vk_shader;
 
+/**
+* Shaderæ•°æ®ç®¡ç†å™¨,ç”¨äºç”Ÿæˆæ­£å¼Shaderå‰çš„èµ„æºç»Ÿè®¡
+*/
 class ShaderDataManager
 {
     ShaderStageBits ssb;
 
-    char *spv_data;
-    uint32_t spv_length;
-    AnsiString compiled_log;
-
     ShaderStageIO stage_io;
     
-    ObjectList<ShaderDescriptor> descriptor_list;
-    List<ShaderUBOData *> ubo_list;
-    List<ShaderObjectData *> object_list;
-    ObjectList<ShaderConstValue> const_value_list;
-    ShaderSubpassInput subpass_input;
-    ShaderPushConstant push_constant;
+    AnsiStringList                  descriptor_name_list;    
+    ObjectList<ShaderDescriptor>    descriptor_list;
+    
+    List<ShaderUBOData *>           ubo_list;
+    List<ShaderObjectData *>        object_list;
+    
+    ObjectList<ShaderConstValue>    const_value_list;    
+    ObjectList<ShaderSubpassInput>  subpass_input;
+    
+    ShaderPushConstant              push_constant;
 
 private:
-        
-    ShaderDescriptor *GetDescriptor(const char *name);                                              ///<¸ù¾İÃû³Æ»ñÈ¡Ò»¸öÃèÊö·û
-    bool AddDescriptor(ShaderStageBits bit,DescriptorSetsType set_type,ShaderDescriptor *new_sd);   ///<Ìí¼ÓÒ»¸öÃèÊö·û£¬Èç¹ûËü±¾Éí´æÔÚ£¬Ôò·µ»Øfalse
+
+    bool AddDescriptor(DescriptorSetsType set_type,ShaderDescriptor *new_sd);                       ///<æ·»åŠ ä¸€ä¸ªæè¿°ç¬¦ï¼Œå¦‚æœå®ƒæœ¬èº«å­˜åœ¨ï¼Œåˆ™è¿”å›false
 
 public:
 
-    ShaderDataManager(ShaderStageBits cur,ShaderStageBits prev,ShaderStageBits next)
-    {
-        ssb=cur;
+    ShaderDataManager(ShaderStageBits,ShaderStageBits,ShaderStageBits);
+    ~ShaderDataManager(){Clear();}
 
-        spv_data=nullptr;
-        spv_length=0;
-        
-        stage_io.cur=cur;
-        stage_io.prev=prev;
-        stage_io.next=next;
-    }
+    void Clear();
 
-    ~ShaderDataManager()
-    {
-        Clear();
-    }
+public:
 
-    void Clear()
-    {
-        SAFE_CLEAR_ARRAY(spv_data);
-        spv_length=0;
-        compiled_log.Clear();
+    bool AddInput(ShaderStage *);
+    bool AddOutput(ShaderStage *);
 
-        descriptor_list.Clear();       
-        ubo_list.Clear();
-        object_list.Clear();
-        const_value_list.Clear();
-        hgl_zero(subpass_input);
-        hgl_zero(push_constant);
-    }
+    bool AddUBO(DescriptorSetsType type,ShaderUBOData *sd);
+    bool AddObject(DescriptorSetsType type,ShaderObjectData *sd);
 
-
-    bool AddUBO(DescriptorSetsType type,ShaderUBOData *sd)
-    {
-        ENUM_CLASS_RANGE_ERROR_RETURN_FALSE(type);
-        if(!sd)return(false);
-
-
-    }
-
-    void AddObject(DescriptorSetsType type,ShaderObjectData *sd);
-
-    void AddConstValue(ShaderConstValue *sd);
-
-    void AddSubpassInput(const UTF8String name,uint8_t index)
-    {
-        //»¹ĞèÒª¼ì²âÃû×ÖºÍË÷ÒıºÅÊÇ·ñÖØ¸´
-
-        subpass_input.name=name;
-        subpass_input.input_attachment_index=index;
-    }
-
-    void SetPushConstant(const UTF8String name,uint8_t offset,uint8_t size)
-    {
-        push_constant.name  =name;
-        push_constant.offset=offset;
-        push_constant.size  =size;
-    }
-
+    bool AddConstValue(ShaderConstValue *sd);    
+    bool AddSubpassInput(const UTF8String name,uint8_t index);
+    
+    void SetPushConstant(const UTF8String name,uint8_t offset,uint8_t size);
 };//class ShaderDataManager

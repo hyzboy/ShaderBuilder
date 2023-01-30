@@ -5,7 +5,7 @@
 using namespace hgl;
 using namespace vk_shader;
     
-class MaterialDescriptorManager
+class MaterialDataManager
 {
     MapObject<ShaderStageBits,ShaderStageIO> stage_io_map;
         
@@ -23,8 +23,8 @@ private:
 
 public:
 
-    MaterialDescriptorManager()=default;
-    ~MaterialDescriptorManager()=default;
+    MaterialDataManager()=default;
+    ~MaterialDataManager()=default;
 
     void Clear();
 
@@ -52,4 +52,4 @@ public:
     }
 
     void Resort();                                                                                  ///<为所有描述符产生set/binding编号
-};//class ShaderDescriptorManager
+};//class MaterialDataManager

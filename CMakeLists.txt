@@ -30,8 +30,10 @@ SOURCE_GROUP("Vulkan Shader Common" FILES ${VK_SHADER_COMMON_SOURCE})
 
 SET(SHADER_DATA_SOURCE  ShaderData/pmc.h
                         ShaderData/Varying.h
-                        ShaderData/MaterialDescriptorManager.h
-                        ShaderData/MaterialDescriptorManager.cpp)
+                        ShaderData/ShaderDataManager.h
+                        ShaderData/ShaderDataManager.cpp
+                        ShaderData/MaterialDataManager.h
+                        ShaderData/MaterialDataManager.cpp)
 
 SOURCE_GROUP("Shader Data" FILES ${SHADER_DATA_SOURCE})
 

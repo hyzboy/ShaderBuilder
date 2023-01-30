@@ -1,9 +1,9 @@
-﻿#include"MaterialDescriptorManager.h"
+﻿#include"MaterialDataManager.h"
 
 /**
 * 根据名称获取一个描述符
 */
-ShaderDescriptor *MaterialDescriptorManager::GetDescriptor(const char *name)
+ShaderDescriptor *MaterialDataManager::GetDescriptor(const char *name)
 {
     if(!name||!*name)
         return(nullptr);
@@ -20,7 +20,7 @@ ShaderDescriptor *MaterialDescriptorManager::GetDescriptor(const char *name)
 /**
 * 添加一个描述符，如果它本身存在，则返回false
 */
-bool MaterialDescriptorManager::AddDescriptor(ShaderStageBits bit,DescriptorSetsType set_type,ShaderDescriptor *new_sd)
+bool MaterialDataManager::AddDescriptor(ShaderStageBits bit,DescriptorSetsType set_type,ShaderDescriptor *new_sd)
 {
     ShaderDescriptor *sd=GetDescriptor(new_sd->name);
 
@@ -36,7 +36,7 @@ bool MaterialDescriptorManager::AddDescriptor(ShaderStageBits bit,DescriptorSets
     return(true);
 }
 
-void MaterialDescriptorManager::Clear()
+void MaterialDataManager::Clear()
 {
     stage_io_map.Clear();
     descriptor_list.Clear();
@@ -45,7 +45,7 @@ void MaterialDescriptorManager::Clear()
     const_value_list.Clear();
 }
 
-ShaderStageIO *MaterialDescriptorManager::AddShaderStageIO(const ShaderStageBits &ssb)
+ShaderStageIO *MaterialDataManager::AddShaderStageIO(const ShaderStageBits &ssb)
 {
     if(stage_io_map.KeyExist(ssb))
         return(nullptr);
@@ -57,12 +57,12 @@ ShaderStageIO *MaterialDescriptorManager::AddShaderStageIO(const ShaderStageBits
     return sio;
 }
 
-ShaderStageIO *MaterialDescriptorManager::GetShaderStageIO(const ShaderStageBits &ssb)
+ShaderStageIO *MaterialDataManager::GetShaderStageIO(const ShaderStageBits &ssb)
 {
     return stage_io_map[ssb];
 }
 
-void MaterialDescriptorManager::AddUBO(ShaderStageBits bit,DescriptorSetsType type,ShaderUBOData *sd)
+void MaterialDataManager::AddUBO(ShaderStageBits bit,DescriptorSetsType type,ShaderUBOData *sd)
 {
     if(bit==0||!sd)return;
             
@@ -70,7 +70,7 @@ void MaterialDescriptorManager::AddUBO(ShaderStageBits bit,DescriptorSetsType ty
         ubo_list.Add(sd);
 }
 
-void MaterialDescriptorManager::AddObject(ShaderStageBits bit,DescriptorSetsType type,ShaderObjectData *sd)
+void MaterialDataManager::AddObject(ShaderStageBits bit,DescriptorSetsType type,ShaderObjectData *sd)
 {
     if(bit==0||!sd)return;
             
@@ -78,7 +78,7 @@ void MaterialDescriptorManager::AddObject(ShaderStageBits bit,DescriptorSetsType
         object_list.Add(sd);
 }
 
-void MaterialDescriptorManager::AddConstValue(ShaderConstValue *sd)
+void MaterialDataManager::AddConstValue(ShaderConstValue *sd)
 {
     if(!sd)return;
 
@@ -88,7 +88,7 @@ void MaterialDescriptorManager::AddConstValue(ShaderConstValue *sd)
 /**
 * 为所有描述符产生set/binding编号
 */
-void MaterialDescriptorManager::Resort()
+void MaterialDataManager::Resort()
 {
     int set_index[size_t(DescriptorSetsType::RANGE_SIZE)];
 

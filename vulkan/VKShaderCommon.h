@@ -91,8 +91,9 @@ namespace vk_shader
         Global=0,   ///<全局参数(如太阳光等)
         PerFrame,   ///<每帧参数(如摄像机等)
         PerObject,  ///<每个物体参数(如模型矩阵等)
+        Instance,
 
-        ENUM_CLASS_RANGE(Global,PerObject)
+        ENUM_CLASS_RANGE(Global,Instance)
     };//enum class DescriptorSetsType
     
     constexpr size_t DESCRIPTOR_NAME_MAX_LENGTH=128;

@@ -141,6 +141,40 @@ namespace vk_shader
         CompOperator(const ShaderDescriptor &,Comp);
     };//struct ShaderDescriptor
     
+    struct ShaderUBOData:public ShaderDescriptor
+    {
+        UTF8String type;
+        UTF8String name;
+    };
+
+    struct ShaderObjectData:public ShaderDescriptor
+    {
+        UTF8String type;
+        UTF8String name;
+    };
+
+    struct ShaderConstValue
+    {
+        int constant_id;
+        
+        UTF8String type;
+        UTF8String name;
+        UTF8String value;
+    };
+
+    struct ShaderSubpassInput
+    {
+        UTF8String name;
+        uint8_t input_attachment_index;
+    };
+
+    struct ShaderPushConstant
+    {
+        UTF8String name;
+        uint8_t offset;
+        uint8_t size;
+    };
+    
     struct ShaderStage
     {
         char name[DESCRIPTOR_NAME_MAX_LENGTH];
@@ -160,37 +194,11 @@ namespace vk_shader
         {
             prev=cur=next=0;
         }
-    };
-    
-    struct ShaderUBOData:public ShaderDescriptor
-    {
-        UTF8String type;
-        UTF8String name;
-    };
 
-    struct ShaderObjectData:public ShaderDescriptor
-    {
-        UTF8String type;
-        UTF8String name;
-    };
-
-    struct ShaderConstValue:public ShaderDescriptor
-    {
-        UTF8String type;
-        UTF8String name;
-        UTF8String value;
-    };
-
-    struct ShaderSubpassInput
-    {
-        UTF8String name;
-        uint8_t input_attachment_index;
-    };
-
-    struct ShaderPushConstant
-    {
-        UTF8String name;
-        uint8_t offset;
-        uint8_t size;
+        void Clear()
+        {
+            input.Clear();
+            output.Clear();
+        }
     };
 };//namespace vk_shader

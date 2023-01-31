@@ -14,7 +14,7 @@ SET(SHADER_COMPILER_LIBRARY CMCore
 
 SET(GLSL_COMPILER_SOURCE	GLSLCompiler/GLSLCompiler.h
                             GLSLCompiler/GLSLCompiler.cpp
-                            GLSLCompiler/glsl2spv.cpp
+#                            GLSLCompiler/glsl2spv.cpp
                             GLSLCompiler/VKShaderParse.h)
 SOURCE_GROUP("GLSL Compiler" FILES ${GLSL_COMPILER_SOURCE})
 
@@ -31,9 +31,9 @@ SOURCE_GROUP("Vulkan Shader Common" FILES ${VK_SHADER_COMMON_SOURCE})
 SET(SHADER_DATA_SOURCE  ShaderData/pmc.h
                         ShaderData/Varying.h
                         ShaderData/ShaderDataManager.h
-                        ShaderData/ShaderDataManager.cpp
-                        ShaderData/MaterialDataManager.h
-                        ShaderData/MaterialDataManager.cpp)
+                        ShaderData/ShaderDataManager.cpp)
+#                        ShaderData/MaterialDataManager.h
+#                        ShaderData/MaterialDataManager.cpp)
 
 SOURCE_GROUP("Shader Data" FILES ${SHADER_DATA_SOURCE})
 

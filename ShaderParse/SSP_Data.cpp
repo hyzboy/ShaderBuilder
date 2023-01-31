@@ -14,7 +14,7 @@ private:
     ShaderSection shader_section;
 
     ObjectList<ShaderUBOData> ubo_list;
-    ObjectList<ShaderUBOData> data_list;
+    ObjectList<ShaderObjectData> object_list;
     ObjectList<ShaderConstValue> const_value_list;
     
 public:
@@ -43,7 +43,7 @@ private:
 
                 LOG_INFO("Find UBO: "+type_name+" "+name);
 
-                UBOData *ubo=new UBOData;
+                ShaderUBOData *ubo=new ShaderUBOData;
 
                 ubo->type=type_name;
                 ubo->name=name;
@@ -74,12 +74,12 @@ private:
 
                 LOG_INFO("Find data: "+type_name+" "+name);
 
-                UBOData *ubo=new UBOData;
+                ShaderObjectData *ubo=new ShaderObjectData;
 
                 ubo->type=type_name;
                 ubo->name=name;
 
-                data_list.Add(ubo);
+                object_list.Add(ubo);
                 
                 return(true);
             }
@@ -158,7 +158,7 @@ private:
         
         LOG_INFO("Find const: "+type_name+" "+name+" = "+default_value);
 
-        ConstValue *cv=new ConstValue;
+        ShaderConstValue *cv=new ShaderConstValue;
 
         cv->type=type_name;
         cv->name=name;
@@ -210,12 +210,12 @@ public:
                 return;
         }
 
-        LOG_ERROR("Parse error£º"+raw_line);
+        LOG_ERROR("Parse error: "+raw_line);
     }
 
-    const ObjectList<UBOData> *GetUBOList()const { return &ubo_list; }
-    const ObjectList<UBOData> *GetDataList()const { return &data_list; }
-    const ObjectList<ConstValue> *GetConstValueList()const { return &const_value_list; }
+    const ObjectList<ShaderUBOData> *   GetShaderUBOList        ()const { return &ubo_list; }
+    const ObjectList<ShaderObjectData> *GetShaderObjectList     ()const { return &object_list; }
+    const ObjectList<ShaderConstValue> *GetShaderConstValueList ()const { return &const_value_list; }
 };//class SSP_Code:public ShaderSectionParse
 
 ShaderSectionParse *CreateSSP_Data(ShaderSection ss)

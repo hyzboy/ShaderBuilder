@@ -15,7 +15,6 @@ private:
 
     ObjectList<ShaderUBOData> ubo_list;
     ObjectList<ShaderObjectData> object_list;
-    ObjectList<ShaderConstValue> const_value_list;
     
 public:
     
@@ -88,85 +87,6 @@ private:
         return(false);
     }
 
-    bool ParseConstValue(GLSLTokenizer *parse)
-    {
-        GLSLToken token;
-        GLSLToken type_token=GLSLToken::None;
-        UTF8String type_name;
-        UTF8String name;
-        UTF8String default_value;
-        
-        const char *str;
-        int length;
-
-        do
-        {
-            str=parse->GetToken(&token, &length);
-
-            if(token>=GLSLToken::Boolean
-             &&token<=GLSLToken::dvec4)
-            {
-                type_token=token;
-                type_name.SetString(str,length);
-                break;
-            }
-        }while(str);
-
-        if(type_token==GLSLToken::None)
-            return(false);
-
-        do
-        {
-            str=parse->GetToken(&token, &length);
-
-            if(token==GLSLToken::Identifier)
-            {
-                name.SetString(str, length);
-                break;
-            }
-        }while(str);
-
-        if(name.IsEmpty())
-            return(false);
-
-        do
-        {
-            str=parse->GetToken(&token, &length);
-
-            if(token==GLSLToken::Assignment)
-                break;
-        }while(str);
-
-        if(!str)
-        {
-            LOG_ERROR("const value need a default value.");
-            return(false);
-        }
-
-        const char *start=str+length;
-
-        do
-        {
-            str=parse->GetToken(&token, &length);
-
-            if(token==GLSLToken::EndStatement)
-            {
-                default_value.SetString(start, str-start+length-1);
-                break;
-            }
-        }while(str);
-        
-        LOG_INFO("Find const: "+type_name+" "+name+" = "+default_value);
-
-        ShaderConstValue *cv=new ShaderConstValue;
-
-        cv->type=type_name;
-        cv->name=name;
-        cv->value=default_value;
-
-        return(true);
-    }
-
 public:
 
     SSP_Data(ShaderSection ss)
@@ -203,19 +123,12 @@ public:
             if(ParseData(&parse,type_name))
                 return;
         }
-        else
-        if(token==GLSLToken::Const)
-        {
-            if(ParseConstValue(&parse))
-                return;
-        }
 
         LOG_ERROR("Parse error: "+raw_line);
     }
 
     const ObjectList<ShaderUBOData> *   GetShaderUBOList        ()const { return &ubo_list; }
     const ObjectList<ShaderObjectData> *GetShaderObjectList     ()const { return &object_list; }
-    const ObjectList<ShaderConstValue> *GetShaderConstValueList ()const { return &const_value_list; }
 };//class SSP_Code:public ShaderSectionParse
 
 ShaderSectionParse *CreateSSP_Data(ShaderSection ss)

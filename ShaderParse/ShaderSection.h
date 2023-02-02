@@ -6,10 +6,13 @@ enum class ShaderSection
 
     Input,
     Output,
+
+    Const,
     
     Global,
     PerFrame,
     PerObject,
+    Instance,
 
     Code
 };

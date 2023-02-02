@@ -2,6 +2,7 @@
 #include"GLSLCompiler/GLSLCompiler.h"
 #include"ShaderParse/ShaderSection.h"
 #include"ShaderParse/ShaderSectionParse.h"
+#include"ShaderData/ShaderDataManager.h"
 
 bool LoadShader(vk_shader::ShaderStageBits ssb,const OSString &filename)
 {
@@ -12,6 +13,8 @@ bool LoadShader(vk_shader::ShaderStageBits ssb,const OSString &filename)
         LOG_ERROR(OS_TEXT("Load shader file failure. filename: ")+filename);
         return(false);
     }
+
+    ShaderDataManager *sdm=new ShaderDataManager(ssb);
         
     const UTF8String ssb_name=GetShaderStageName(ssb);
 

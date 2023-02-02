@@ -42,6 +42,7 @@ SET(SHADER_PARSE_SOURCE ShaderParse/ShaderSection.h
                         ShaderParse/ShaderSectionParse.h
                         ShaderParse/ShaderSectionParse.cpp
                         ShaderParse/SSP_Code.cpp
+                        ShaderParse/SSP_Const.cpp
                         ShaderParse/SSP_Varying.cpp
                         ShaderParse/SSP_Data.cpp
 )

@@ -1,5 +1,14 @@
 #include"ShaderDataManager.h"
 
+ShaderDataManager::ShaderDataManager(ShaderStageBits cur)
+{
+    ssb=cur;
+
+    stage_io.cur=cur;
+    stage_io.prev=0;
+    stage_io.next=0;
+}
+
 ShaderDataManager::ShaderDataManager(ShaderStageBits cur,ShaderStageBits prev,ShaderStageBits next)
 {
     ssb=cur;

@@ -33,7 +33,8 @@ private:
 
 public:
 
-    ShaderDataManager(ShaderStageBits,ShaderStageBits,ShaderStageBits);
+    ShaderDataManager(ShaderStageBits);
+    ShaderDataManager(ShaderStageBits cur,ShaderStageBits prev,ShaderStageBits next);
     ~ShaderDataManager(){Clear();}
 
     void Clear();

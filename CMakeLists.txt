@@ -6,7 +6,7 @@ add_definitions(-DUNICODE -D_UNICODE)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
-SET(SHADER_COMPILER_LIBRARY CMCore
+SET(SHADER_BUILDER_LIBRARY  CMCore
                             CMPlatform
                             CMUtil
                             CMSceneGraph
@@ -46,7 +46,12 @@ SET(SHADER_PARSE_SOURCE ShaderParse/ShaderSection.h
                         ShaderParse/SSP_Data.cpp
 )
 
-SOURCE_GROUP("ShaderParse" FILES ${SHADER_PARSE_SOURCE})
+SOURCE_GROUP("Shader Parse" FILES ${SHADER_PARSE_SOURCE})
+
+SET(SHADER_GEN_SOURCE   ShaderGen/LoadMat.cpp
+                        ShaderGen/LoadShader.cpp)
+
+SOURCE_GROUP("Shader Generate" FILES ${SHADER_GEN_SOURCE})
 
 set(VULKAN_SPIRV_LIBS   GenericCodeGen
                         glslang
@@ -58,19 +63,29 @@ set(VULKAN_SPIRV_LIBS   GenericCodeGen
                         SPIRV-Tools-opt
                         spirv-cross-core)
 
+macro(shader_builder_project project_name)
+    target_link_libraries(${project_name} PRIVATE ${SHADER_BUILDER_LIBRARY} ${VULKAN_SPIRV_LIBS})
+
+    if(UNIX)
+        target_link_libraries(${project_name} PRIVATE dl)
+    endif()
+
+    IF(WIN32)
+        set_debugger_directory(${project_name} ${CMAKE_CURRENT_SOURCE_DIR})
+
+        target_sources(${project_name} PRIVATE ${CM_MANIFEST})
+    ENDIF()
+
+    set_property(TARGET ${project_name} PROPERTY FOLDER "CM/Tools/ShaderBuilder")
+endmacro()
+                               
 add_executable(ShaderBuilder    ShaderBuilder.cpp
-                                LoadMat.cpp
-                                LoadShader.cpp
+                                Config.cpp
+                                ${SHADER_GEN_SOURCE}
                                 ${SHADER_DATA_SOURCE}
                                 ${SHADER_PARSE_SOURCE}
                                 ${GLSL_Parse_SOURCE}
                                 ${GLSL_COMPILER_SOURCE}
                                 ${VK_SHADER_COMMON_SOURCE})
-
-set_property(TARGET ShaderBuilder PROPERTY FOLDER "CM/Tools/ShaderBuilder")
-
-target_link_libraries(ShaderBuilder PRIVATE ${SHADER_COMPILER_LIBRARY} ${VULKAN_SPIRV_LIBS})
-
-IF(WIN32)
-    set_debugger_directory(ShaderBuilder ${CMAKE_CURRENT_SOURCE_DIR})
-ENDIF()
+                                
+shader_builder_project(ShaderBuilder)

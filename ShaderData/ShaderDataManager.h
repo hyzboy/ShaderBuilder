@@ -16,13 +16,13 @@ class ShaderDataManager
 
     ShaderStageIO stage_io;
     
-    AnsiStringList                  descriptor_name_list;    
+    AnsiStringList                  descriptor_name_list;
     ObjectList<ShaderDescriptor>    descriptor_list;
     
     List<ShaderUBOData *>           ubo_list;
     List<ShaderObjectData *>        object_list;
     
-    ObjectList<ShaderConstValue>    const_value_list;    
+    ObjectList<ShaderConstValue>    const_value_list;
     ObjectList<ShaderSubpassInput>  subpass_input;
     
     ShaderPushConstant              push_constant;

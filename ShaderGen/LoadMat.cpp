@@ -77,6 +77,16 @@ bool LoadMat(const OSString &filename)
 
         SDMList.Add(sdm);
     }
+
+    if(shaderfile.Get(vk_shader::ssbGeometry,shader_filename))
+    {
+        ShaderDataManager *sdm=LoadShader(vk_shader::ssbGeometry,shader_filename);
+
+        if(!sdm)
+            return(false);
+
+        SDMList.Add(sdm);
+    }    
     
     if(!shaderfile.Get(vk_shader::ssbVertex,shader_filename))
     {

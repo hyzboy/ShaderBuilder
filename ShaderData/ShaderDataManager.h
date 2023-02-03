@@ -36,8 +36,12 @@ private:
 public:
 
     ShaderDataManager(ShaderStageBits);
-    ShaderDataManager(ShaderStageBits cur,ShaderStageBits prev,ShaderStageBits next);
     ~ShaderDataManager(){Clear();}
+
+    const ShaderStageBits GetStageBits()const { return ssb; }
+    
+    void SetPrevShader(ShaderStageBits prev) { stage_io.prev=prev; }
+    void SetNextShader(ShaderStageBits next) { stage_io.next=next; }
 
     void Clear();
 
@@ -59,3 +63,5 @@ public:
         source_codes+=str;
     }
 };//class ShaderDataManager
+
+void ResortShaderDescriptor(List<ShaderDataManager *> shader_list);

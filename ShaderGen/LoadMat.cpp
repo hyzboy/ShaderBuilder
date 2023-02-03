@@ -4,10 +4,11 @@
 #include<hgl/filesystem/FileSystem.h>
 #include"GLSLCompiler/GLSLCompiler.h"
 #include"vulkan/VKShaderCommon.h"
+#include"ShaderData/ShaderDataManager.h"
 
 using namespace hgl;
 
-bool LoadShader(vk_shader::ShaderStageBits ssb,const OSString &filename);
+ShaderDataManager *LoadShader(vk_shader::ShaderStageBits ssb,const OSString &filename);
 
 bool LoadMat(const OSString &filename)
 {
@@ -59,6 +60,8 @@ bool LoadMat(const OSString &filename)
     }
 
     OSString shader_filename;
+
+    ObjectList<ShaderDataManager> SDMList;
     
     if(!shaderfile.Get(vk_shader::ssbFragment,shader_filename))
     {
@@ -67,8 +70,12 @@ bool LoadMat(const OSString &filename)
     }
     else
     {
-        if(!LoadShader(vk_shader::ssbFragment,shader_filename))
+        ShaderDataManager *sdm=LoadShader(vk_shader::ssbFragment,shader_filename);
+
+        if(!sdm)
             return(false);
+
+        SDMList.Add(sdm);
     }
     
     if(!shaderfile.Get(vk_shader::ssbVertex,shader_filename))
@@ -78,9 +85,15 @@ bool LoadMat(const OSString &filename)
     }
     else
     {
-        if(!LoadShader(vk_shader::ssbVertex, shader_filename))
+        ShaderDataManager *sdm=LoadShader(vk_shader::ssbVertex, shader_filename);
+
+        if(!sdm)
             return(false);
+
+        SDMList.Add(sdm);
     }
+
+    ResortShaderDescriptor(SDMList);
 
     return(true);
 }

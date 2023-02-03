@@ -9,15 +9,6 @@ ShaderDataManager::ShaderDataManager(ShaderStageBits cur)
     stage_io.next=0;
 }
 
-ShaderDataManager::ShaderDataManager(ShaderStageBits cur,ShaderStageBits prev,ShaderStageBits next)
-{
-    ssb=cur;
-
-    stage_io.cur=cur;
-    stage_io.prev=prev;
-    stage_io.next=next;
-}
-
 void ShaderDataManager::Clear()
 {
     stage_io.Clear();

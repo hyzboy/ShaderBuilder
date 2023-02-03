@@ -4,14 +4,14 @@
 #include"ShaderParse/ShaderSectionParse.h"
 #include"ShaderData/ShaderDataManager.h"
 
-bool LoadShader(vk_shader::ShaderStageBits ssb,const OSString &filename)
+ShaderDataManager *LoadShader(vk_shader::ShaderStageBits ssb,const OSString &filename)
 {
     UTF8StringList sl;
 
     if(!LoadStringListFromTextFile(sl,filename))
     {
         LOG_ERROR(OS_TEXT("Load shader file failure. filename: ")+filename);
-        return(false);
+        return(nullptr);
     }
 
     ShaderDataManager *sdm=new ShaderDataManager(ssb);
@@ -78,5 +78,5 @@ bool LoadShader(vk_shader::ShaderStageBits ssb,const OSString &filename)
     SAFE_CLEAR(ssp);
 
     LOG_INFO("End parsing the "+ssb_name+" Shader............");
-    return(true);
+    return(sdm);
 }

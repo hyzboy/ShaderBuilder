@@ -89,7 +89,7 @@ private:
 
 public:
 
-    SSP_Data(ShaderSection ss)
+    SSP_Data(ShaderSection ss,ShaderDataManager *s):ShaderSectionParse(s)
     {
         shader_section = ss;
     }
@@ -131,7 +131,7 @@ public:
     const ObjectList<ShaderObjectData> *GetShaderObjectList     ()const { return &object_list; }
 };//class SSP_Code:public ShaderSectionParse
 
-ShaderSectionParse *CreateSSP_Data(ShaderSection ss)
+ShaderSectionParse *CreateSSP_Data(ShaderSection ss,ShaderDataManager *sdm)
 {    
-    return(new SSP_Data(ss));
+    return(new SSP_Data(ss,sdm));
 }

@@ -10,16 +10,6 @@ namespace
     OSString shader_library_path;
 }
 
-bool SetShaderLibraryPath(const OSString &path)
-{
-    if(!IsDirectory(path))
-        return(false);
-    
-    shader_library_path=path;
-    SaveConfig();
-    return(true);
-}
-
 bool LoadConfig()
 {
     OSString path;
@@ -78,4 +68,14 @@ void SaveConfig()
     }
 
     LOG_INFO(OS_TEXT("Save config file success."));
+}
+
+bool SetShaderLibraryPath(const OSString &path)
+{
+    if(!IsDirectory(path))
+        return(false);
+    
+    shader_library_path=path;
+    SaveConfig();
+    return(true);
 }

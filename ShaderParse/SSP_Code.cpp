@@ -17,7 +17,7 @@ public:
 
 public:
 
-    SSP_Code()
+    SSP_Code(ShaderDataManager *s):ShaderSectionParse(s)
     {
         shader_section = ShaderSection::Code;
     }
@@ -32,7 +32,7 @@ public:
     const UTF8StringList &GetCodes()const{return code_list;}
 };//class SSP_Code:public ShaderSectionParse
 
-ShaderSectionParse *CreateSSP_Code(ShaderSection)
+ShaderSectionParse *CreateSSP_Code(ShaderSection,ShaderDataManager *sdm)
 {    
-    return(new SSP_Code());
+    return(new SSP_Code(sdm));
 }

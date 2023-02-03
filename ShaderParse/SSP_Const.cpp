@@ -105,7 +105,7 @@ private:
 
 public:
 
-    SSP_Const()=default;
+    SSP_Const(ShaderDataManager *s):ShaderSectionParse(s){}
     virtual ~SSP_Const() = default;
 
     virtual void Add(const UTF8String &line, const UTF8String &raw_line)
@@ -129,7 +129,7 @@ public:
     const ObjectList<ShaderConstValue> *GetShaderConstValueList ()const { return &const_value_list; }
 };//class SSP_Const:public ShaderSectionParse
 
-ShaderSectionParse *CreateSSP_Const(ShaderSection)
+ShaderSectionParse *CreateSSP_Const(ShaderSection,ShaderDataManager *sdm)
 {    
-    return(new SSP_Const());
+    return(new SSP_Const(sdm));
 }

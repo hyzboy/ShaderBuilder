@@ -60,7 +60,7 @@ bool LoadShader(vk_shader::ShaderStageBits ssb,const OSString &filename)
 
             SAFE_CLEAR(ssp);
 
-            ssp=CreateSSP(shader_section);
+            ssp=CreateSSP(shader_section,sdm);
         }
         else
         {
@@ -69,7 +69,7 @@ bool LoadShader(vk_shader::ShaderStageBits ssb,const OSString &filename)
                 ssp->Add(line,raw_line);
             }
             else
-            {                
+            {
                 LOG_INFO(line);
             }
         }

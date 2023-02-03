@@ -106,7 +106,7 @@ private:
 
 public:
 
-    SSP_Varying(const ShaderSection &ms)
+    SSP_Varying(const ShaderSection &ms,ShaderDataManager *s):ShaderSectionParse(s)
     {
         shader_section = ms;
     }
@@ -136,11 +136,11 @@ public:
     const VaryingList &GetVaryingList()const { return varying_list; }
 };//class SSP_Varying:public ShaderSectionParse
 
-ShaderSectionParse *CreateSSP_Varying(ShaderSection ms)
+ShaderSectionParse *CreateSSP_Varying(ShaderSection ms,ShaderDataManager *sdm)
 {
     if(ms!=ShaderSection::Input
      &&ms!=ShaderSection::Output)
         return(nullptr);
     
-    return(new SSP_Varying(ms));
+    return(new SSP_Varying(ms,sdm));
 }

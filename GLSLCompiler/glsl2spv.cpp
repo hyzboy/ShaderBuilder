@@ -407,7 +407,7 @@ SPVData *Shader2SPV(
     SPVData *spv=new SPVData(spirv);
 
     spv->shader_stage = shader_stage;
-        
+
     {
         ShaderParse sp(spirv.data(),(uint32_t)spirv.size()*sizeof(uint32_t));
             

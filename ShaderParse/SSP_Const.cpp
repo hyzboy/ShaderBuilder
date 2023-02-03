@@ -4,6 +4,7 @@
 #include<hgl/type/Map.h>
 #include"GLSLParse/GLSLTokenizer.h"
 #include"vulkan/VKShaderCommon.h"
+#include"ShaderData/ShaderDataManager.h"
 
 using namespace vk_shader;
 
@@ -12,8 +13,6 @@ class SSP_Const:public ShaderSectionParse
 private:
     
     ShaderSection shader_section;
-
-    ObjectList<ShaderConstValue> const_value_list;
     
 public:
     
@@ -100,6 +99,8 @@ private:
         cv->name=name;
         cv->value=default_value;
 
+        sdm->AddConstValue(cv);
+
         return(true);
     }
 
@@ -125,8 +126,6 @@ public:
 
         LOG_ERROR("Parse error: "+raw_line);
     }
-    
-    const ObjectList<ShaderConstValue> *GetShaderConstValueList ()const { return &const_value_list; }
 };//class SSP_Const:public ShaderSectionParse
 
 ShaderSectionParse *CreateSSP_Const(ShaderSection,ShaderDataManager *sdm)

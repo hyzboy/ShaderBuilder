@@ -1,6 +1,7 @@
 #include"ShaderSectionParse.h"
 #include"ShaderData/Varying.h"
 #include"GLSLParse/GLSLTokenizer.h"
+#include"ShaderData/ShaderDataManager.h"
 #include<hgl/type/StringList.h>
 
 class SSP_Varying:public ShaderSectionParse
@@ -10,7 +11,6 @@ private:
     ShaderSection shader_section;
     
     UTF8StringList varying_names;
-    VaryingList varying_list;
     
 public:
     
@@ -129,11 +129,20 @@ public:
             delete v;
         }
         
-        varying_list.Add(v);
         varying_names.Add(v->name);
-    }
 
-    const VaryingList &GetVaryingList()const { return varying_list; }
+        {
+            ShaderStage *ss=new ShaderStage;
+
+            strcpy(ss->name,v->name);
+            ss->type=v->type;
+
+            if(shader_section==ShaderSection::Input)
+                sdm->AddInput(ss);
+            else
+                sdm->AddOutput(ss);
+        }
+    }
 };//class SSP_Varying:public ShaderSectionParse
 
 ShaderSectionParse *CreateSSP_Varying(ShaderSection ms,ShaderDataManager *sdm)

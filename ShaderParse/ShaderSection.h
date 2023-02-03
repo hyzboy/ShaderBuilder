@@ -11,6 +11,7 @@ enum class ShaderSection
     
     Global,
     PerFrame,
+    PerMaterial,
     PerObject,
     Instance,
 

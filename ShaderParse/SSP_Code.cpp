@@ -1,5 +1,6 @@
 #include"ShaderSectionParse.h"
 #include<hgl/type/StringList.h>
+#include"ShaderData/ShaderDataManager.h"
 
 class SSP_Code:public ShaderSectionParse
 {
@@ -27,9 +28,8 @@ public:
     virtual void Add(const UTF8String &, const UTF8String &raw_str)
     {
         code_list.Add(raw_str);
+        sdm->AddSource(raw_str);
     }
-
-    const UTF8StringList &GetCodes()const{return code_list;}
 };//class SSP_Code:public ShaderSectionParse
 
 ShaderSectionParse *CreateSSP_Code(ShaderSection,ShaderDataManager *sdm)

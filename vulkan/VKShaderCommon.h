@@ -90,6 +90,7 @@ namespace vk_shader
     {
         Global=0,   ///<全局参数(如太阳光等)
         PerFrame,   ///<每帧参数(如摄像机等)
+        PerMaterial,
         PerObject,  ///<每个物体参数(如模型矩阵等)
         Instance,
 
@@ -177,9 +178,15 @@ namespace vk_shader
     
     struct ShaderStage
     {
-        char name[DESCRIPTOR_NAME_MAX_LENGTH];
         uint8_t location;
-        uint32_t basetype;      //现在改对应hgl/graph/VertexAttrib中的enum class VertexAttribBaseType
+        
+        
+        char name[DESCRIPTOR_NAME_MAX_LENGTH];
+        
+        UTF8String type;                        //字符串格式的类型,在shader生成阶段不需要详细信息，所以只需要字符串就行了
+
+        //下面两项为详细的类型，在.material阶段，由SPV编译器返回
+        uint32_t basetype;                      //现在改对应hgl/graph/VertexAttrib中的enum class VertexAttribBaseType
         uint32_t vec_size;
     };//
     

@@ -19,7 +19,7 @@ bool LoadShader(vk_shader::ShaderStageBits ssb,const OSString &filename)
     const UTF8String ssb_name=GetShaderStageName(ssb);
 
     LOG_INFO("Start parsing the "+ssb_name+" Shader............");
-        
+
     ShaderSectionParse *ssp=nullptr;
 
     for(int i=0;i<sl.GetCount();i++)

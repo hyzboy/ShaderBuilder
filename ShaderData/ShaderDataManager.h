@@ -27,6 +27,8 @@ class ShaderDataManager
     
     ShaderPushConstant              push_constant;
 
+    UTF8String                      source_codes;
+
 private:
 
     bool AddDescriptor(DescriptorSetsType set_type,ShaderDescriptor *new_sd);                       ///<添加一个描述符，如果它本身存在，则返回false
@@ -51,4 +53,9 @@ public:
     bool AddSubpassInput(const UTF8String name,uint8_t index);
     
     void SetPushConstant(const UTF8String name,uint8_t offset,uint8_t size);
+
+    void AddSource(const UTF8String &str)
+    {
+        source_codes+=str;
+    }
 };//class ShaderDataManager

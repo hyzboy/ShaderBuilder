@@ -3,26 +3,30 @@
 
 namespace
 {
-    constexpr const char *mat_section_name[] =
+    constexpr const char *shader_section_name[] =
     {
         "Unknow",
         
         "Input",
         "Output",
         
+        "Const",
+        
         "Global",
         "PerFrame",
+        "PerMaterial",
         "PerObject",
+        "Instance",
 
-        "Main",
+        "Code",
     };
 }//namespace
 
 ShaderSection ParseShaderSection(const char *str)
 {
-    for(int i = 1;i < sizeof(mat_section_name) / sizeof(mat_section_name[0]);i++)
+    for(int i = 1;i < sizeof(shader_section_name) / sizeof(shader_section_name[0]);i++)
     {
-        if(stricmp(str,mat_section_name[i])==0)
+        if(stricmp(str,shader_section_name[i])==0)
             return(ShaderSection(i));
     }        
 

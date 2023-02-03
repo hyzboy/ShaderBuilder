@@ -4,6 +4,7 @@
 #include<hgl/type/Map.h>
 #include"GLSLParse/GLSLTokenizer.h"
 #include"vulkan/VKShaderCommon.h"
+#include"ShaderData/ShaderDataManager.h"
 
 using namespace vk_shader;
 
@@ -13,8 +14,7 @@ private:
     
     ShaderSection shader_section;
 
-    ObjectList<ShaderUBOData> ubo_list;
-    ObjectList<ShaderObjectData> object_list;
+    DescriptorSetsType desc_set_type;
     
 public:
     
@@ -47,7 +47,7 @@ private:
                 ubo->type=type_name;
                 ubo->name=name;
 
-                ubo_list.Add(ubo);
+                sdm->AddUBO(desc_set_type,ubo);
 
                 return(true);
             }
@@ -78,7 +78,7 @@ private:
                 ubo->type=type_name;
                 ubo->name=name;
 
-                object_list.Add(ubo);
+                sdm->AddObject(desc_set_type,ubo);
                 
                 return(true);
             }
@@ -92,6 +92,23 @@ public:
     SSP_Data(ShaderSection ss,ShaderDataManager *s):ShaderSectionParse(s)
     {
         shader_section = ss;
+
+        if(ss==ShaderSection::Global)
+            desc_set_type=DescriptorSetsType::Global;
+        else
+        if(ss==ShaderSection::PerFrame)
+            desc_set_type=DescriptorSetsType::PerFrame;
+        else
+        if(ss==ShaderSection::PerMaterial)
+            desc_set_type=DescriptorSetsType::PerMaterial;
+        else
+        if(ss==ShaderSection::PerObject)
+            desc_set_type=DescriptorSetsType::PerObject;
+        else
+        if(ss==ShaderSection::Instance)
+            desc_set_type=DescriptorSetsType::Instance;
+        else
+            desc_set_type=DescriptorSetsType::Global;
     }
 
     virtual ~SSP_Data() = default;
@@ -126,9 +143,6 @@ public:
 
         LOG_ERROR("Parse error: "+raw_line);
     }
-
-    const ObjectList<ShaderUBOData> *   GetShaderUBOList        ()const { return &ubo_list; }
-    const ObjectList<ShaderObjectData> *GetShaderObjectList     ()const { return &object_list; }
 };//class SSP_Code:public ShaderSectionParse
 
 ShaderSectionParse *CreateSSP_Data(ShaderSection ss,ShaderDataManager *sdm)

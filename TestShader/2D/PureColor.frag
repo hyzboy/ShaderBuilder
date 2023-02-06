@@ -7,7 +7,7 @@ PureColorMaterial color_material;   //编译器会复制名为PureColorMaterial.
 vec4 color=vec4(1,0,0);
 
 [code]
-vec4 FragmentMain()
+void main()
 {
     return color_material.Color;
 }

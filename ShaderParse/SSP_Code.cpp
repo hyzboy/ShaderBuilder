@@ -33,6 +33,6 @@ public:
 };//class SSP_Code:public ShaderSectionParse
 
 ShaderSectionParse *CreateSSP_Code(ShaderSection,ShaderDataManager *sdm)
-{    
+{
     return(new SSP_Code(sdm));
 }

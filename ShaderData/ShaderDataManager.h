@@ -45,6 +45,8 @@ public:
     const ObjectList<ShaderConstValue> &GetConstList()const{return const_value_list;}
 
     const ObjectList<ShaderSubpassInput> &GetSubpassInputList()const { return subpass_input; }
+
+    const UTF8String &GetSources()const{return source_codes;}
     
 public:
 
@@ -62,6 +64,7 @@ public:
     void AddSource(const UTF8String &str)
     {
         source_codes+=str;
+        source_codes+="\n";
     }
 
 #ifdef _DEBUG

@@ -78,7 +78,7 @@ public:
     }
 
     bool End() override
-    {
+    {        
         return(true);
     }
 };//class ShaderGenVertex:public ShaderGen

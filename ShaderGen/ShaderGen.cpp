@@ -71,7 +71,7 @@ void ShaderGen::ProcUBO()
     if(ubo_list.IsEmpty())return;
 
     for(auto ubo:ubo_list)
-        Add("layout(std140,set="+UTF8String::numberOf(ubo->set)+",binding="+UTF8String::numberOf(ubo->binding)+") uniform "+ubo->type+" "+ubo->name+";");
+        Add("layout(std140,set="+UTF8String::numberOf(ubo->set)+",binding="+UTF8String::numberOf(ubo->binding)+") uniform "+ubo->type+" "+ubo->name+";\n");
 
     AddLineBreak();
 }
@@ -83,7 +83,7 @@ void ShaderGen::ProcObject()
     if(obj_list.IsEmpty())return;
 
     for(auto obj:obj_list)
-        Add("layout(std140,set="+UTF8String::numberOf(obj->set)+",binding="+UTF8String::numberOf(obj->binding)+") "+obj->type+" "+obj->name+";");
+        Add("layout(std140,set="+UTF8String::numberOf(obj->set)+",binding="+UTF8String::numberOf(obj->binding)+") "+obj->type+" "+obj->name+";\n");
 
     AddLineBreak();
 }
@@ -95,7 +95,9 @@ void ShaderGen::ProcConst()
     if(cv_list.IsEmpty())return;
 
     for(auto cv:cv_list)
-        Add("layout(constant_id="+UTF8String::numberOf(cv->constant_id)+") const "+cv->type+" "+cv->name+"="+cv->value+";");
+        Add("layout(constant_id="+UTF8String::numberOf(cv->constant_id)+") const "+cv->type+" "+cv->name+"="+cv->value+";\n");
+    
+    AddLineBreak();
 }
 
 const int ShaderGen::GetStageOutputCount()const
@@ -121,13 +123,15 @@ bool ShaderGen::Gen()
     ProcSubpassInput();
     ProcUBO();
     ProcObject();
-    ProcConst();    
+    ProcConst();
     
     if(!Begin())
         return(false);
 
     if(!End())
         return(false);
+
+    Add(sdm->GetSources());
 
     {
         UTF8String fn=sdm->GetStageName()+UTF8String(".glsl");

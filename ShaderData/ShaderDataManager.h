@@ -30,10 +30,15 @@ public:
     ~ShaderDataManager()=default;
 
     const ShaderStageBits GetStageBits()const { return stage_io.cur; }
+    const UTF8String GetStageName()const { return UTF8String(GetShaderStageName(stage_io.cur)); }
    
     void SetPrevShader(ShaderStageBits prev) { stage_io.prev=prev; }
     void SetNextShader(ShaderStageBits next) { stage_io.next=next; }
 
+public:
+
+    const ShaderStageIO &GetShaderStageIO()const{return stage_io;}
+    
 public:
 
     bool AddInput(ShaderStage *);

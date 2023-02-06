@@ -5,12 +5,15 @@
 #include"GLSLCompiler/GLSLCompiler.h"
 #include"vulkan/VKShaderCommon.h"
 #include"ShaderData/ShaderDataManager.h"
+#include"ShaderGen/ShaderGen.h"
 
 using namespace hgl;
 
 bool LoadShader(ShaderDataManager *sdm,const UTF8StringList &source_codes);
 
-bool LoadMat(const OSString &filename)
+ShaderGen *CreateShaderGen(ShaderDataManager *sdm,const OSString &);
+
+bool LoadMat(const OSString &filename,const OSString &output_path)
 {
     UTF8StringList sl;
 
@@ -103,6 +106,25 @@ bool LoadMat(const OSString &filename)
 
     MDM.Resort();
     ResortShader(SDMList);
+
+    {
+        for(auto sdm:SDMList)
+        {            
+            ShaderGen *sg=CreateShaderGen(sdm,output_path);
+
+            if(sg)
+            {
+                sg->Gen();
+
+                delete sg;
+            }
+            else
+            {
+                LOG_ERROR(UTF8String("Create ShaderGen failure : ")+GetShaderStageName(sdm->GetStageBits()));
+                return(false);
+            }
+        }
+    }
 
     return(true);
 }

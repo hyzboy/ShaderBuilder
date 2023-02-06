@@ -29,6 +29,7 @@ bool ShaderDataManager::AddInput(ShaderStage *ss)
 
     if(Find(stage_io.input,ss))return(false);
 
+    ss->location=stage_io.input.GetCount();
     stage_io.input.Add(ss);
     return(true);
 }
@@ -38,7 +39,8 @@ bool ShaderDataManager::AddOutput(ShaderStage *ss)
     if(!ss)return(false);
 
     if(Find(stage_io.output,ss))return(false);
-
+    
+    ss->location=stage_io.output.GetCount();
     stage_io.output.Add(ss);
     return(true);
 }
@@ -111,6 +113,37 @@ void ShaderDataManager::DebugOutput()
     LOG_INFO(name+" shader");
     LOG_INFO("\tprev next is "+prev_name);
     LOG_INFO("\tnext next is "+next_name);
+
+    if(stage_io.input.GetCount()>0)
+    {
+        LOG_INFO("\tStage Input "+AnsiString::numberOf(stage_io.input.GetCount()));
+
+        for(auto *ss:stage_io.input)
+            LOG_INFO("\t\tlayout(location="+AnsiString::numberOf(ss->location)+") in "+ss->type+"\t"+AnsiString(ss->name));
+    }
+
+    if(stage_io.output.GetCount()>0)
+    {
+        LOG_INFO("\tStage Output "+AnsiString::numberOf(stage_io.output.GetCount()));
+
+        for(auto *ss:stage_io.output)
+            LOG_INFO("\t\tlayout(location="+AnsiString::numberOf(ss->location)+") out "+ss->type+"\t"+AnsiString(ss->name));
+    }
     
+    if(ubo_list.GetCount()>0)
+    {
+        LOG_INFO("\tUBO "+AnsiString::numberOf(ubo_list.GetCount()));
+        
+        for(auto *ubo:ubo_list)
+            LOG_INFO("\t\tlayout(set="+AnsiString::numberOf(ubo->set)+",binding="+AnsiString::numberOf(ubo->binding)+") uniform "+ubo->type+"\t"+ubo->type);
+    }
+
+    if(object_list.GetCount()>0)
+    {
+        LOG_INFO("\tObject "+AnsiString::numberOf(object_list.GetCount()));
+
+        for(auto *ubo:ubo_list)
+            LOG_INFO("\t\tlayout(set="+AnsiString::numberOf(ubo->set)+",binding="+AnsiString::numberOf(ubo->binding)+") uniform "+ubo->type+"\t"+ubo->type);
+    }
 }
 #endif//_DEBUG

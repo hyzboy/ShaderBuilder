@@ -106,9 +106,9 @@ void ShaderDataManager::SetPushConstant(const UTF8String name,uint8_t offset,uin
 #ifdef _DEBUG
 void ShaderDataManager::DebugOutput()
 {
-    AnsiString name=GetShaderStageName(stage_io.cur);
-    AnsiString prev_name=GetShaderStageName(stage_io.prev);
-    AnsiString next_name=GetShaderStageName(stage_io.next);
+    UTF8String name=GetShaderStageName(stage_io.cur);
+    UTF8String prev_name=GetShaderStageName(stage_io.prev);
+    UTF8String next_name=GetShaderStageName(stage_io.next);
     
     LOG_INFO(name+" shader");
     LOG_INFO("\tprev next is "+prev_name);
@@ -116,34 +116,34 @@ void ShaderDataManager::DebugOutput()
 
     if(stage_io.input.GetCount()>0)
     {
-        LOG_INFO("\tStage Input "+AnsiString::numberOf(stage_io.input.GetCount()));
+        LOG_INFO("\tStage Input "+UTF8String::numberOf(stage_io.input.GetCount()));
 
         for(auto *ss:stage_io.input)
-            LOG_INFO("\t\tlayout(location="+AnsiString::numberOf(ss->location)+") in "+ss->type+"\t"+AnsiString(ss->name));
+            LOG_INFO("\t\tlayout(location="+UTF8String::numberOf(ss->location)+") in "+ss->type+"\t"+UTF8String(ss->name));
     }
 
     if(stage_io.output.GetCount()>0)
     {
-        LOG_INFO("\tStage Output "+AnsiString::numberOf(stage_io.output.GetCount()));
+        LOG_INFO("\tStage Output "+UTF8String::numberOf(stage_io.output.GetCount()));
 
         for(auto *ss:stage_io.output)
-            LOG_INFO("\t\tlayout(location="+AnsiString::numberOf(ss->location)+") out "+ss->type+"\t"+AnsiString(ss->name));
+            LOG_INFO("\t\tlayout(location="+UTF8String::numberOf(ss->location)+") out "+ss->type+"\t"+UTF8String(ss->name));
     }
     
     if(ubo_list.GetCount()>0)
     {
-        LOG_INFO("\tUBO "+AnsiString::numberOf(ubo_list.GetCount()));
+        LOG_INFO("\tUBO "+UTF8String::numberOf(ubo_list.GetCount()));
         
         for(auto *ubo:ubo_list)
-            LOG_INFO("\t\tlayout(set="+AnsiString::numberOf(ubo->set)+",binding="+AnsiString::numberOf(ubo->binding)+") uniform "+ubo->type+"\t"+ubo->type);
+            LOG_INFO("\t\tlayout(set="+UTF8String::numberOf(ubo->set)+",binding="+UTF8String::numberOf(ubo->binding)+") uniform "+ubo->type+"\t"+ubo->type);
     }
 
     if(object_list.GetCount()>0)
     {
-        LOG_INFO("\tObject "+AnsiString::numberOf(object_list.GetCount()));
+        LOG_INFO("\tObject "+UTF8String::numberOf(object_list.GetCount()));
 
         for(auto *ubo:ubo_list)
-            LOG_INFO("\t\tlayout(set="+AnsiString::numberOf(ubo->set)+",binding="+AnsiString::numberOf(ubo->binding)+") uniform "+ubo->type+"\t"+ubo->type);
+            LOG_INFO("\t\tlayout(set="+UTF8String::numberOf(ubo->set)+",binding="+UTF8String::numberOf(ubo->binding)+") uniform "+ubo->type+"\t"+ubo->type);
     }
 }
 #endif//_DEBUG

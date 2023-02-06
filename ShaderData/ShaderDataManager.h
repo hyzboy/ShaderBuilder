@@ -30,7 +30,7 @@ public:
     ~ShaderDataManager()=default;
 
     const ShaderStageBits GetStageBits()const { return stage_io.cur; }
-    
+   
     void SetPrevShader(ShaderStageBits prev) { stage_io.prev=prev; }
     void SetNextShader(ShaderStageBits next) { stage_io.next=next; }
 

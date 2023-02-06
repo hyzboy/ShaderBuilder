@@ -13,7 +13,7 @@ struct ShaderDescriptorSet
     int set;
     int count;
 
-    ObjectMap<AnsiString,ShaderDescriptor>  descriptor_map;
+    ObjectMap<UTF8String,ShaderDescriptor>  descriptor_map;
     
     List<ShaderUBOData *>                   ubo_list;
     List<ShaderObjectData *>                object_list;

@@ -42,7 +42,7 @@ namespace glsl_compiler
     void        AddGLSLIncludePath(const char *);
     void        RebuildGLSLIncludePath();
 
-    ShaderType  GetType (const char *ext_name);
+    ShaderStageBits  GetType (const char *ext_name);
     
     SPVData *   Compile (const uint32_t type,const char *source);
     void        Free    (SPVData *spv_data);

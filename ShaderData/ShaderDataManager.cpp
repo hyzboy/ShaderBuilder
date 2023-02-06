@@ -1,25 +1,12 @@
 #include"ShaderDataManager.h"
 
-ShaderDataManager::ShaderDataManager(ShaderStageBits cur)
+ShaderDataManager::ShaderDataManager(ShaderStageBits cur,MaterialDescriptorManager *mdm)
 {
-    ssb=cur;
+    descriptor_set_manager=mdm;
 
     stage_io.cur=cur;
-    stage_io.prev=0;
-    stage_io.next=0;
-}
-
-void ShaderDataManager::Clear()
-{
-    stage_io.Clear();
-        
-    descriptor_list.Clear();
-        
-    ubo_list.Clear();
-    object_list.Clear();
-    
-    const_value_list.Clear();
-    subpass_input.Clear();
+    stage_io.prev=ssbNone;
+    stage_io.next=ssbNone;
     
     hgl_zero(push_constant);
 }
@@ -56,42 +43,26 @@ bool ShaderDataManager::AddOutput(ShaderStage *ss)
     return(true);
 }
 
-/**
-* 添加一个描述符，如果它本身存在，则返回false
-*/
-bool ShaderDataManager::AddDescriptor(DescriptorSetsType set_type,ShaderDescriptor *new_sd)
-{
-    if(!new_sd)return(false);
-    if(descriptor_name_list.Exist(new_sd->name))return(false);
-    
-    new_sd->set_type=set_type;
-    new_sd->stage_flag=ssb;
-    
-    descriptor_list.Add(new_sd);
-    descriptor_name_list.Add(new_sd->name);
-    return(true);
-}
-
 bool ShaderDataManager::AddUBO(DescriptorSetsType type,ShaderUBOData *sd)
 {
-    RANGE_CHECK_RETURN_FALSE(type);
-    if(!sd)return(false);
+    const ShaderUBOData *obj=descriptor_set_manager->AddUBO(stage_io.cur,type,sd);
 
-    if(!AddDescriptor(type,sd))return(false);
+    if(!obj)
+        return(false);
 
-    ubo_list.Add(sd);
-    return(true);
+    ubo_list.Add(obj);
+    return obj;
 }
 
 bool ShaderDataManager::AddObject(DescriptorSetsType type,ShaderObjectData *sd)
 {
-    RANGE_CHECK_RETURN_FALSE(type);
-    if(!sd)return(false);
-    
-    if(!AddDescriptor(type,sd))return(false);
+    const ShaderObjectData *obj=descriptor_set_manager->AddObject(stage_io.cur,type,sd);
 
-    object_list.Add(sd);
-    return(true);
+    if(!obj)
+        return(false);
+
+    object_list.Add(obj);
+    return obj;
 }
 
 bool ShaderDataManager::AddConstValue(ShaderConstValue *sd)
@@ -129,3 +100,17 @@ void ShaderDataManager::SetPushConstant(const UTF8String name,uint8_t offset,uin
     push_constant.offset=offset;
     push_constant.size  =size;
 }
+
+#ifdef _DEBUG
+void ShaderDataManager::DebugOutput()
+{
+    AnsiString name=GetShaderStageName(stage_io.cur);
+    AnsiString prev_name=GetShaderStageName(stage_io.prev);
+    AnsiString next_name=GetShaderStageName(stage_io.next);
+    
+    LOG_INFO(name+" shader");
+    LOG_INFO("\tprev next is "+prev_name);
+    LOG_INFO("\tnext next is "+next_name);
+    
+}
+#endif//_DEBUG

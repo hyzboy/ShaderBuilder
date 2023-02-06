@@ -117,12 +117,12 @@ namespace glsl_compiler
             compile_info.includes[i]=include_list[i].c_str();
     }
 
-    ShaderType GetType (const char *ext_name)
+    ShaderStageBits GetType (const char *ext_name)
     {
         if(gsi)
-            return gsi->GetType(ext_name);
+            return (ShaderStageBits)(gsi->GetType(ext_name));
 
-        return 0;
+        return (ShaderStageBits)0;
     }
 
     SPVData *   Compile (const uint32_t type,const char *source)

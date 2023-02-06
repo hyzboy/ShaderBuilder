@@ -2,12 +2,13 @@
 
 namespace vk_shader
 {
-    const char *GetShaderStageName(const ShaderType &type)
+    const char *GetShaderStageName(const ShaderStageBits &type)
     {
-        if(type==0
-         ||type>ssbCallable)return(nullptr);
+        if(type==0)return(shader_stage_name_list[0]);
 
-        uint32_t index=0;
+        if(type>ssbCallable)return(nullptr);
+
+        uint32_t index=1;
         uint32_t value=(uint32_t)type;
 
         while(value>1)

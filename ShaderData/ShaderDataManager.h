@@ -2,25 +2,20 @@
 
 #include"vulkan/VKShaderCommon.h"
 #include<hgl/type/Map.h>
-#include<hgl/type/StringList.h>
-
-using namespace hgl;
-using namespace vk_shader;
-
+#include"MaterialDescriptorManager.h"
+    
 /**
 * Shader数据管理器,用于生成正式Shader前的资源统计
 */
 class ShaderDataManager
 {
-    ShaderStageBits ssb;
-
     ShaderStageIO stage_io;
     
-    AnsiStringList                  descriptor_name_list;
-    ObjectList<ShaderDescriptor>    descriptor_list;
-    
-    List<ShaderUBOData *>           ubo_list;
-    List<ShaderObjectData *>        object_list;
+    MaterialDescriptorManager *     descriptor_set_manager;
+
+    //ubo/object在这里以及MaterialDescriptorManager中均有一份，mdm中的用于产生set/binding号，这里的用于产生shader
+    List<const ShaderUBOData *>     ubo_list;
+    List<const ShaderObjectData *>  object_list;
     
     ObjectList<ShaderConstValue>    const_value_list;
     ObjectList<ShaderSubpassInput>  subpass_input;
@@ -29,21 +24,15 @@ class ShaderDataManager
 
     UTF8String                      source_codes;
 
-private:
-
-    bool AddDescriptor(DescriptorSetsType set_type,ShaderDescriptor *new_sd);                       ///<添加一个描述符，如果它本身存在，则返回false
-
 public:
 
-    ShaderDataManager(ShaderStageBits);
-    ~ShaderDataManager(){Clear();}
+    ShaderDataManager(ShaderStageBits,MaterialDescriptorManager *);
+    ~ShaderDataManager()=default;
 
-    const ShaderStageBits GetStageBits()const { return ssb; }
+    const ShaderStageBits GetStageBits()const { return stage_io.cur; }
     
     void SetPrevShader(ShaderStageBits prev) { stage_io.prev=prev; }
     void SetNextShader(ShaderStageBits next) { stage_io.next=next; }
-
-    void Clear();
 
 public:
 
@@ -62,6 +51,12 @@ public:
     {
         source_codes+=str;
     }
+
+#ifdef _DEBUG
+    void DebugOutput();
+#endif//_DEBUG
 };//class ShaderDataManager
 
-void ResortShaderDescriptor(List<ShaderDataManager *> shader_list);
+using SDMPointer=ShaderDataManager *;
+
+void ResortShader(List<SDMPointer> shader_list);

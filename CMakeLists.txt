@@ -32,10 +32,9 @@ SET(SHADER_DATA_SOURCE  ShaderData/pmc.h
                         ShaderData/Varying.h
                         ShaderData/ShaderDataManager.h
                         ShaderData/ShaderDataManager.cpp
-                        ShaderData/ResortShaderDescriptor.cpp
-)
-#                        ShaderData/MaterialDataManager.h
-#                        ShaderData/MaterialDataManager.cpp)
+                        ShaderData/ResortShader.cpp
+                        ShaderData/MaterialDescriptorManager.h
+                        ShaderData/MaterialDescriptorManager.cpp)
 
 SOURCE_GROUP("Shader Data" FILES ${SHADER_DATA_SOURCE})
 

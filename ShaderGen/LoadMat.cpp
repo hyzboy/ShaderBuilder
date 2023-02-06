@@ -8,7 +8,7 @@
 
 using namespace hgl;
 
-ShaderDataManager *LoadShader(vk_shader::ShaderStageBits ssb,const OSString &filename);
+bool LoadShader(ShaderDataManager *sdm,const UTF8StringList &source_codes);
 
 bool LoadMat(const OSString &filename)
 {
@@ -21,7 +21,7 @@ bool LoadMat(const OSString &filename)
     }
 
     UTF8String pmc;
-    Map<vk_shader::ShaderType,OSString> shaderfile;
+    Map<vk_shader::ShaderStageBits,OSString> shaderfile;
 
     UTF8String left,right;
     OSString path;
@@ -42,7 +42,7 @@ bool LoadMat(const OSString &filename)
             pmc=left;
         else
         {
-            vk_shader::ShaderType type=glsl_compiler::GetType(left);
+            vk_shader::ShaderStageBits type=glsl_compiler::GetType(left);
 
             if(type==0)
                 continue;
@@ -59,51 +59,50 @@ bool LoadMat(const OSString &filename)
         }
     }
 
-    OSString shader_filename;
-
+    MaterialDescriptorManager MDM;
     ObjectList<ShaderDataManager> SDMList;
     
-    if(!shaderfile.Get(vk_shader::ssbFragment,shader_filename))
+    if(!shaderfile.KeyExist(vk_shader::ssbFragment))
     {
         LOG_ERROR("can't find fragment shader.");
         return(false);
     }
-    else
-    {
-        ShaderDataManager *sdm=LoadShader(vk_shader::ssbFragment,shader_filename);
 
-        if(!sdm)
-            return(false);
-
-        SDMList.Add(sdm);
-    }
-
-    if(shaderfile.Get(vk_shader::ssbGeometry,shader_filename))
-    {
-        ShaderDataManager *sdm=LoadShader(vk_shader::ssbGeometry,shader_filename);
-
-        if(!sdm)
-            return(false);
-
-        SDMList.Add(sdm);
-    }    
-    
-    if(!shaderfile.Get(vk_shader::ssbVertex,shader_filename))
+    if(!shaderfile.KeyExist(vk_shader::ssbVertex))
     {
         LOG_ERROR("can't find fragment shader.");
         return(false);        
     }
-    else
+
     {
-        ShaderDataManager *sdm=LoadShader(vk_shader::ssbVertex, shader_filename);
+        auto *dp=shaderfile.GetDataList();
+        
+        for(int i=0;i<shaderfile.GetCount();i++)
+        {   
+            UTF8StringList codes;
 
-        if(!sdm)
-            return(false);
+            if(!LoadStringListFromTextFile(codes, (*dp)->right))
+            {
+                LOG_ERROR(OS_TEXT("Load shader file failure. filename: ")+(*dp)->right);
+                continue;
+            }
+            
+            ShaderDataManager *sdm=new ShaderDataManager((*dp)->left, &MDM);
 
-        SDMList.Add(sdm);
+            if(!LoadShader(sdm, codes))
+            {
+                delete sdm;
+                return(false);
+            }
+
+            SDMList.Add(sdm);
+
+            ++dp;
+        }
     }
 
-    ResortShaderDescriptor(SDMList);
+    MDM.Resort();
+    ResortShader(SDMList);
 
     return(true);
 }

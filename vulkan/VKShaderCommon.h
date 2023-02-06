@@ -11,6 +11,8 @@ namespace vk_shader
 {
     enum ShaderStageBits        //等同VkShaderStageFlagBits
     {
+        ssbNone         = 0,
+
         ssbVertex       = 0x00000001,
         ssbTessControl  = 0x00000002,
         ssbTessEval     = 0x00000004,
@@ -28,11 +30,11 @@ namespace vk_shader
         ssbCallable     = 0x00002000,
         ssbAll          = 0x7FFFFFFF
     };
-
-    using ShaderType=uint32_t;          ///<用来单独表示SHADER是那一种
     
     constexpr const char *shader_stage_name_list[32]=
     {
+        "",
+        
         "Vertex"      ,
         "TessControl" ,
         "TeseEval"    ,
@@ -49,7 +51,7 @@ namespace vk_shader
         "Callable"
     };//
 
-    const char *GetShaderStageName(const ShaderType &);
+    const char *GetShaderStageName(const ShaderStageBits &);
     
     enum class DescriptorType         //等同VkDescriptorType
     {
@@ -192,14 +194,14 @@ namespace vk_shader
     
     struct ShaderStageIO
     {
-        uint prev,cur,next;
+        ShaderStageBits prev,cur,next;
         ObjectList<ShaderStage> input,output;
 
     public:
         
         ShaderStageIO()
         {
-            prev=cur=next=0;
+            prev=cur=next=ssbNone;
         }
 
         void Clear()

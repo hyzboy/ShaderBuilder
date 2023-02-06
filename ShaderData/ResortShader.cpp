@@ -2,15 +2,14 @@
 #include<hgl/util/sort/Sort.h>
 #include<hgl/log/LogInfo.h>
 
-using SDMPointer=ShaderDataManager *;
-
 template<> int Comparator<SDMPointer>::compare(const SDMPointer &a, const SDMPointer &b) const
 {
     return a->GetStageBits()-b->GetStageBits();
 }
 
-void ResortShaderDescriptor(List<SDMPointer> shader_list)
+void ResortShader(List<SDMPointer> shader_list)
 {
+    //设置prev/next
     {
         Comparator<SDMPointer> comp;
 
@@ -20,7 +19,7 @@ void ResortShaderDescriptor(List<SDMPointer> shader_list)
 
         prev=nullptr;
         cur=shader_list.GetData();
-        next=++cur;
+        next=cur+1;
 
         for(int i=0; i<shader_list.GetCount(); i++)
         {
@@ -36,18 +35,19 @@ void ResortShaderDescriptor(List<SDMPointer> shader_list)
         }
     }
     
+    LOG_INFO("Resort Shader.");
+   
+    //输出排序结果
+#ifdef _DEBUG
     {
-        LOG_INFO("Resort Shader.");
-
         SDMPointer *p=shader_list.GetData();
 
         for(int i=0;i<shader_list.GetCount();i++)
         {
-            AnsiString name=GetShaderStageName((*p)->GetStageBits());
-            
-            LOG_INFO("Shader["+AnsiString::numberOf(i)+"]:"+name);
+            (*p)->DebugOutput();
 
             ++p;
         }
     }
+#endif//_DEBUG
 }

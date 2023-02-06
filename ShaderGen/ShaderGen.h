@@ -6,6 +6,8 @@ class ShaderGen
 {
 protected:
 
+    ShaderGen *prev_gen;
+
     ShaderDataManager *sdm;
     OSString output_path;
     
@@ -29,6 +31,12 @@ protected:
 
     void ProcInclude();
 
+    void ProcSubpassInput();
+
+    void ProcUBO();
+    void ProcObject();
+    void ProcConst();
+
 protected:
 
     virtual void PreProcess()=0;
@@ -38,15 +46,19 @@ protected:
 
 public:
 
+    const int GetStageOutputCount()const;
+
     const UTF8String &GetOutputStructName()const{return output_struct_name;}
     const UTF8String &GetOutputStructFilename()const{return output_struct_filename;}
 
 public:
 
-    ShaderGen(ShaderDataManager *_sdm,const OSString &path);
+    ShaderGen(ShaderDataManager *_sdm,const OSString &path,ShaderGen *prev=nullptr);
     virtual ~ShaderGen()=default;
+
+    const ShaderGen *GetPrevShadeGen()const{return prev_gen;}
 
     virtual bool Gen();
 };//class ShaderGen
 
-ShaderGen *CreateShaderGen(ShaderDataManager *sdm,const OSString &);
+ShaderGen *CreateShaderGen(ShaderDataManager *sdm,const OSString &,ShaderGen *prev=nullptr);

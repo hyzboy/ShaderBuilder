@@ -127,6 +127,7 @@ public:
         {
             LOG_ERROR(U8_TEXT("Varying name repeat: \"")+raw_str+U8_TEXT("\""));
             delete v;
+            return;
         }
         
         varying_names.Add(v->name);

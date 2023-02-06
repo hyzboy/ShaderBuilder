@@ -10,15 +10,11 @@ using namespace vk_shader;
 
 class SSP_Const:public ShaderSectionParse
 {
-private:
-    
-    ShaderSection shader_section;
-    
 public:
     
     const ShaderSection GetSection()const override
     {
-        return shader_section;
+        return ShaderSection::Const;
     };
 
 private:
@@ -99,7 +95,8 @@ private:
         cv->name=name;
         cv->value=default_value;
 
-        sdm->AddConstValue(cv);
+        if(!sdm->AddConstValue(cv))
+            delete cv;
 
         return(true);
     }
@@ -112,14 +109,6 @@ public:
     virtual void Add(const UTF8String &line, const UTF8String &raw_line)
     {
         GLSLTokenizer parse(line.c_str(), line.Length());
-        GLSLToken token;        
-        int length;
-        const char *str;
-        UTF8String type_name;
-        
-        str=parse.GetToken(&token, &length);
-
-        if(!str)return;
         
         if(ParseConstValue(&parse))
             return;

@@ -6,7 +6,7 @@
 
 bool LoadShader(ShaderDataManager *sdm,const UTF8StringList &source_codes)
 {
-    const UTF8String ssb_name=GetShaderStageName(sdm->GetStageBits());
+    const UTF8String ssb_name=sdm->GetStageName();
 
     LOG_INFO("Start parsing the "+ssb_name+" Shader............");
 

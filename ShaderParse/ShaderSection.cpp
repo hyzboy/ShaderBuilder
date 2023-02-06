@@ -10,6 +10,7 @@ namespace
         "Input",
         "Output",
         
+        "Subpass",
         "Const",
         
         "Global",

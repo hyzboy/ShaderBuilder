@@ -75,7 +75,7 @@ bool ShaderDataManager::AddConstValue(ShaderConstValue *sd)
         if(p->name.Comp(sd->name)==0)
             return(false);
 
-    const_value_list.Add(sd);
+    sd->constant_id=const_value_list.Add(sd);
     return(true);
 }
 

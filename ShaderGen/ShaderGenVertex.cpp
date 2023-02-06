@@ -11,6 +11,8 @@ private:
 
     void PreProcess() override
     {
+        if(sdm->GetShaderStageIO().output.IsEmpty())return;
+        
         output_struct_name=sdm->GetStageName()+UTF8String("Output");
 
         output_struct_filename=output_struct_name+U8_TEXT(".glsl");
@@ -79,7 +81,7 @@ public:
     {
         return(true);
     }
-};
+};//class ShaderGenVertex:public ShaderGen
 
 ShaderGen *CreateShaderGenVertex(ShaderDataManager *sdm,const OSString &path)
 {

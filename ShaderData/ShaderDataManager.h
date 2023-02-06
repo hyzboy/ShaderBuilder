@@ -38,6 +38,13 @@ public:
 public:
 
     const ShaderStageIO &GetShaderStageIO()const{return stage_io;}
+
+    const List<const ShaderUBOData *> &GetUBOList()const{return ubo_list;}
+    const List<const ShaderObjectData *> &GetObjectList()const { return object_list; }
+
+    const ObjectList<ShaderConstValue> &GetConstList()const{return const_value_list;}
+
+    const ObjectList<ShaderSubpassInput> &GetSubpassInputList()const { return subpass_input; }
     
 public:
 

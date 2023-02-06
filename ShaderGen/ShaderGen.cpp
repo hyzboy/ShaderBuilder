@@ -3,23 +3,29 @@
 #include<hgl/log/LogInfo.h>
 
 ShaderGen *CreateShaderGenVertex(ShaderDataManager *sdm,const OSString &path);
+ShaderGen *CreateShaderGenFragment(ShaderDataManager *sdm,const OSString &path,ShaderGen *prev);
 
-ShaderGen *CreateShaderGen(ShaderDataManager *sdm,const OSString &path)
+ShaderGen *CreateShaderGen(ShaderDataManager *sdm,const OSString &path,ShaderGen *prev)
 {
     if(!sdm||!filesystem::IsDirectory(path))
         return(nullptr);
 
-    if(sdm->GetStageBits()==ssbVertex)
-        return CreateShaderGenVertex(sdm,path);
-    else
+    switch(sdm->GetStageBits())
     {
-        LOG_ERROR(U8_TEXT("CreateShaderGen() unsupport stage bits: ")+sdm->GetStageName());
-        return(nullptr);
+        case ssbVertex:     return CreateShaderGenVertex(sdm,path);
+        case ssbFragment:   return CreateShaderGenFragment(sdm, path, prev);
+        default:
+        {
+            LOG_ERROR(U8_TEXT("CreateShaderGen() unsupport stage bits: ")+sdm->GetStageName());
+            return(nullptr);
+        }
     }
 }
 
-ShaderGen::ShaderGen(ShaderDataManager *_sdm,const OSString &path)
+ShaderGen::ShaderGen(ShaderDataManager *_sdm,const OSString &path,ShaderGen *prev)
 {
+    prev_gen=prev;
+
     sdm=_sdm;
     
     output_path=path;
@@ -47,6 +53,56 @@ void ShaderGen::ProcInclude()
     AddLineBreak();
 }
 
+void ShaderGen::ProcSubpassInput()
+{
+    const auto &si_list=sdm->GetSubpassInputList();
+
+    if(si_list.IsEmpty())return;
+
+    for(auto si:si_list)
+    {
+    }        
+}
+
+void ShaderGen::ProcUBO()
+{
+    const auto &ubo_list=sdm->GetUBOList();
+
+    if(ubo_list.IsEmpty())return;
+
+    for(auto ubo:ubo_list)
+        Add("layout(std140,set="+UTF8String::numberOf(ubo->set)+",binding="+UTF8String::numberOf(ubo->binding)+") uniform "+ubo->type+" "+ubo->name+";");
+
+    AddLineBreak();
+}
+
+void ShaderGen::ProcObject()
+{
+    const auto &obj_list=sdm->GetObjectList();
+
+    if(obj_list.IsEmpty())return;
+
+    for(auto obj:obj_list)
+        Add("layout(std140,set="+UTF8String::numberOf(obj->set)+",binding="+UTF8String::numberOf(obj->binding)+") "+obj->type+" "+obj->name+";");
+
+    AddLineBreak();
+}
+
+void ShaderGen::ProcConst()
+{
+    const auto &cv_list=sdm->GetConstList();
+
+    if(cv_list.IsEmpty())return;
+
+    for(auto cv:cv_list)
+        Add("layout(constant_id="+UTF8String::numberOf(cv->constant_id)+") const "+cv->type+" "+cv->name+"="+cv->value+";");
+}
+
+const int ShaderGen::GetStageOutputCount()const
+{
+    return sdm->GetShaderStageIO().output.GetCount();
+}
+
 void ShaderGen::AddStageOutput()
 {
     Add("layout(location=0) out "+output_struct_name+"\tOutput;\n");
@@ -61,6 +117,11 @@ bool ShaderGen::Gen()
     PreProcess();
     
     ProcInclude();
+
+    ProcSubpassInput();
+    ProcUBO();
+    ProcObject();
+    ProcConst();    
     
     if(!Begin())
         return(false);

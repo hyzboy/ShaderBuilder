@@ -90,7 +90,7 @@ namespace vk_shader
     
     enum class DescriptorSetsType
     {
-        Global=0,   ///<全局参数(如太阳光等)
+        Global,     ///<全局参数(如太阳光等)
         PerFrame,   ///<每帧参数(如摄像机等)
         PerMaterial,
         PerObject,  ///<每个物体参数(如模型矩阵等)
@@ -118,6 +118,7 @@ namespace vk_shader
             hgl_zero(*this);
             set=-1;
             binding=-1;
+            stage_flag=0;
         }
         
         ShaderDescriptor(const ShaderDescriptor *sr)

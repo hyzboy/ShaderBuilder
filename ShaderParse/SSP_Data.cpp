@@ -93,21 +93,10 @@ public:
     {
         shader_section = ss;
 
-        if(ss==ShaderSection::Global)
-            desc_set_type=DescriptorSetsType::Global;
-        else
-        if(ss==ShaderSection::PerFrame)
-            desc_set_type=DescriptorSetsType::PerFrame;
-        else
-        if(ss==ShaderSection::PerMaterial)
-            desc_set_type=DescriptorSetsType::PerMaterial;
-        else
-        if(ss==ShaderSection::PerObject)
-            desc_set_type=DescriptorSetsType::PerObject;
-        else
-        if(ss==ShaderSection::Instance)
-            desc_set_type=DescriptorSetsType::Instance;
-        else
+        if(ss==ShaderSection::PerFrame)     desc_set_type=DescriptorSetsType::PerFrame;     else
+        if(ss==ShaderSection::PerMaterial)  desc_set_type=DescriptorSetsType::PerMaterial;  else
+        if(ss==ShaderSection::PerObject)    desc_set_type=DescriptorSetsType::PerObject;    else
+        if(ss==ShaderSection::Instance)     desc_set_type=DescriptorSetsType::Instance;     else
             desc_set_type=DescriptorSetsType::Global;
     }
 

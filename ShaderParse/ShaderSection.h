@@ -7,6 +7,7 @@ enum class ShaderSection
     Input,
     Output,
 
+    Subpass,
     Const,
     
     Global,

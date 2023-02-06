@@ -1,2 +1,3 @@
 pmc: Color
+vert: PureColor
 frag: PureColor

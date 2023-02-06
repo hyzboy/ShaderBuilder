@@ -108,19 +108,24 @@ bool LoadMat(const OSString &filename,const OSString &output_path)
     ResortShader(SDMList);
 
     {
+        ShaderGen *prev=nullptr;
+        ObjectList<ShaderGen> SGList;
+        
         for(auto sdm:SDMList)
         {            
-            ShaderGen *sg=CreateShaderGen(sdm,output_path);
+            ShaderGen *sg=CreateShaderGen(sdm,output_path,prev);
 
             if(sg)
             {
                 sg->Gen();
 
-                delete sg;
+                SGList.Add(sg);
+
+                prev=sg;
             }
             else
             {
-                LOG_ERROR(UTF8String("Create ShaderGen failure : ")+GetShaderStageName(sdm->GetStageBits()));
+                LOG_ERROR(UTF8String("Create ShaderGen failure : ")+sdm->GetStageName());
                 return(false);
             }
         }

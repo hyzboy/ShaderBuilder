@@ -114,7 +114,7 @@ bool ShaderGen::Gen()
 {
     Add(u8"// the Shader was created by the ShaderBuilder (" HGL_OFFICAL_WEB_U8 u8")\n"
         u8"\n"
-        u8"#version 460\n\n");
+        u8"#version 460 core\n\n");
 
     PreProcess();
     
@@ -128,10 +128,10 @@ bool ShaderGen::Gen()
     if(!Begin())
         return(false);
 
+    Add(sdm->GetSources());
+
     if(!End())
         return(false);
-
-    Add(sdm->GetSources());
 
     {
         UTF8String fn=sdm->GetStageName()+UTF8String(".glsl");

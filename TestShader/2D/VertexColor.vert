@@ -9,4 +9,5 @@ vec4 Color;
 void VertexMain()
 {
     Output.Color=Color;
+    gl_Position=Position;
 }

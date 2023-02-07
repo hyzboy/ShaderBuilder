@@ -21,13 +21,26 @@ public:
     bool Begin() override
     {
         if(prev_gen&&prev_gen->GetStageOutputCount()>0)
+        {
             Add("layout(location=0) in "+prev_gen->GetOutputStructName()+"\tInput;\n");
+
+            AddLineBreak();
+        }
 
         return(true);
     }
 
     bool End() override
     {
+        Add(R"(
+layout(location=0) out vec4 FragColor;
+
+void main()
+{
+    FragColor = FragmentMain();
+}
+)");
+        
         return(true);
     }    
 };//class ShaderGenFragment:public ShaderGen

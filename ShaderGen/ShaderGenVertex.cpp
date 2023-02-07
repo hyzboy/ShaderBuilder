@@ -78,7 +78,13 @@ public:
     }
 
     bool End() override
-    {        
+    {
+        Add(R"(
+void main()
+{
+    VertexMain();
+})");
+
         return(true);
     }
 };//class ShaderGenVertex:public ShaderGen

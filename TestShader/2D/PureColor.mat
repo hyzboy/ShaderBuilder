@@ -1,3 +1,5 @@
+light: Unlit
+
 pmc: Color
 vert: PureColor
 frag: PureColor

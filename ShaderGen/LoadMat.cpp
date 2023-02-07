@@ -64,7 +64,7 @@ bool LoadMat(const OSString &filename,const OSString &output_path)
 
     MaterialDescriptorManager MDM;
     ObjectList<ShaderDataManager> SDMList;
-    
+
     if(!shaderfile.KeyExist(vk_shader::ssbFragment))
     {
         LOG_ERROR("can't find fragment shader.");
@@ -74,7 +74,7 @@ bool LoadMat(const OSString &filename,const OSString &output_path)
     if(!shaderfile.KeyExist(vk_shader::ssbVertex))
     {
         LOG_ERROR("can't find fragment shader.");
-        return(false);        
+        return(false);
     }
 
     {

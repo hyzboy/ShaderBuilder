@@ -45,7 +45,7 @@ bool ShaderDataManager::AddOutput(ShaderStage *ss)
     return(true);
 }
 
-bool ShaderDataManager::AddUBO(DescriptorSetsType type,ShaderUBOData *sd)
+bool ShaderDataManager::AddUBO(DescriptorSetType type,ShaderUBOData *sd)
 {
     const ShaderUBOData *obj=descriptor_set_manager->AddUBO(stage_io.cur,type,sd);
 
@@ -56,7 +56,7 @@ bool ShaderDataManager::AddUBO(DescriptorSetsType type,ShaderUBOData *sd)
     return obj;
 }
 
-bool ShaderDataManager::AddObject(DescriptorSetsType type,ShaderObjectData *sd)
+bool ShaderDataManager::AddObject(DescriptorSetType type,ShaderObjectData *sd)
 {
     const ShaderObjectData *obj=descriptor_set_manager->AddObject(stage_io.cur,type,sd);
 

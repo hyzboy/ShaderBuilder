@@ -14,7 +14,7 @@ private:
     
     ShaderSection shader_section;
 
-    DescriptorSetsType desc_set_type;
+    DescriptorSetType desc_set_type;
     
 public:
     
@@ -93,12 +93,12 @@ public:
     {
         shader_section = ss;
 
-        if(ss==ShaderSection::PerFrame)     desc_set_type=DescriptorSetsType::PerFrame;     else
-        if(ss==ShaderSection::PerMaterial)  desc_set_type=DescriptorSetsType::PerMaterial;  else
-        if(ss==ShaderSection::PerObject)    desc_set_type=DescriptorSetsType::PerObject;    else
-        if(ss==ShaderSection::Instance)     desc_set_type=DescriptorSetsType::Instance;     else
-        if(ss==ShaderSection::Skeleton)     desc_set_type=DescriptorSetsType::Skeleton;     else
-            desc_set_type=DescriptorSetsType::Global;
+        if(ss==ShaderSection::PerFrame)     desc_set_type=DescriptorSetType::PerFrame;     else
+        if(ss==ShaderSection::PerMaterial)  desc_set_type=DescriptorSetType::PerMaterial;  else
+        if(ss==ShaderSection::PerObject)    desc_set_type=DescriptorSetType::PerObject;    else
+        if(ss==ShaderSection::Instance)     desc_set_type=DescriptorSetType::Instance;     else
+        if(ss==ShaderSection::Skeleton)     desc_set_type=DescriptorSetType::Skeleton;     else
+            desc_set_type=DescriptorSetType::Global;
     }
 
     virtual ~SSP_Data() = default;

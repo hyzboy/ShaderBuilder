@@ -2,11 +2,11 @@
 
 MaterialDescriptorManager::MaterialDescriptorManager()
 {
-    int set_type=(int)DescriptorSetsType::BEGIN_RANGE;
+    int set_type=(int)DescriptorSetType::BEGIN_RANGE;
 
     for(auto &p:desc_set_array)
     {
-        p.set_type=(DescriptorSetsType)set_type;
+        p.set_type=(DescriptorSetType)set_type;
 
         ++set_type;
 
@@ -40,7 +40,7 @@ const ShaderDescriptor *ShaderDescriptorSet::AddDescriptor(ShaderStageBits ssb,S
     }
 }
 
-const ShaderUBOData *MaterialDescriptorManager::AddUBO(ShaderStageBits ssb,DescriptorSetsType type,ShaderUBOData *sd)
+const ShaderUBOData *MaterialDescriptorManager::AddUBO(ShaderStageBits ssb,DescriptorSetType type,ShaderUBOData *sd)
 {
     RANGE_CHECK_RETURN_NULLPTR(type);
     if(!sd)return(nullptr);
@@ -55,7 +55,7 @@ const ShaderUBOData *MaterialDescriptorManager::AddUBO(ShaderStageBits ssb,Descr
     return((ShaderUBOData *)obj);
 }
 
-const ShaderObjectData *MaterialDescriptorManager::AddObject(ShaderStageBits ssb,DescriptorSetsType type,ShaderObjectData *sd)
+const ShaderObjectData *MaterialDescriptorManager::AddObject(ShaderStageBits ssb,DescriptorSetType type,ShaderObjectData *sd)
 {
     RANGE_CHECK_RETURN_NULLPTR(type);
     if(!sd)return(nullptr);

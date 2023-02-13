@@ -88,7 +88,7 @@ namespace vk_shader
         "subpass_input"
     };
     
-    enum class DescriptorSetsType
+    enum class DescriptorSetType
     {
         Global,     ///<全局参数(如太阳光等)
         PerFrame,   ///<每帧参数(如摄像机等)
@@ -99,7 +99,7 @@ namespace vk_shader
         Skeleton,
 
         ENUM_CLASS_RANGE(Global,Skeleton)
-    };//enum class DescriptorSetsType
+    };//enum class DescriptorSetType
     
     constexpr size_t DESCRIPTOR_NAME_MAX_LENGTH=128;
 
@@ -107,7 +107,7 @@ namespace vk_shader
     {
         char name[DESCRIPTOR_NAME_MAX_LENGTH];
         vk_shader::DescriptorType type;
-        DescriptorSetsType set_type;
+        DescriptorSetType set_type;
 
         int set;
         int binding;

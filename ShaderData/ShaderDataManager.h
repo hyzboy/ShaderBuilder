@@ -53,8 +53,8 @@ public:
     bool AddInput(ShaderStage *);
     bool AddOutput(ShaderStage *);
 
-    bool AddUBO(DescriptorSetsType type,ShaderUBOData *sd);
-    bool AddObject(DescriptorSetsType type,ShaderObjectData *sd);
+    bool AddUBO(DescriptorSetType type,ShaderUBOData *sd);
+    bool AddObject(DescriptorSetType type,ShaderObjectData *sd);
 
     bool AddConstValue(ShaderConstValue *sd);    
     bool AddSubpassInput(const UTF8String name,uint8_t index);

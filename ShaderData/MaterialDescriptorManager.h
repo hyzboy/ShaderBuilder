@@ -8,7 +8,7 @@ using namespace vk_shader;
 
 struct ShaderDescriptorSet
 {
-    DescriptorSetsType set_type;
+    DescriptorSetType set_type;
 
     int set;
     int count;
@@ -23,7 +23,7 @@ public:
     const ShaderDescriptor *AddDescriptor(ShaderStageBits ssb,ShaderDescriptor *new_sd);                       ///<添加一个描述符，如果它本身存在，则返回false
 };
 
-typedef ShaderDescriptorSet ShaderDescriptorSetArray[size_t(DescriptorSetsType::RANGE_SIZE)];
+typedef ShaderDescriptorSet ShaderDescriptorSetArray[size_t(DescriptorSetType::RANGE_SIZE)];
     
 class MaterialDescriptorManager
 {
@@ -36,8 +36,8 @@ public:
     MaterialDescriptorManager();
     ~MaterialDescriptorManager()=default;
 
-    const ShaderUBOData *AddUBO(ShaderStageBits ssb,DescriptorSetsType type,ShaderUBOData *sd);
-    const ShaderObjectData *AddObject(ShaderStageBits ssb,DescriptorSetsType type,ShaderObjectData *sd);
+    const ShaderUBOData *AddUBO(ShaderStageBits ssb,DescriptorSetType type,ShaderUBOData *sd);
+    const ShaderObjectData *AddObject(ShaderStageBits ssb,DescriptorSetType type,ShaderObjectData *sd);
 
     void Resort();      //排序产生set号与binding号
 };

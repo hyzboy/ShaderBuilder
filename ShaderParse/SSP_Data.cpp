@@ -97,6 +97,7 @@ public:
         if(ss==ShaderSection::PerMaterial)  desc_set_type=DescriptorSetsType::PerMaterial;  else
         if(ss==ShaderSection::PerObject)    desc_set_type=DescriptorSetsType::PerObject;    else
         if(ss==ShaderSection::Instance)     desc_set_type=DescriptorSetsType::Instance;     else
+        if(ss==ShaderSection::Skeleton)     desc_set_type=DescriptorSetsType::Skeleton;     else
             desc_set_type=DescriptorSetsType::Global;
     }
 

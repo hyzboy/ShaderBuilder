@@ -22,9 +22,9 @@ private:
 
     bool MakeOutput()
     {
-        UTF8String codes;
+        UTF8String codes=TOP_COMMENT;
 
-        codes=  "#ifndef "+output_struct_name+"_GLSL\n"
+        codes+= "#ifndef "+output_struct_name+"_GLSL\n"
                 "#define "+output_struct_name+"_GLSL\n"
                 "\n"
                 "struct "+output_struct_name+"\n"
@@ -82,7 +82,7 @@ public:
         Add(R"(
 void main()
 {
-    VertexMain();
+    gl_Position=VertexMain();
 })");
 
         return(true);

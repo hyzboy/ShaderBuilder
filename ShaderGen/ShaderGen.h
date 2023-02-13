@@ -2,6 +2,8 @@
 #include"ShaderData/ShaderDataManager.h"
 #include<hgl/type/StringList.h>
 
+constexpr char TOP_COMMENT[]=u8"// the Shader was created by the ShaderBuilder (" HGL_OFFICAL_WEB_U8 u8")\n\n";
+
 class ShaderGen
 {
 protected:

@@ -6,8 +6,8 @@ vec4 Color;         //顶点颜色
 vec4 Color;
 
 [code]
-void VertexMain()
+vec4 VertexMain()
 {
     Output.Color=Color;
-    gl_Position=Position;
+    return Position;
 }

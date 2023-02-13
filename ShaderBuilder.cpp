@@ -11,7 +11,7 @@ bool SetShaderLibraryPath(const OSString &);
 bool LoadConfig();
 void SaveConfig();
 
-bool LoadMat(const OSString &filename,const OSString &output_path);
+bool ConvertMaterial(const OSString &filename,const OSString &output_path);
 
 int os_main(int argc,os_char **argv)
 {
@@ -65,7 +65,7 @@ int os_main(int argc,os_char **argv)
 
     glsl_compiler::Init();
 
-    LoadMat(input_filename,output_path);
+    ConvertMaterial(input_filename,output_path);
 
     glsl_compiler::Close();
     return 0;

@@ -60,6 +60,11 @@ SET(SHADER_GEN_SOURCE   ShaderGen/LoadMat.cpp
 
 SOURCE_GROUP("Shader Generate" FILES ${SHADER_GEN_SOURCE})
 
+SET(SHADER_GEN_MANAGER_SOURCE   ShaderGen/ShaderGenManager.h
+                                ShaderGen/ShaderGenManager.cpp)
+
+SOURCE_GROUP("Shader Generate\\Manager" FILES ${SHADER_GEN_MANAGER_SOURCE})
+
 set(VULKAN_SPIRV_LIBS   GenericCodeGen
                         glslang
                         MachineIndependent
@@ -89,6 +94,7 @@ endmacro()
 add_executable(ShaderBuilder    ShaderBuilder.cpp
                                 Config.cpp
                                 ${SHADER_GEN_SOURCE}
+                                ${SHADER_GEN_MANAGER_SOURCE}
                                 ${SHADER_DATA_SOURCE}
                                 ${SHADER_PARSE_SOURCE}
                                 ${GLSL_Parse_SOURCE}

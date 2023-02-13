@@ -3,6 +3,7 @@
 #include"ShaderParse/ShaderSection.h"
 #include"ShaderParse/ShaderSectionParse.h"
 #include"ShaderData/ShaderDataManager.h"
+#include"ShaderGenManager.h"
 
 bool LoadShader(ShaderDataManager *sdm,const UTF8StringList &source_codes)
 {
@@ -68,5 +69,51 @@ bool LoadShader(ShaderDataManager *sdm,const UTF8StringList &source_codes)
     SAFE_CLEAR(ssp);
 
     LOG_INFO("End parsing the "+ssb_name+" Shader............");
+    return(true);
+}
+
+bool LoadShader(ConvertMaterialData *cvd)
+{
+    if(!cvd)return(false);
+
+    if(!cvd->shaderfile.KeyExist(vk_shader::ssbFragment))
+    {
+        LOG_ERROR("can't find fragment shader.");
+        return(false);
+    }
+
+    if(!cvd->shaderfile.KeyExist(vk_shader::ssbVertex))
+    {
+        LOG_ERROR("can't find fragment shader.");
+        return(false);
+    }
+
+    {
+        auto *dp=cvd->shaderfile.GetDataList();
+        
+        for(int i=0;i<cvd->shaderfile.GetCount();i++)
+        {   
+            UTF8StringList codes;
+
+            if(!LoadStringListFromTextFile(codes, (*dp)->right))
+            {
+                LOG_ERROR(OS_TEXT("Load shader file failure. filename: ")+(*dp)->right);
+                continue;
+            }
+            
+            ShaderDataManager *sdm=new ShaderDataManager((*dp)->left, &cvd->MDM);
+
+            if(!LoadShader(sdm, codes))
+            {
+                delete sdm;
+                return(false);
+            }
+
+            cvd->SDMList.Add(sdm);
+
+            ++dp;
+        }
+    }
+
     return(true);
 }

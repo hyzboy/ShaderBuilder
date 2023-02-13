@@ -14,7 +14,9 @@ enum class ShaderSection
     PerFrame,
     PerMaterial,
     PerObject,
+
     Instance,
+    Skeleton,
 
     Code
 };

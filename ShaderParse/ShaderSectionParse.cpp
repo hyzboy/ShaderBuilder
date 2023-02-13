@@ -20,8 +20,10 @@ ShaderSectionParse *CreateSSP(const ShaderSection &ms,ShaderDataManager *sdm)
         case ShaderSection::PerFrame:
         case ShaderSection::PerMaterial:
         case ShaderSection::PerObject:
-        case ShaderSection::Instance:   return CreateSSP_Data(ms,sdm);
-            
+
+        case ShaderSection::Instance:   
+        case ShaderSection::Skeleton:   return CreateSSP_Data(ms,sdm);
+
         default:                        return nullptr;
     }
 }

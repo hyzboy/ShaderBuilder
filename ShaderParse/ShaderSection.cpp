@@ -17,7 +17,9 @@ namespace
         "PerFrame",
         "PerMaterial",
         "PerObject",
+
         "Instance",
+        "Skeleton",
 
         "Code",
     };

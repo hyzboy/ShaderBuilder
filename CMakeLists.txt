@@ -50,15 +50,18 @@ SET(SHADER_PARSE_SOURCE ShaderParse/ShaderSection.h
 
 SOURCE_GROUP("Shader Parse" FILES ${SHADER_PARSE_SOURCE})
 
-SET(SHADER_GEN_SOURCE   ShaderGen/LoadMat.cpp
-                        ShaderGen/LoadShader.cpp
-                        ShaderGen/ShaderGen.h
+SET(SHADER_LOAD_SOURCE  ShaderGen/LoadMat.cpp
+                        ShaderGen/LoadShader.cpp)
+
+SOURCE_GROUP("Shader Generate" FILES ${SHADER_LOAD_SOURCE})
+
+SET(SHADER_GEN_SOURCE   ShaderGen/ShaderGen.h
                         ShaderGen/ShaderGen.cpp
                         ShaderGen/ShaderGenVertex.cpp
                         ShaderGen/ShaderGenGeometry.cpp
                         ShaderGen/ShaderGenFragment.cpp)
 
-SOURCE_GROUP("Shader Generate" FILES ${SHADER_GEN_SOURCE})
+SOURCE_GROUP("Shader Generate\\Gen" FILES ${SHADER_GEN_SOURCE})
 
 SET(SHADER_GEN_MANAGER_SOURCE   ShaderGen/ShaderGenManager.h
                                 ShaderGen/ShaderGenManager.cpp)
@@ -93,6 +96,7 @@ endmacro()
                                
 add_executable(ShaderBuilder    ShaderBuilder.cpp
                                 Config.cpp
+                                ${SHADER_LOAD_SOURCE}
                                 ${SHADER_GEN_SOURCE}
                                 ${SHADER_GEN_MANAGER_SOURCE}
                                 ${SHADER_DATA_SOURCE}

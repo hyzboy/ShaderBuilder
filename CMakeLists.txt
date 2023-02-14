@@ -13,9 +13,7 @@ SET(SHADER_BUILDER_LIBRARY  CMCore
                             ${HGL_MATH_LIB})
 
 SET(GLSL_COMPILER_SOURCE	GLSLCompiler/GLSLCompiler.h
-                            GLSLCompiler/GLSLCompiler.cpp
-#                            GLSLCompiler/glsl2spv.cpp
-                            GLSLCompiler/VKShaderParse.h)
+                            GLSLCompiler/GLSLCompiler.cpp)
 SOURCE_GROUP("GLSL Compiler" FILES ${GLSL_COMPILER_SOURCE})
 
 SET(GLSL_Parse_SOURCE   GLSLParse/GLSLToken.h
@@ -68,18 +66,8 @@ SET(SHADER_GEN_MANAGER_SOURCE   ShaderGen/ShaderGenManager.h
 
 SOURCE_GROUP("Shader Generate\\Manager" FILES ${SHADER_GEN_MANAGER_SOURCE})
 
-set(VULKAN_SPIRV_LIBS   GenericCodeGen
-                        glslang
-                        MachineIndependent
-                        OGLCompiler
-                        OSDependent
-                        SPIRV
-                        SPIRV-Tools
-                        SPIRV-Tools-opt
-                        spirv-cross-core)
-
 macro(shader_builder_project project_name)
-    target_link_libraries(${project_name} PRIVATE ${SHADER_BUILDER_LIBRARY} ${VULKAN_SPIRV_LIBS})
+    target_link_libraries(${project_name} PRIVATE ${SHADER_BUILDER_LIBRARY})
 
     if(UNIX)
         target_link_libraries(${project_name} PRIVATE dl)

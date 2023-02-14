@@ -40,7 +40,7 @@ bool LoadMat(ConvertMaterialData *cvd)
             cvd->pmc=right;
         else
         {
-            vk_shader::ShaderStageBits type=glsl_compiler::GetType(left);
+            uint32_t type=glsl_compiler::GetType(left);
 
             if(type==0)
                 continue;
@@ -53,7 +53,7 @@ bool LoadMat(ConvertMaterialData *cvd)
                 return(false);
             }
             
-            cvd->shaderfile.Add(type,fullname);
+            cvd->shaderfile.Add((vk_shader::ShaderStageBits)type,fullname);
         }
     }
 

@@ -98,7 +98,5 @@ namespace glsl_compiler
     
     SPVData *   Compile (const uint32_t type,const char *source);
     void        Free    (SPVData *spv_data);
-
-    SPVData *   CompileShaderToSPV(const uint8 *source,const uint32_t flag);
 }//namespace glsl_compiler
 #endif//HGL_GLSL_COMPILER_INCLUDE

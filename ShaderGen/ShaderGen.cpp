@@ -113,7 +113,8 @@ void ShaderGen::AddStageOutput()
 bool ShaderGen::Gen()
 {
     Add(TOP_COMMENT);
-    Add(u8"#version 460 core\n\n");
+    Add(u8"#version 460 core\n");
+    Add(u8"#define GL_GOOGLE_include_directive 1\n\n");
 
     PreProcess();
     

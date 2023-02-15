@@ -106,6 +106,8 @@ namespace glsl_compiler
             include_list.Add(path);
     }
 
+    const char PreambleString[]="#define GL_GOOGLE_include_directive 1\n";
+
     void RebuildGLSLIncludePath()
     {
         delete[] compile_info.includes;
@@ -115,6 +117,9 @@ namespace glsl_compiler
 
         for(uint32_t i=0;i<compile_info.includes_count;i++)
             compile_info.includes[i]=include_list[i].c_str();
+
+        if(compile_info.includes_count>0)
+            compile_info.preamble=PreambleString;
     }
 
     uint32_t GetType (const char *ext_name)
@@ -125,22 +130,17 @@ namespace glsl_compiler
         return 0;
     }
 
-    SPVData *   Compile (const uint32_t type,const char *source)
-    {
-        if(gsi)
-            return gsi->Compile(type,source,&compile_info);
-
-        return nullptr;
-    }
-
     void        Free    (SPVData *spv_data)
     {
         if(gsi)
             gsi->Free(spv_data);
     }
 
-    SPVData *CompileShaderToSPV(const uint8 *source,const uint32_t flag)
+    SPVData *Compile(const uint32_t type,const char *source)
     {
+        if(!gsi)
+            return(nullptr);
+
         ByteOrderMask bom=CheckBOM(source);
 
         if(bom==ByteOrderMask::UTF8)
@@ -152,7 +152,7 @@ namespace glsl_compiler
             return(nullptr);
         }
 
-        glsl_compiler::SPVData *spv=glsl_compiler::Compile(flag,(char *)source);
+        glsl_compiler::SPVData *spv=gsi->Compile(type,source,&compile_info);
 
         if(!spv)return(nullptr);
 

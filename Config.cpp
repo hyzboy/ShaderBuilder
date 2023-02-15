@@ -11,6 +11,11 @@ namespace
     UTF8String shader_library_path;
 }
 
+const UTF8String GetCurWorkPath()
+{
+    return to_u8(cur_work_path);
+}
+
 const UTF8String GetShaderLibraryPath()
 {
     return shader_library_path;

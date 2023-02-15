@@ -48,6 +48,8 @@ protected:
 
 public:
 
+    const ShaderStageBits GetStageBits()const{return sdm->GetStageBits();}
+
     const int GetStageOutputCount()const;
 
     const UTF8String &GetOutputStructName()const{return output_struct_name;}
@@ -61,6 +63,8 @@ public:
     const ShaderGen *GetPrevShadeGen()const{return prev_gen;}
 
     virtual bool Gen();
+
+    const UTF8String &GetShaderSource()const{return shader_source;}
 };//class ShaderGen
 
 ShaderGen *CreateShaderGen(ShaderDataManager *sdm,const OSString &,ShaderGen *prev=nullptr);

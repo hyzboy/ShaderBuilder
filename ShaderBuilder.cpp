@@ -9,6 +9,9 @@ using namespace hgl::filesystem;
 
 bool LoadConfig();
 
+const UTF8String GetCurWorkPath();
+const UTF8String GetShaderLibraryPath();
+
 bool ConvertMaterial(const OSString &filename,const OSString &output_path);
 
 int os_main(int argc,os_char **argv)
@@ -50,6 +53,9 @@ int os_main(int argc,os_char **argv)
     }
 
     glsl_compiler::Init();
+    glsl_compiler::AddGLSLIncludePath(GetCurWorkPath().c_str());
+    glsl_compiler::AddGLSLIncludePath(GetShaderLibraryPath().c_str());
+    glsl_compiler::RebuildGLSLIncludePath();
 
     ConvertMaterial(input_filename,output_path);
 

@@ -7,9 +7,7 @@
 using namespace hgl;
 using namespace hgl::filesystem;
 
-bool SetShaderLibraryPath(const OSString &);
 bool LoadConfig();
-void SaveConfig();
 
 bool ConvertMaterial(const OSString &filename,const OSString &output_path);
 
@@ -19,25 +17,13 @@ int os_main(int argc,os_char **argv)
 
     InitLogger(OS_TEXT("ShaderBuilder"));
 
-    LoadConfig();
+    if(!LoadConfig())
+        return(-1);
 
     if(argc<=1)
     {
-        LOG_INFO(OS_TEXT("\nUsage: ShaderBuilder <input material source file> <output path>\n"
-                           "       ShaderBuilder /C <Shader Library Path>"));
+        LOG_INFO(OS_TEXT("\nUsage: ShaderBuilder <input material source file> <output path>\n"));
         return(-1);
-    }
-
-    {
-        util::CmdParse cp(argc, argv);
-
-        OSString path;
-        
-        if(cp.GetString(OS_TEXT("/C"),path))
-        {
-            SetShaderLibraryPath(path);
-            return(0);
-        }
     }
 
     OSString input_filename = argv[1];

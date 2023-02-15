@@ -38,7 +38,7 @@ bool ConvertMaterial(const OSString &filename,const OSString &output_path)
             }
             else
             {
-                LOG_ERROR(UTF8String("Create ShaderGen failure : ")+sdm->GetStageName());
+                LOG_ERROR(UTF8String("Create ShaderGen failure: ")+sdm->GetStageName());
                 return(false);
             }
         }

@@ -22,7 +22,7 @@ bool ConvertMaterial(const OSString &filename,const OSString &output_path)
     cvd.MDM.Resort();
     ResortShader(cvd.SDMList);
 
-    ObjectMap<ShaderStageBits,glsl_compiler::SPVData> spv_map;
+    Map<ShaderStageBits,glsl_compiler::SPVData *> spv_map;
 
     {
         ShaderGen *prev=nullptr;
@@ -59,6 +59,16 @@ bool ConvertMaterial(const OSString &filename,const OSString &output_path)
                 LOG_ERROR(UTF8String("Create ShaderGen failure: ")+sdm->GetStageName());
                 return(false);
             }
+        }
+    }
+
+    {
+        auto *p=spv_map.GetDataList();
+
+        for(int i=0;i<spv_map.GetCount();i++)
+        {
+            glsl_compiler::Free((*p)->right);
+            ++p;
         }
     }
 

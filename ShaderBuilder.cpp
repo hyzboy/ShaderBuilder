@@ -53,9 +53,15 @@ int os_main(int argc,os_char **argv)
     }
 
     glsl_compiler::Init();
-    glsl_compiler::AddGLSLIncludePath(GetCurWorkPath().c_str());
-    glsl_compiler::AddGLSLIncludePath(GetShaderLibraryPath().c_str());
-    glsl_compiler::RebuildGLSLIncludePath();
+
+    {
+        const UTF8String output_u8path=to_u8(output_path);
+
+        glsl_compiler::AddGLSLIncludePath(output_u8path.c_str());
+        glsl_compiler::AddGLSLIncludePath(GetCurWorkPath().c_str());
+        glsl_compiler::AddGLSLIncludePath(GetShaderLibraryPath().c_str());
+        glsl_compiler::RebuildGLSLIncludePath();
+    }
 
     ConvertMaterial(input_filename,output_path);
 

@@ -80,6 +80,7 @@ namespace glsl_compiler
 
         uint32_t *spv_data;
         uint32_t spv_length;
+        uint32_t shader_stage;
 
         ShaderStageData input,output;
         ShaderFullResourceData resource;

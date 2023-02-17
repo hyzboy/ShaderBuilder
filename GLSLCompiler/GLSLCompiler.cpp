@@ -1,6 +1,7 @@
 #include"GLSLCompiler/GLSLCompiler.h"
 #include<hgl/platform/ExternalModule.h>
 #include<hgl/type/StringList.h>
+#include<hgl/filesystem/FileSystem.h>
 
 using namespace hgl;
 using namespace hgl::io;
@@ -57,9 +58,14 @@ namespace glsl_compiler
 
         if(gsi)return(true);
 
-        constexpr os_char filename[]=OS_TEXT("GLSLCompiler") HGL_PLUGIN_EXTNAME;
+        OSString cur_path;
+        OSString glsl_compiler_fullname;
 
-        gsi_module=LoadExternalModule(filename);
+        if(!filesystem::GetCurrentPath(cur_path))
+            return(false);
+        glsl_compiler_fullname=filesystem::MergeFilename(cur_path,OS_TEXT("GLSLCompiler") HGL_PLUGIN_EXTNAME);
+
+        gsi_module=LoadExternalModule(glsl_compiler_fullname);
 
         if(!gsi_module)return(false);
 
@@ -106,7 +112,7 @@ namespace glsl_compiler
             include_list.Add(path);
     }
 
-    const char PreambleString[]="#define GL_GOOGLE_include_directive 1\n";
+    const char PreambleString[]="#extension GL_GOOGLE_include_directive : require\n";
 
     void RebuildGLSLIncludePath()
     {
@@ -161,8 +167,11 @@ namespace glsl_compiler
         if(!result)
         {
             std::cerr<<"glsl compile failed."<<std::endl;
-            std::cerr<<"info: "<<spv->log<<std::endl;
-            std::cerr<<"debug info: "<<spv->debug_log<<std::endl;
+
+            if(spv->log)
+                std::cerr<<"info: "<<spv->log<<std::endl;
+            if(spv->debug_log)
+                std::cerr<<"debug info: "<<spv->debug_log<<std::endl;
 
             glsl_compiler::Free(spv);
             return(nullptr);

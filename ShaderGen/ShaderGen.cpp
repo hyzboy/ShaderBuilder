@@ -2,10 +2,10 @@
 #include<hgl/filesystem/Filesystem.h>
 #include<hgl/log/LogInfo.h>
 
-ShaderGen *CreateShaderGenVertex(ShaderDataManager *sdm,const OSString &path);
-ShaderGen *CreateShaderGenFragment(ShaderDataManager *sdm,const OSString &path,ShaderGen *prev);
+ShaderGen *CreateShaderGenVertex(ShaderDescriptorManager *sdm,const OSString &path);
+ShaderGen *CreateShaderGenFragment(ShaderDescriptorManager *sdm,const OSString &path,ShaderGen *prev);
 
-ShaderGen *CreateShaderGen(ShaderDataManager *sdm,const OSString &path,ShaderGen *prev)
+ShaderGen *CreateShaderGen(ShaderDescriptorManager *sdm,const OSString &path,ShaderGen *prev)
 {
     if(!sdm||!filesystem::IsDirectory(path))
         return(nullptr);
@@ -22,7 +22,7 @@ ShaderGen *CreateShaderGen(ShaderDataManager *sdm,const OSString &path,ShaderGen
     }
 }
 
-ShaderGen::ShaderGen(ShaderDataManager *_sdm,const OSString &path,ShaderGen *prev)
+ShaderGen::ShaderGen(ShaderDescriptorManager *_sdm,const OSString &path,ShaderGen *prev)
 {
     prev_gen=prev;
 

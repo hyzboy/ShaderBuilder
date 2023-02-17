@@ -1,6 +1,6 @@
 #include"ShaderSectionParse.h"
 #include<hgl/type/StringList.h>
-#include"ShaderData/ShaderDataManager.h"
+#include"ShaderData/ShaderDescriptorManager.h"
 
 class SSP_Code:public ShaderSectionParse
 {
@@ -18,7 +18,7 @@ public:
 
 public:
 
-    SSP_Code(ShaderDataManager *s):ShaderSectionParse(s)
+    SSP_Code(ShaderDescriptorManager *s):ShaderSectionParse(s)
     {
         shader_section = ShaderSection::Code;
     }
@@ -32,7 +32,7 @@ public:
     }
 };//class SSP_Code:public ShaderSectionParse
 
-ShaderSectionParse *CreateSSP_Code(ShaderSection,ShaderDataManager *sdm)
+ShaderSectionParse *CreateSSP_Code(ShaderSection,ShaderDescriptorManager *sdm)
 {
     return(new SSP_Code(sdm));
 }

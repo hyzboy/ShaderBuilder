@@ -2,10 +2,10 @@
 #include"GLSLCompiler/GLSLCompiler.h"
 #include"ShaderParse/ShaderSection.h"
 #include"ShaderParse/ShaderSectionParse.h"
-#include"ShaderData/ShaderDataManager.h"
+#include"ShaderData/ShaderDescriptorManager.h"
 #include"ShaderGenManager.h"
 
-bool LoadShader(ShaderDataManager *sdm,const UTF8StringList &source_codes)
+bool LoadShader(ShaderDescriptorManager *sdm,const UTF8StringList &source_codes)
 {
     const UTF8String ssb_name=sdm->GetStageName();
 
@@ -102,7 +102,7 @@ bool LoadShader(ConvertMaterialData *cvd)
                 continue;
             }
             
-            ShaderDataManager *sdm=new ShaderDataManager((*dp)->left, &cvd->MDM);
+            ShaderDescriptorManager *sdm=new ShaderDescriptorManager((*dp)->left, &cvd->MDM);
 
             if(!LoadShader(sdm, codes))
             {

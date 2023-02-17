@@ -1,7 +1,7 @@
 #include"ShaderSectionParse.h"
 #include"ShaderData/Varying.h"
 #include"GLSLParse/GLSLTokenizer.h"
-#include"ShaderData/ShaderDataManager.h"
+#include"ShaderData/ShaderDescriptorManager.h"
 #include<hgl/type/StringList.h>
 
 class SSP_Varying:public ShaderSectionParse
@@ -106,7 +106,7 @@ private:
 
 public:
 
-    SSP_Varying(const ShaderSection &ms,ShaderDataManager *s):ShaderSectionParse(s)
+    SSP_Varying(const ShaderSection &ms,ShaderDescriptorManager *s):ShaderSectionParse(s)
     {
         shader_section = ms;
     }
@@ -146,7 +146,7 @@ public:
     }
 };//class SSP_Varying:public ShaderSectionParse
 
-ShaderSectionParse *CreateSSP_Varying(ShaderSection ms,ShaderDataManager *sdm)
+ShaderSectionParse *CreateSSP_Varying(ShaderSection ms,ShaderDescriptorManager *sdm)
 {
     if(ms!=ShaderSection::Input
      &&ms!=ShaderSection::Output)

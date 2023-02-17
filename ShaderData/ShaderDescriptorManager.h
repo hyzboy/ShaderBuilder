@@ -7,7 +7,7 @@
 /**
 * Shader数据管理器,用于生成正式Shader前的资源统计
 */
-class ShaderDataManager
+class ShaderDescriptorManager
 {
     ShaderStageIO stage_io;
     
@@ -26,8 +26,8 @@ class ShaderDataManager
 
 public:
 
-    ShaderDataManager(ShaderStageBits,MaterialDescriptorManager *);
-    ~ShaderDataManager()=default;
+    ShaderDescriptorManager(ShaderStageBits,MaterialDescriptorManager *);
+    ~ShaderDescriptorManager()=default;
 
     const ShaderStageBits GetStageBits()const { return stage_io.cur; }
     const UTF8String GetStageName()const { return UTF8String(GetShaderStageName(stage_io.cur)); }
@@ -70,4 +70,4 @@ public:
 #ifdef _DEBUG
     void DebugOutput(int);
 #endif//_DEBUG
-};//class ShaderDataManager
+};//class ShaderDescriptorManager

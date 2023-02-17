@@ -3,7 +3,7 @@
 #include"vulkan/VKShaderCommon.h"
 #include<hgl/type/Map.h>
 
-class ShaderDataManager;
+class ShaderDescriptorManager;
 class ShaderGen;
 
 namespace glsl_compiler
@@ -16,7 +16,7 @@ struct ShaderDataInfo
     vk_shader::ShaderStageBits shader_stage_bit;
 
     OSString filename;
-    ShaderDataManager *shader_data_manager;
+    ShaderDescriptorManager *shader_data_manager;
     ShaderGen *sg;
     glsl_compiler::SPVData *spv;
 

@@ -1,5 +1,5 @@
 #pragma once
-#include"ShaderData/ShaderDataManager.h"
+#include"ShaderData/ShaderDescriptorManager.h"
 #include<hgl/type/StringList.h>
 
 constexpr char TOP_COMMENT[]=u8"// the Shader was created by the ShaderBuilder (" HGL_OFFICAL_WEB_U8 u8")\n\n";
@@ -10,7 +10,7 @@ protected:
 
     ShaderGen *prev_gen;
 
-    ShaderDataManager *sdm;
+    ShaderDescriptorManager *sdm;
     OSString output_path;
     
     UTF8String shader_source;
@@ -57,7 +57,7 @@ public:
 
 public:
 
-    ShaderGen(ShaderDataManager *_sdm,const OSString &path,ShaderGen *prev=nullptr);
+    ShaderGen(ShaderDescriptorManager *_sdm,const OSString &path,ShaderGen *prev=nullptr);
     virtual ~ShaderGen()=default;
 
     const ShaderGen *GetPrevShadeGen()const{return prev_gen;}
@@ -67,4 +67,4 @@ public:
     const UTF8String &GetShaderSource()const{return shader_source;}
 };//class ShaderGen
 
-ShaderGen *CreateShaderGen(ShaderDataManager *sdm,const OSString &,ShaderGen *prev=nullptr);
+ShaderGen *CreateShaderGen(ShaderDescriptorManager *sdm,const OSString &,ShaderGen *prev=nullptr);

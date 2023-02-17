@@ -4,7 +4,7 @@
 #include<hgl/type/Map.h>
 #include"GLSLParse/GLSLTokenizer.h"
 #include"vulkan/VKShaderCommon.h"
-#include"ShaderData/ShaderDataManager.h"
+#include"ShaderData/ShaderDescriptorManager.h"
 
 using namespace vk_shader;
 
@@ -103,7 +103,7 @@ private:
 
 public:
 
-    SSP_Const(ShaderDataManager *s):ShaderSectionParse(s){}
+    SSP_Const(ShaderDescriptorManager *s):ShaderSectionParse(s){}
     virtual ~SSP_Const() = default;
 
     virtual void Add(const UTF8String &line, const UTF8String &raw_line)
@@ -117,7 +117,7 @@ public:
     }
 };//class SSP_Const:public ShaderSectionParse
 
-ShaderSectionParse *CreateSSP_Const(ShaderSection,ShaderDataManager *sdm)
+ShaderSectionParse *CreateSSP_Const(ShaderSection,ShaderDescriptorManager *sdm)
 {    
     return(new SSP_Const(sdm));
 }

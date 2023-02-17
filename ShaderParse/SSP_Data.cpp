@@ -4,7 +4,7 @@
 #include<hgl/type/Map.h>
 #include"GLSLParse/GLSLTokenizer.h"
 #include"vulkan/VKShaderCommon.h"
-#include"ShaderData/ShaderDataManager.h"
+#include"ShaderData/ShaderDescriptorManager.h"
 
 using namespace vk_shader;
 
@@ -89,7 +89,7 @@ private:
 
 public:
 
-    SSP_Data(ShaderSection ss,ShaderDataManager *s):ShaderSectionParse(s)
+    SSP_Data(ShaderSection ss,ShaderDescriptorManager *s):ShaderSectionParse(s)
     {
         shader_section = ss;
 
@@ -135,7 +135,7 @@ public:
     }
 };//class SSP_Code:public ShaderSectionParse
 
-ShaderSectionParse *CreateSSP_Data(ShaderSection ss,ShaderDataManager *sdm)
+ShaderSectionParse *CreateSSP_Data(ShaderSection ss,ShaderDescriptorManager *sdm)
 {    
     return(new SSP_Data(ss,sdm));
 }

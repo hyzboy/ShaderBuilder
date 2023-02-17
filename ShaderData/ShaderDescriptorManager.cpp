@@ -1,6 +1,6 @@
-#include"ShaderDataManager.h"
+#include"ShaderDescriptorManager.h"
 
-ShaderDataManager::ShaderDataManager(ShaderStageBits cur,MaterialDescriptorManager *mdm)
+ShaderDescriptorManager::ShaderDescriptorManager(ShaderStageBits cur,MaterialDescriptorManager *mdm)
 {
     descriptor_set_manager=mdm;
 
@@ -23,7 +23,7 @@ namespace
     }
 }//namespace
 
-bool ShaderDataManager::AddInput(ShaderStage *ss)
+bool ShaderDescriptorManager::AddInput(ShaderStage *ss)
 {
     if(!ss)return(false);
 
@@ -34,7 +34,7 @@ bool ShaderDataManager::AddInput(ShaderStage *ss)
     return(true);
 }
 
-bool ShaderDataManager::AddOutput(ShaderStage *ss)
+bool ShaderDescriptorManager::AddOutput(ShaderStage *ss)
 {
     if(!ss)return(false);
 
@@ -45,7 +45,7 @@ bool ShaderDataManager::AddOutput(ShaderStage *ss)
     return(true);
 }
 
-bool ShaderDataManager::AddUBO(DescriptorSetType type,ShaderUBOData *sd)
+bool ShaderDescriptorManager::AddUBO(DescriptorSetType type,ShaderUBOData *sd)
 {
     const ShaderUBOData *obj=descriptor_set_manager->AddUBO(stage_io.cur,type,sd);
 
@@ -56,7 +56,7 @@ bool ShaderDataManager::AddUBO(DescriptorSetType type,ShaderUBOData *sd)
     return obj;
 }
 
-bool ShaderDataManager::AddObject(DescriptorSetType type,ShaderObjectData *sd)
+bool ShaderDescriptorManager::AddObject(DescriptorSetType type,ShaderObjectData *sd)
 {
     const ShaderObjectData *obj=descriptor_set_manager->AddObject(stage_io.cur,type,sd);
 
@@ -67,7 +67,7 @@ bool ShaderDataManager::AddObject(DescriptorSetType type,ShaderObjectData *sd)
     return obj;
 }
 
-bool ShaderDataManager::AddConstValue(ShaderConstValue *sd)
+bool ShaderDescriptorManager::AddConstValue(ShaderConstValue *sd)
 {
     if(!sd)return(false);
 
@@ -79,7 +79,7 @@ bool ShaderDataManager::AddConstValue(ShaderConstValue *sd)
     return(true);
 }
 
-bool ShaderDataManager::AddSubpassInput(const UTF8String name,uint8_t index)
+bool ShaderDescriptorManager::AddSubpassInput(const UTF8String name,uint8_t index)
 {
     for(auto *si:subpass_input)
     {
@@ -96,7 +96,7 @@ bool ShaderDataManager::AddSubpassInput(const UTF8String name,uint8_t index)
     return(true);
 }
 
-void ShaderDataManager::SetPushConstant(const UTF8String name,uint8_t offset,uint8_t size)
+void ShaderDescriptorManager::SetPushConstant(const UTF8String name,uint8_t offset,uint8_t size)
 {
     push_constant.name  =name;
     push_constant.offset=offset;
@@ -104,7 +104,7 @@ void ShaderDataManager::SetPushConstant(const UTF8String name,uint8_t offset,uin
 }
 
 #ifdef _DEBUG
-void ShaderDataManager::DebugOutput(int index)
+void ShaderDescriptorManager::DebugOutput(int index)
 {
     UTF8String name=GetShaderStageName(stage_io.cur);
     UTF8String prev_name=GetShaderStageName(stage_io.prev);

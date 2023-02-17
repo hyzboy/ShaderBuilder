@@ -5,7 +5,7 @@ class ShaderGenVertex:public ShaderGen
 {
 public:
 
-    ShaderGenVertex(ShaderDataManager *_sdm, const OSString &path):ShaderGen(_sdm, path) {}
+    ShaderGenVertex(ShaderDescriptorManager *_sdm, const OSString &path):ShaderGen(_sdm, path) {}
 
 private:
 
@@ -89,7 +89,7 @@ void main()
     }
 };//class ShaderGenVertex:public ShaderGen
 
-ShaderGen *CreateShaderGenVertex(ShaderDataManager *sdm,const OSString &path)
+ShaderGen *CreateShaderGenVertex(ShaderDescriptorManager *sdm,const OSString &path)
 {
     return(new ShaderGenVertex(sdm,path));
 }

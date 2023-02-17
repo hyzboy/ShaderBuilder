@@ -4,13 +4,13 @@
 
 using namespace hgl;
 
-class ShaderDataManager;
+class ShaderDescriptorManager;
 
 class ShaderSectionParse
 {
 protected:
 
-    ShaderDataManager *sdm;
+    ShaderDescriptorManager *sdm;
     
 public:
 
@@ -18,10 +18,10 @@ public:
 
 public:
 
-    ShaderSectionParse(ShaderDataManager *s){sdm=s;}
+    ShaderSectionParse(ShaderDescriptorManager *s){sdm=s;}
     virtual ~ShaderSectionParse() = default;
 
     virtual void Add(const UTF8String &str,const UTF8String &raw) = 0;
 };//class ShaderSectionParse
 
-ShaderSectionParse *CreateSSP(const ShaderSection &,ShaderDataManager *);
+ShaderSectionParse *CreateSSP(const ShaderSection &,ShaderDescriptorManager *);

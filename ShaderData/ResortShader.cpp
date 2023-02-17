@@ -1,5 +1,5 @@
 ﻿#include"ShaderData/ShaderDataInfo.h"
-#include"ShaderData/ShaderDataManager.h"
+#include"ShaderData/ShaderDescriptorManager.h"
 #include<hgl/util/sort/Sort.h>
 #include<hgl/log/LogInfo.h>
 

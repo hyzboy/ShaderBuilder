@@ -5,7 +5,7 @@ class ShaderGenFragment:public ShaderGen
 {
 public:
     
-    ShaderGenFragment(ShaderDataManager *_sdm, const OSString &path,ShaderGen *prev):ShaderGen(_sdm, path,prev) {}
+    ShaderGenFragment(ShaderDescriptorManager *_sdm, const OSString &path,ShaderGen *prev):ShaderGen(_sdm, path,prev) {}
     
     void PreProcess() override
     {
@@ -45,7 +45,7 @@ void main()
     }    
 };//class ShaderGenFragment:public ShaderGen
 
-ShaderGen *CreateShaderGenFragment(ShaderDataManager *sdm,const OSString &path,ShaderGen *prev)
+ShaderGen *CreateShaderGenFragment(ShaderDescriptorManager *sdm,const OSString &path,ShaderGen *prev)
 {
     return(new ShaderGenFragment(sdm,path,prev));
 }

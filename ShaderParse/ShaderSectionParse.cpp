@@ -1,11 +1,11 @@
 #include"ShaderSectionParse.h"
 
-ShaderSectionParse *CreateSSP_Code      (ShaderSection,ShaderDataManager *);
-ShaderSectionParse *CreateSSP_Varying   (ShaderSection,ShaderDataManager *);
-ShaderSectionParse *CreateSSP_Const     (ShaderSection,ShaderDataManager *);
-ShaderSectionParse *CreateSSP_Data      (ShaderSection,ShaderDataManager *);
+ShaderSectionParse *CreateSSP_Code      (ShaderSection,ShaderDescriptorManager *);
+ShaderSectionParse *CreateSSP_Varying   (ShaderSection,ShaderDescriptorManager *);
+ShaderSectionParse *CreateSSP_Const     (ShaderSection,ShaderDescriptorManager *);
+ShaderSectionParse *CreateSSP_Data      (ShaderSection,ShaderDescriptorManager *);
 
-ShaderSectionParse *CreateSSP(const ShaderSection &ms,ShaderDataManager *sdm)
+ShaderSectionParse *CreateSSP(const ShaderSection &ms,ShaderDescriptorManager *sdm)
 {
     switch(ms)
     {

@@ -104,13 +104,13 @@ void ShaderDataManager::SetPushConstant(const UTF8String name,uint8_t offset,uin
 }
 
 #ifdef _DEBUG
-void ShaderDataManager::DebugOutput()
+void ShaderDataManager::DebugOutput(int index)
 {
     UTF8String name=GetShaderStageName(stage_io.cur);
     UTF8String prev_name=GetShaderStageName(stage_io.prev);
     UTF8String next_name=GetShaderStageName(stage_io.next);
     
-    LOG_INFO(name+" shader");
+    LOG_INFO(UTF8String::numberOf(index)+": "+name+" shader");
     LOG_INFO("\tprev next is "+prev_name);
     LOG_INFO("\tnext next is "+next_name);
 

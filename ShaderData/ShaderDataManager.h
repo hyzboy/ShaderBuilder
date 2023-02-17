@@ -68,10 +68,9 @@ public:
     }
 
 #ifdef _DEBUG
-    void DebugOutput();
+    void DebugOutput(int);
 #endif//_DEBUG
 };//class ShaderDataManager
 
-using SDMPointer=ShaderDataManager *;
-
-void ResortShader(List<SDMPointer> shader_list);
+struct ConvertMaterialData;
+void ResortShader(ConvertMaterialData *);

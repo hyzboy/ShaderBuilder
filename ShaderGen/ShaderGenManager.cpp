@@ -21,31 +21,30 @@ bool ConvertMaterial(const OSString &filename,const OSString &output_path)
 
     cvd.MDM.Resort();
 
-    List<SDMPointer> SDMList;
-    {
-        auto **it=cvd.shader_map.GetDataList();
-        for(int i=0;i<cvd.shader_map.GetCount();i++)
-        {
-            SDMList.Add((*it)->right->shader_data_manager);
-            ++it;
-        }
-    }
- 
-    ResortShader(SDMList);
+    ResortShader(&cvd);
 
     {
         ShaderDataInfo *sdi;
         ShaderGen *prev=nullptr;
 
-        for(auto sdm:SDMList)
+        UTF8String stage_name;
+
+        auto *sp=cvd.shader_map.GetDataList();
+        const int count=cvd.shader_map.GetCount();
+
+        for(int i=0;i<count;i++)
         {
-            if(!cvd.shader_map.Get(sdm->GetStageBits(),sdi))
+            sdi=(*sp)->right;
+
+            stage_name=vk_shader::GetShaderStageName(sdi->shader_stage_bit);
+
+            if(!cvd.shader_map.Get(sdi->shader_stage_bit,sdi))
             {
-                LOG_ERROR(UTF8String("Can't find ShaderDataInfo for ")+sdm->GetStageName());
-                return(false);  
+                LOG_ERROR(UTF8String("Can't find ShaderDataInfo for ")+stage_name);
+                return(false);
             }
 
-            sdi->sg=CreateShaderGen(sdm,output_path,prev);
+            sdi->sg=CreateShaderGen(sdi->shader_data_manager,output_path,prev);
 
             if(sdi->sg)
             {
@@ -57,7 +56,7 @@ bool ConvertMaterial(const OSString &filename,const OSString &output_path)
                     sdi->spv=spv;
                 else
                 {
-                    LOG_ERROR(UTF8String("Compile ")+sdm->GetStageName()+UTF8String(" shader failure."));
+                    LOG_ERROR(UTF8String("Compile ")+stage_name+UTF8String(" shader failure."));
 
                     if(spv)
                     {
@@ -70,9 +69,11 @@ bool ConvertMaterial(const OSString &filename,const OSString &output_path)
             }
             else
             {
-                LOG_ERROR(UTF8String("Create ShaderGen failure: ")+sdm->GetStageName());
+                LOG_ERROR(UTF8String("Create ShaderGen failure: ")+stage_name);
                 return(false);
             }
+
+            ++sp;
         }
     }
 

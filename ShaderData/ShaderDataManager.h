@@ -71,6 +71,3 @@ public:
     void DebugOutput(int);
 #endif//_DEBUG
 };//class ShaderDataManager
-
-struct ConvertMaterialData;
-void ResortShader(ConvertMaterialData *);

@@ -13,5 +13,5 @@ struct ConvertMaterialData
 
     MaterialDescriptorManager MDM;
     
-    ObjectMap<vk_shader::ShaderStageBits,ShaderDataInfo> shader_map;
+    ShaderMap shader_map;
 };

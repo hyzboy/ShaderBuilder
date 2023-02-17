@@ -1,22 +1,19 @@
-#include"ShaderGen/ShaderGenManager.h"
+﻿#include"ShaderData/ShaderDataInfo.h"
 #include"ShaderData/ShaderDataManager.h"
 #include<hgl/util/sort/Sort.h>
 #include<hgl/log/LogInfo.h>
 
-//template<> int Comparator<SDMPointer>::compare(const SDMPointer &a, const SDMPointer &b) const
-//{
-//    return a->GetStageBits()-b->GetStageBits();
-//}
-
-void ResortShader(ConvertMaterialData *cvd)
+void ResortShader(ShaderMap &shader_map)
 {
+    //ShaderMapwgk使用ObjectMap,其本质附带排序功能，所以这里无需再排序，仅设定prev,next即可
+
     LOG_INFO("Resort Shader.");
 
     ShaderDataInfo *prev,*cur,*next;
 
-    auto *it=cvd->shader_map.GetDataList();
+    auto *it=shader_map.GetDataList();
 
-    const int count=cvd->shader_map.GetCount();
+    const int count=shader_map.GetCount();
 
     for(int i=0; i<count; i++)
     {

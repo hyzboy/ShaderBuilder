@@ -6,6 +6,8 @@
 bool LoadMat(ConvertMaterialData *);
 bool LoadShader(ConvertMaterialData *);
 
+void ResortShader(ShaderMap &);
+
 bool ConvertMaterial(const OSString &filename,const OSString &output_path)
 {
     ConvertMaterialData cvd;
@@ -21,7 +23,7 @@ bool ConvertMaterial(const OSString &filename,const OSString &output_path)
 
     cvd.MDM.Resort();
 
-    ResortShader(&cvd);
+    ResortShader(cvd.shader_map);
 
     {
         ShaderDataInfo *sdi;

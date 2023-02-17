@@ -1,6 +1,7 @@
 #pragma once
 
 #include"vulkan/VKShaderCommon.h"
+#include<hgl/type/Map.h>
 
 class ShaderDataManager;
 class ShaderGen;
@@ -24,3 +25,5 @@ public:
     ShaderDataInfo(const vk_shader::ShaderStageBits ssb,const OSString &fn);
     ~ShaderDataInfo();
 };
+
+using ShaderMap=ObjectMap<vk_shader::ShaderStageBits,ShaderDataInfo>;

@@ -53,7 +53,7 @@ bool LoadMat(ConvertMaterialData *cvd)
                 return(false);
             }
             
-            cvd->shaderfile.Add((vk_shader::ShaderStageBits)type,fullname);
+            cvd->shader_map.Add((vk_shader::ShaderStageBits)type,new ShaderDataInfo((vk_shader::ShaderStageBits)type,fullname));
         }
     }
 

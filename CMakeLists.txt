@@ -30,6 +30,8 @@ SET(SHADER_DATA_SOURCE  ShaderData/pmc.h
                         ShaderData/Varying.h
                         ShaderData/ShaderDataManager.h
                         ShaderData/ShaderDataManager.cpp
+                        ShaderData/ShaderDataInfo.h
+                        ShaderData/ShaderDataInfo.cpp
                         ShaderData/ResortShader.cpp
                         ShaderData/MaterialDescriptorManager.h
                         ShaderData/MaterialDescriptorManager.cpp)

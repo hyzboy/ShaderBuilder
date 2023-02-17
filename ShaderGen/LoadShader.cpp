@@ -76,28 +76,29 @@ bool LoadShader(ConvertMaterialData *cvd)
 {
     if(!cvd)return(false);
 
-    if(!cvd->shaderfile.KeyExist(vk_shader::ssbFragment))
+    if(!cvd->shader_map.KeyExist(vk_shader::ssbFragment))
     {
         LOG_ERROR("can't find fragment shader.");
         return(false);
     }
 
-    if(!cvd->shaderfile.KeyExist(vk_shader::ssbVertex))
+    if(!cvd->shader_map.KeyExist(vk_shader::ssbVertex))
     {
         LOG_ERROR("can't find fragment shader.");
         return(false);
     }
 
     {
-        auto *dp=cvd->shaderfile.GetDataList();
+        auto *dp=cvd->shader_map.GetDataList();
         
-        for(int i=0;i<cvd->shaderfile.GetCount();i++)
+        for(int i=0;i<cvd->shader_map.GetCount();i++)
         {   
             UTF8StringList codes;
+            ShaderDataInfo *sdi=(*dp)->right;
 
-            if(!LoadStringListFromTextFile(codes, (*dp)->right))
+            if(!LoadStringListFromTextFile(codes,sdi->filename))
             {
-                LOG_ERROR(OS_TEXT("Load shader file failure. filename: ")+(*dp)->right);
+                LOG_ERROR(OS_TEXT("Load shader file failure. filename: ")+sdi->filename);
                 continue;
             }
             
@@ -109,7 +110,7 @@ bool LoadShader(ConvertMaterialData *cvd)
                 return(false);
             }
 
-            cvd->SDMList.Add(sdm);
+            sdi->shader_data_manager=sdm;
 
             ++dp;
         }

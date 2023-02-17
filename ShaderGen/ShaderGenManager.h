@@ -1,6 +1,7 @@
 #pragma once
 
-#include"ShaderData/ShaderDataManager.h"
+#include"ShaderData/ShaderDataInfo.h"
+#include"ShaderData/MaterialDescriptorManager.h"
 
 struct ConvertMaterialData
 {
@@ -10,8 +11,7 @@ struct ConvertMaterialData
 
     UTF8String pmc;
 
-    Map<vk_shader::ShaderStageBits,OSString> shaderfile;
-
     MaterialDescriptorManager MDM;
-    ObjectList<ShaderDataManager> SDMList;
+    
+    ObjectMap<vk_shader::ShaderStageBits,ShaderDataInfo> shader_map;
 };

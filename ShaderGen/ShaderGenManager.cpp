@@ -20,29 +20,45 @@ bool ConvertMaterial(const OSString &filename,const OSString &output_path)
         return(false);
 
     cvd.MDM.Resort();
-    ResortShader(cvd.SDMList);
 
-    Map<ShaderStageBits,glsl_compiler::SPVData *> spv_map;
+    List<SDMPointer> SDMList;
+    {
+        auto **it=cvd.shader_map.GetDataList();
+        for(int i=0;i<cvd.shader_map.GetCount();i++)
+        {
+            SDMList.Add((*it)->right->shader_data_manager);
+            ++it;
+        }
+    }
+ 
+    ResortShader(SDMList);
 
     {
+        ShaderDataInfo *sdi;
         ShaderGen *prev=nullptr;
-        ObjectList<ShaderGen> SGList;
-        
-        for(auto sdm:cvd.SDMList)
-        {            
-            ShaderGen *sg=CreateShaderGen(sdm,output_path,prev);
 
-            if(sg)
+        for(auto sdm:SDMList)
+        {
+            if(!cvd.shader_map.Get(sdm->GetStageBits(),sdi))
             {
-                sg->Gen();
+                LOG_ERROR(UTF8String("Can't find ShaderDataInfo for ")+sdm->GetStageName());
+                return(false);  
+            }
 
-                glsl_compiler::SPVData *spv=glsl_compiler::Compile(sg->GetStageBits(),sg->GetShaderSource().c_str());
+            sdi->sg=CreateShaderGen(sdm,output_path,prev);
+
+            if(sdi->sg)
+            {
+                sdi->sg->Gen();
+
+                glsl_compiler::SPVData *spv=glsl_compiler::Compile(sdi->sg->GetStageBits(),sdi->sg->GetShaderSource().c_str());
 
                 if(spv&&spv->result)
-                    spv_map.Add(sg->GetStageBits(),spv);
+                    sdi->spv=spv;
                 else
                 {
                     LOG_ERROR(UTF8String("Compile ")+sdm->GetStageName()+UTF8String(" shader failure."));
+
                     if(spv)
                     {
                         LOG_ERROR(UTF8String("Compile log: ")+spv->log);
@@ -50,25 +66,13 @@ bool ConvertMaterial(const OSString &filename,const OSString &output_path)
                     }
                 }
 
-                SGList.Add(sg);
-
-                prev=sg;
+                prev=sdi->sg;
             }
             else
             {
                 LOG_ERROR(UTF8String("Create ShaderGen failure: ")+sdm->GetStageName());
                 return(false);
             }
-        }
-    }
-
-    {
-        auto *p=spv_map.GetDataList();
-
-        for(int i=0;i<spv_map.GetCount();i++)
-        {
-            glsl_compiler::Free((*p)->right);
-            ++p;
         }
     }
 

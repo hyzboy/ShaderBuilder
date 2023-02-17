@@ -3,7 +3,7 @@
 #include"ShaderData/ShaderDataInfo.h"
 #include"ShaderData/MaterialDescriptorManager.h"
 
-struct ConvertMaterialData
+struct MaterialDataInfo
 {
     OSString filename;
 

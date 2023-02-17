@@ -3,6 +3,7 @@
 #include<hgl/util/cmd/CmdParse.h>
 #include<hgl/Endian.h>
 #include"GLSLCompiler/GLSLCompiler.h"
+#include"ShaderData/MaterialDataInfo.h"
 
 using namespace hgl;
 using namespace hgl::filesystem;
@@ -12,7 +13,11 @@ bool LoadConfig();
 const UTF8String GetCurWorkPath();
 const UTF8String GetShaderLibraryPath();
 
-bool ConvertMaterial(const OSString &filename,const OSString &output_path);
+bool LoadMat(MaterialDataInfo *);
+bool LoadShader(MaterialDataInfo *);
+
+void ResortShader(ShaderMap &);
+bool CompileToSPV(MaterialDataInfo &);
 
 int os_main(int argc,os_char **argv)
 {
@@ -63,7 +68,29 @@ int os_main(int argc,os_char **argv)
         glsl_compiler::RebuildGLSLIncludePath();
     }
 
-    ConvertMaterial(input_filename,output_path);
+    MaterialDataInfo mdi;
+
+    mdi.filename=input_filename;
+    mdi.output_path=output_path;
+
+    {
+        if(!LoadMat(&mdi))
+            return(false);
+
+        if(!LoadShader(&mdi))
+            return(false);
+
+        mdi.MDM.Resort();
+
+        ResortShader(mdi.shader_map);
+    }
+
+    {
+        if(CompileToSPV(mdi))
+        {
+
+        }
+    }
 
     glsl_compiler::Close();
     return 0;

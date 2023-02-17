@@ -4,27 +4,27 @@
 #include<hgl/filesystem/FileSystem.h>
 #include"GLSLCompiler/GLSLCompiler.h"
 #include"vulkan/VKShaderCommon.h"
-#include"ShaderGenManager.h"
+#include"ShaderData/MaterialDataInfo.h"
 #include"ShaderGen/ShaderGen.h"
 
 using namespace hgl;
 
-bool LoadMat(ConvertMaterialData *cvd)
+bool LoadMat(MaterialDataInfo *mdi)
 {
-    if(!cvd)return(false);
+    if(!mdi)return(false);
 
     UTF8StringList sl;
 
-    if(!LoadStringListFromTextFile(sl,cvd->filename))
+    if(!LoadStringListFromTextFile(sl,mdi->filename))
     {
-        LOG_ERROR(OS_TEXT("Load .Mat file failure. filename: ")+cvd->filename);
+        LOG_ERROR(OS_TEXT("Load .Mat file failure. filename: ")+mdi->filename);
         return(false);
     }
 
     UTF8String left,right;
     OSString path;
 
-    path=filesystem::ClipPathname(cvd->filename,false);
+    path=filesystem::ClipPathname(mdi->filename,false);
 
     for(int i=0;i<sl.GetCount();i++)
     {
@@ -37,7 +37,7 @@ bool LoadMat(ConvertMaterialData *cvd)
             continue;
 
         if(left.CaseComp(u8"pmc")==0)
-            cvd->pmc=right;
+            mdi->pmc=right;
         else
         {
             uint32_t type=glsl_compiler::GetType(left);
@@ -53,7 +53,7 @@ bool LoadMat(ConvertMaterialData *cvd)
                 return(false);
             }
             
-            cvd->shader_map.Add((vk_shader::ShaderStageBits)type,new ShaderDataInfo((vk_shader::ShaderStageBits)type,fullname));
+            mdi->shader_map.Add((vk_shader::ShaderStageBits)type,new ShaderDataInfo((vk_shader::ShaderStageBits)type,fullname));
         }
     }
 

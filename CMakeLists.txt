@@ -33,6 +33,7 @@ SET(SHADER_DATA_SOURCE  ShaderData/pmc.h
                         ShaderData/ShaderDataInfo.h
                         ShaderData/ShaderDataInfo.cpp
                         ShaderData/ResortShader.cpp
+                        ShaderData/MaterialDataInfo.h
                         ShaderData/MaterialDescriptorManager.h
                         ShaderData/MaterialDescriptorManager.cpp)
 
@@ -63,11 +64,6 @@ SET(SHADER_GEN_SOURCE   ShaderGen/ShaderGen.h
 
 SOURCE_GROUP("Shader Generate\\Gen" FILES ${SHADER_GEN_SOURCE})
 
-SET(SHADER_GEN_MANAGER_SOURCE   ShaderGen/ShaderGenManager.h
-                                ShaderGen/ShaderGenManager.cpp)
-
-SOURCE_GROUP("Shader Generate\\Manager" FILES ${SHADER_GEN_MANAGER_SOURCE})
-
 macro(shader_builder_project project_name)
     target_link_libraries(${project_name} PRIVATE ${SHADER_BUILDER_LIBRARY})
 
@@ -86,6 +82,7 @@ endmacro()
                                
 add_executable(ShaderBuilder    ShaderBuilder.cpp
                                 Config.cpp
+                                CompileToSPV.cpp
                                 ${SHADER_LOAD_SOURCE}
                                 ${SHADER_GEN_SOURCE}
                                 ${SHADER_GEN_MANAGER_SOURCE}

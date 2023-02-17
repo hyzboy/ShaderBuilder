@@ -3,7 +3,7 @@
 #include"ShaderParse/ShaderSection.h"
 #include"ShaderParse/ShaderSectionParse.h"
 #include"ShaderData/ShaderDescriptorManager.h"
-#include"ShaderGenManager.h"
+#include"ShaderData/MaterialDataInfo.h"
 
 bool LoadShader(ShaderDescriptorManager *sdm,const UTF8StringList &source_codes)
 {
@@ -72,7 +72,7 @@ bool LoadShader(ShaderDescriptorManager *sdm,const UTF8StringList &source_codes)
     return(true);
 }
 
-bool LoadShader(ConvertMaterialData *cvd)
+bool LoadShader(MaterialDataInfo *cvd)
 {
     if(!cvd)return(false);
 

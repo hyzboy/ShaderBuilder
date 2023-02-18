@@ -80,7 +80,7 @@ int os_main(int argc,os_char **argv)
         if(!LoadShader(&mdi))
             return(false);
 
-        mdi.MDM.Resort();
+        mdi.mdm.Resort();
 
         ResortShader(mdi.shader_map);
     }

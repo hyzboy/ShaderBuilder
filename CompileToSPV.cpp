@@ -24,7 +24,7 @@ bool CompileToSPV(MaterialDataInfo &mdi)
             return(false);
         }
 
-        sdi->sg=CreateShaderGen(sdi->shader_data_manager,mdi.output_path,prev);
+        sdi->sg=CreateShaderGen(sdi->sdm,mdi.output_path,prev);
 
         if(sdi->sg)
         {

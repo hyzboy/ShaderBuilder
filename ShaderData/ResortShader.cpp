@@ -5,7 +5,7 @@
 
 void ResortShader(ShaderMap &shader_map)
 {
-    //ShaderMapwgk使用ObjectMap,其本质附带排序功能，所以这里无需再排序，仅设定prev,next即可
+    //ShaderMap使用ObjectMap保存,ObjectMap本质附带排序功能，所以这里无需再排序，直接设定prev,next即可
 
     LOG_INFO("Resort Shader.");
 
@@ -21,16 +21,16 @@ void ResortShader(ShaderMap &shader_map)
         ++it;
 
         if(i>0)
-            cur->shader_data_manager->SetPrevShader(prev->shader_stage_bit);
+            cur->sdm->SetPrevShader(prev->shader_stage_bit);
 
         if(i<count-1)
         {
             next=(*it)->right;
-            cur->shader_data_manager->SetNextShader(next->shader_stage_bit);
+            cur->sdm->SetNextShader(next->shader_stage_bit);
         }
 
 #ifdef _DEBUG
-        cur->shader_data_manager->DebugOutput(i);
+        cur->sdm->DebugOutput(i);
 #endif//_DEBUG
             
         prev=cur;

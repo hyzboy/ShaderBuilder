@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include"vulkan/VKShaderCommon.h"
 #include<hgl/type/Map.h>
@@ -6,27 +6,31 @@
 using namespace hgl;
 using namespace vk_shader;
 
-struct ShaderDescriptorSet
-{
-    DescriptorSetType set_type;
-
-    int set;
-    int count;
-
-    ObjectMap<UTF8String,ShaderDescriptor>  descriptor_map;
-    
-    List<ShaderUBOData *>                   ubo_list;
-    List<ShaderObjectData *>                object_list;
-
-public:    
-
-    const ShaderDescriptor *AddDescriptor(ShaderStageBits ssb,ShaderDescriptor *new_sd);                       ///<Ìí¼ÓÒ»¸öÃèÊö·û£¬Èç¹ûËü±¾Éí´æÔÚ£¬Ôò·µ»Øfalse
-};
-
-typedef ShaderDescriptorSet ShaderDescriptorSetArray[size_t(DescriptorSetType::RANGE_SIZE)];
-    
+/**
+* æè´¨æè¿°ç¬¦ç®¡ç†å™¨</p>
+* è¯¥ç±»ä½¿ç”¨äºSHADERç”Ÿæˆå‰ï¼Œç”¨äºç»Ÿè®¡ç¼–å·set/binding
+*/
 class MaterialDescriptorManager
 {
+    struct ShaderDescriptorSet
+    {
+        DescriptorSetType set_type;
+
+        int set;
+        int count;
+
+        ObjectMap<UTF8String,ShaderDescriptor>  descriptor_map;
+
+        List<ShaderUBOData *>                   ubo_list;
+        List<ShaderObjectData *>                object_list;
+
+    public:
+
+        const ShaderDescriptor *AddDescriptor(ShaderStageBits ssb,ShaderDescriptor *new_sd);                       ///<æ·»åŠ ä¸€ä¸ªæè¿°ç¬¦ï¼Œå¦‚æœå®ƒæœ¬èº«å­˜åœ¨ï¼Œåˆ™è¿”å›false
+    };
+
+    using ShaderDescriptorSetArray=ShaderDescriptorSet[size_t(DescriptorSetType::RANGE_SIZE)];
+
     ShaderDescriptorSetArray desc_set_array;
 
 private:
@@ -39,5 +43,5 @@ public:
     const ShaderUBOData *AddUBO(ShaderStageBits ssb,DescriptorSetType type,ShaderUBOData *sd);
     const ShaderObjectData *AddObject(ShaderStageBits ssb,DescriptorSetType type,ShaderObjectData *sd);
 
-    void Resort();      //ÅÅĞò²úÉúsetºÅÓëbindingºÅ
+    void Resort();      //æ’åºäº§ç”Ÿsetå·ä¸bindingå·
 };

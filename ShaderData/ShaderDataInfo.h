@@ -16,7 +16,7 @@ struct ShaderDataInfo
     vk_shader::ShaderStageBits shader_stage_bit;
 
     OSString filename;
-    ShaderDescriptorManager *shader_data_manager;
+    ShaderDescriptorManager *sdm;
     ShaderGen *sg;
     glsl_compiler::SPVData *spv;
 

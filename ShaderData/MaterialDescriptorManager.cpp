@@ -1,4 +1,4 @@
-#include"MaterialDescriptorManager.h"
+ï»¿#include"MaterialDescriptorManager.h"
 
 MaterialDescriptorManager::MaterialDescriptorManager()
 {
@@ -16,9 +16,9 @@ MaterialDescriptorManager::MaterialDescriptorManager()
 }
 
 /**
-* Ìí¼ÓÒ»¸öÃèÊö·û£¬Èç¹ûËü±¾Éí´æÔÚ£¬Ôò·µ»Øfalse
+* æ·»åŠ ä¸€ä¸ªæè¿°ç¬¦ï¼Œå¦‚æœå®ƒæœ¬èº«å­˜åœ¨ï¼Œåˆ™è¿”å›false
 */
-const ShaderDescriptor *ShaderDescriptorSet::AddDescriptor(ShaderStageBits ssb,ShaderDescriptor *new_sd)
+const ShaderDescriptor *MaterialDescriptorManager::ShaderDescriptorSet::AddDescriptor(ShaderStageBits ssb,ShaderDescriptor *new_sd)
 {
     ShaderDescriptor *sd;
     
@@ -72,7 +72,7 @@ const ShaderObjectData *MaterialDescriptorManager::AddObject(ShaderStageBits ssb
 
 void MaterialDescriptorManager::Resort()
 {
-    //ÖØĞÂÉú³Éset/binding
+    //é‡æ–°ç”Ÿæˆset/binding
     {
         int set=0;
 

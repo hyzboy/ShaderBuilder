@@ -102,7 +102,7 @@ bool LoadShader(MaterialDataInfo *cvd)
                 continue;
             }
             
-            ShaderDescriptorManager *sdm=new ShaderDescriptorManager((*dp)->left, &cvd->MDM);
+            ShaderDescriptorManager *sdm=new ShaderDescriptorManager((*dp)->left, &cvd->mdm);
 
             if(!LoadShader(sdm, codes))
             {
@@ -110,7 +110,7 @@ bool LoadShader(MaterialDataInfo *cvd)
                 return(false);
             }
 
-            sdi->shader_data_manager=sdm;
+            sdi->sdm=sdm;
 
             ++dp;
         }

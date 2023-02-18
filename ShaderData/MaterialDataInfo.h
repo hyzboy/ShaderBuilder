@@ -11,7 +11,7 @@ struct MaterialDataInfo
 
     UTF8String pmc;
 
-    MaterialDescriptorManager MDM;
+    MaterialDescriptorManager mdm;
     
     ShaderMap shader_map;
 };

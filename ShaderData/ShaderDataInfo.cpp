@@ -8,7 +8,7 @@ ShaderDataInfo::ShaderDataInfo(const vk_shader::ShaderStageBits ssb,const OSStri
 {
     shader_stage_bit=ssb;
     filename=fn;
-    shader_data_manager=nullptr;
+    sdm=nullptr;
     sg=nullptr;
     spv=nullptr;
 
@@ -17,7 +17,7 @@ ShaderDataInfo::ShaderDataInfo(const vk_shader::ShaderStageBits ssb,const OSStri
 
 ShaderDataInfo::~ShaderDataInfo()
 {
-    SAFE_CLEAR(shader_data_manager);
+    SAFE_CLEAR(sdm);
     SAFE_CLEAR(sg);
 
     if(spv)

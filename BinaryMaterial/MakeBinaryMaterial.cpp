@@ -1,17 +1,11 @@
 ﻿#include"ShaderData/ShaderDataInfo.h"
 #include<hgl/io/MemoryOutputStream.h>
 #include<hgl/io/DataOutputStream.h>
+#include<hgl/filesystem/FileSystem.h>
 #include"StatMaterialResource.h"
 
 using namespace hgl;
 using namespace hgl::io;
-
-struct BinaryMaterial
-{
-    uint32_t shader_stage_bits;                 //所有shader的bit合集
-
-    ObjectList<MemoryOutputStream> spv_block;   //所有spv数据的合集
-};
 
 using ShaderStageList=List<vk_shader::ShaderStageBits>;
 using ShaderDataList=List<ShaderDataInfo *>;
@@ -52,24 +46,80 @@ MemoryOutputStream *MakeSPVBlock(ShaderDataInfo *sdi)
     return mos;
 }
 
-bool MakeBinaryMaterial(ShaderMap &sm)
+void WriteMDR(DataOutputStream *dos,const MaterialDescriptorResource *mdr)
 {
-    BinaryMaterial bin_mtl;
+    dos->WriteUint8((uint8)(mdr->desc_type));
+    dos->WriteAnsiTinyString(mdr->desc->name);
+    dos->WriteUint8(mdr->desc->set);
+    dos->WriteUint8(mdr->desc->binding);
+    dos->WriteUint32(mdr->shader_stage_bits);
+}
+
+void WriteMDR(DataOutputStream *dos,const MDRList &mdr_list)
+{
+    const uint count=mdr_list.GetCount();
+    auto **it=mdr_list.GetDataList();
+
+    dos->WriteUint8(count);
+
+    if(count<=0)return;
+
+    for(uint i=0;i<count;i++)
+    {
+        WriteMDR(dos,(*it)->right);
+
+        ++it;
+    }
+}
+
+bool MakeBinaryMaterial(const OSString &output_filename,ShaderMap &sm)
+{
+    uint32_t shader_stage_bits;                 //所有shader的bit合集
+    ObjectList<MemoryOutputStream> spv_block;   //所有spv数据的合集
     MDRList mdr_list;
     ShaderDataList sdl;
 
     sm.MakeValueList(sdl);
 
     {
-        bin_mtl.shader_stage_bits=0;
+        shader_stage_bits=0;
 
         for(auto sdi:sdl)
         {
-            bin_mtl.shader_stage_bits|=sdi->shader_stage_bit;
+            shader_stage_bits|=sdi->shader_stage_bit;
 
-            bin_mtl.spv_block.Add(MakeSPVBlock(sdi));
+            spv_block.Add(MakeSPVBlock(sdi));
 
             StatDescriptor(mdr_list,sdi);
+        }
+    }
+
+    {
+        AutoDelete<MemoryOutputStream> mos=new MemoryOutputStream;
+        AutoDelete<DataOutputStream> dos=new LEDataOutputStream(mos);
+
+        {        
+            constexpr char MATERIAL_FILE_HEADER[]=u8"Material\x1A";
+            constexpr uint MATERIAL_FILE_HEADER_LENGTH=sizeof(MATERIAL_FILE_HEADER)-1;
+            
+            dos->Write(MATERIAL_FILE_HEADER,MATERIAL_FILE_HEADER_LENGTH);
+            dos->WriteUint8(2);                                                      //version
+
+            dos->WriteUint32(shader_stage_bits);
+        }
+
+        for(auto &ms:spv_block)
+        {
+            dos->WriteUint32(ms->GetSize());
+            dos->Write(ms->GetData(),ms->GetSize());
+        }
+
+        WriteMDR(dos,mdr_list);
+
+        if(!filesystem::SaveMemoryToFile(output_filename,mos->GetData(),mos->GetSize()))
+        {
+            LOG_ERROR(OS_TEXT("SaveMemoryToFile ")+output_filename+OS_TEXT(" failed!"));
+            return(false);
         }
     }
 

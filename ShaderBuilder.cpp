@@ -19,7 +19,7 @@ bool LoadShader(MaterialDataInfo *);
 void ResortShader(ShaderMap &);
 bool CompileToSPV(MaterialDataInfo &);
 
-bool MakeBinaryMaterial(ShaderMap &);
+bool MakeBinaryMaterial(const OSString &,ShaderMap &);
 
 int os_main(int argc,os_char **argv)
 {
@@ -37,11 +37,8 @@ int os_main(int argc,os_char **argv)
     }
 
     OSString input_filename = argv[1];
-    OSString output_path;
+    OSString output_path = argv[2];
     OSString ext_name=OS_TEXT(".material");
-    
-    if(argc<3)  output_path=ReplaceExtName(input_filename,ext_name);
-        else    output_path=argv[2];
 
     LOG_INFO(OS_TEXT("Input File: ") + input_filename);
     LOG_INFO(OS_TEXT("Output Path: ") + output_path);
@@ -89,7 +86,12 @@ int os_main(int argc,os_char **argv)
 
     {
         if(CompileToSPV(mdi))
-            MakeBinaryMaterial(mdi.shader_map);
+        {
+            OSString main_fn=filesystem::ClipFileMainname(input_filename);
+            OSString out_fn=MergeFilename(output_path,main_fn+ext_name);
+
+            MakeBinaryMaterial(out_fn,mdi.shader_map);
+        }
     }
 
     glsl_compiler::Close();

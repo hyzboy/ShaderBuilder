@@ -23,33 +23,6 @@ namespace glsl_compiler
     
     constexpr size_t SHADER_RESOURCE_NAME_MAX_LENGTH=128;
 
-    struct ShaderResource
-    {
-        char name[SHADER_RESOURCE_NAME_MAX_LENGTH];
-
-        uint8_t set;
-        uint8_t binding;
-
-    public:
-
-        ShaderResource(const ShaderResource *sr)
-        {
-            memcpy(name,sr->name,SHADER_RESOURCE_NAME_MAX_LENGTH);
-            set=sr->set;
-            binding=sr->binding;
-        }
-
-        const int Comp(const ShaderResource &sr)const
-        {
-            if(set!=sr.set)return sr.set-set;
-            if(binding!=sr.binding)return sr.binding-binding;
-
-            return strcmp(name,sr.name);
-        }
-
-        CompOperator(const ShaderResource &,Comp);
-    };//struct ShaderResource
-
     struct ShaderStage
     {
         char name[SHADER_RESOURCE_NAME_MAX_LENGTH];
@@ -64,13 +37,33 @@ namespace glsl_compiler
         ShaderStage *items;
     };
 
+    struct Descriptor
+    {
+        char name[SHADER_RESOURCE_NAME_MAX_LENGTH];
+        uint8_t set;
+        uint8_t binding;
+    };
+
+    struct PushConstant
+    {
+        char name[SHADER_RESOURCE_NAME_MAX_LENGTH];
+        uint8_t offset;
+        uint8_t size;
+    };
+
+    struct SubpassInput
+    {
+        char name[SHADER_RESOURCE_NAME_MAX_LENGTH];
+        uint8_t input_attachment_index;
+        uint8_t binding;
+    };
+
+    template<typename T>
     struct ShaderResourceData
     {
         uint32_t count;
-        ShaderResource *items;
+        T *items;
     };
-
-    using ShaderFullResourceData=ShaderResourceData[size_t(DescriptorType::RANGE_SIZE)];
 
     struct SPVData
     {
@@ -80,13 +73,11 @@ namespace glsl_compiler
 
         uint32_t *spv_data;
         uint32_t spv_length;
-        uint32_t shader_stage;
 
         ShaderStageData input,output;
-        ShaderFullResourceData resource;
-
-        ShaderResourceData push_constant;
-        ShaderResourceData subpass_input;
+        ShaderResourceData<Descriptor>      resource[size_t(DescriptorType::RANGE_SIZE)];
+        ShaderResourceData<PushConstant>    push_constant;
+        ShaderResourceData<SubpassInput>    subpass_input;
     };
 
     bool Init();

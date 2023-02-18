@@ -65,6 +65,8 @@ namespace glsl_compiler
         T *items;
     };
 
+    using ShaderDescriptorResource=ShaderResourceData<Descriptor>[size_t(DescriptorType::RANGE_SIZE)];
+
     struct SPVData
     {
         bool result;
@@ -74,8 +76,9 @@ namespace glsl_compiler
         uint32_t *spv_data;
         uint32_t spv_length;
 
-        ShaderStageData input,output;
-        ShaderResourceData<Descriptor>      resource[size_t(DescriptorType::RANGE_SIZE)];
+        ShaderStageData                     input,
+                                            output;
+        ShaderDescriptorResource            resource;
         ShaderResourceData<PushConstant>    push_constant;
         ShaderResourceData<SubpassInput>    subpass_input;
     };

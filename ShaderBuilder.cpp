@@ -19,6 +19,8 @@ bool LoadShader(MaterialDataInfo *);
 void ResortShader(ShaderMap &);
 bool CompileToSPV(MaterialDataInfo &);
 
+bool MakeBinaryMaterial(ShaderMap &);
+
 int os_main(int argc,os_char **argv)
 {
     LOG_INFO(OS_TEXT("ShaderBuilder v1.0\nCopyright 2022 www.hyzgame.com\n\n"));
@@ -87,9 +89,7 @@ int os_main(int argc,os_char **argv)
 
     {
         if(CompileToSPV(mdi))
-        {
-
-        }
+            MakeBinaryMaterial(mdi.shader_map);
     }
 
     glsl_compiler::Close();

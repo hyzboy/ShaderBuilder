@@ -89,7 +89,7 @@ namespace glsl_compiler
     }
 
     void Close()
-    {        
+    {
         delete[] compile_info.includes;
         compile_info.includes=nullptr;
         

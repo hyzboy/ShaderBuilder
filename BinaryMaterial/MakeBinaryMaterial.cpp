@@ -79,7 +79,7 @@ bool MakeBinaryMaterial(const OSString &output_filename,ShaderMap &sm)
     MDRList mdr_list;
     ShaderDataList sdl;
 
-    sm.MakeValueList(sdl);
+    sm.GetValueList(sdl);
 
     {
         shader_stage_bits=0;

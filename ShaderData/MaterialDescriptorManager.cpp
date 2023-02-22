@@ -15,6 +15,15 @@ MaterialDescriptorManager::MaterialDescriptorManager()
     }
 }
 
+const DescriptorSetType MaterialDescriptorManager::GetSetType(const AnsiString &name)const
+{
+    for(auto &sds:desc_set_array)
+        if(sds.descriptor_map.KeyExist(name))
+            return(sds.set_type);
+
+    return DescriptorSetType::Error;
+}
+
 /**
 * 添加一个描述符，如果它本身存在，则返回false
 */

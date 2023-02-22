@@ -19,7 +19,7 @@ bool LoadShader(MaterialDataInfo *);
 void ResortShader(ShaderMap &);
 bool CompileToSPV(MaterialDataInfo &);
 
-bool MakeBinaryMaterial(const OSString &,ShaderMap &);
+bool MakeBinaryMaterial(const OSString &,ShaderMap &,const MaterialDescriptorManager *);
 
 int os_main(int argc,os_char **argv)
 {
@@ -90,7 +90,7 @@ int os_main(int argc,os_char **argv)
             OSString main_fn=filesystem::ClipFileMainname(input_filename);
             OSString out_fn=MergeFilename(output_path,main_fn+ext_name);
 
-            MakeBinaryMaterial(out_fn,mdi.shader_map);
+            MakeBinaryMaterial(out_fn,mdi.shader_map,&mdi.mdm);
         }
     }
 

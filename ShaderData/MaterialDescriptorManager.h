@@ -43,5 +43,7 @@ public:
     const ShaderUBOData *AddUBO(ShaderStageBits ssb,DescriptorSetType type,ShaderUBOData *sd);
     const ShaderObjectData *AddObject(ShaderStageBits ssb,DescriptorSetType type,ShaderObjectData *sd);
 
+    const DescriptorSetType GetSetType(const AnsiString &)const;
+
     void Resort();      //排序产生set号与binding号
 };

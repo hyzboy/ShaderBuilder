@@ -3,6 +3,7 @@
 #include<hgl/io/DataOutputStream.h>
 #include<hgl/filesystem/FileSystem.h>
 #include"StatMaterialResource.h"
+#include"ShaderData/MaterialDescriptorManager.h"
 
 using namespace hgl;
 using namespace hgl::io;
@@ -50,6 +51,7 @@ void WriteMDR(DataOutputStream *dos,const MaterialDescriptorResource *mdr)
 {
     dos->WriteUint8((uint8)(mdr->desc_type));
     dos->WriteAnsiTinyString(mdr->desc->name);
+    dos->WriteUint8(uint8(mdr->set_type));
     dos->WriteUint8(mdr->desc->set);
     dos->WriteUint8(mdr->desc->binding);
     dos->WriteUint32(mdr->shader_stage_bits);
@@ -72,7 +74,7 @@ void WriteMDR(DataOutputStream *dos,const MDRList &mdr_list)
     }
 }
 
-bool MakeBinaryMaterial(const OSString &output_filename,ShaderMap &sm)
+bool MakeBinaryMaterial(const OSString &output_filename,ShaderMap &sm,const MaterialDescriptorManager *mdm)
 {
     uint32_t shader_stage_bits;                 //所有shader的bit合集
     ObjectList<MemoryOutputStream> spv_block;   //所有spv数据的合集
@@ -95,6 +97,16 @@ bool MakeBinaryMaterial(const OSString &output_filename,ShaderMap &sm)
     }
 
     {
+        auto *mdr=mdr_list.GetDataList();
+
+        for(int i=0;i<mdr_list.GetCount();i++)
+        {
+            (*mdr)->right->set_type=mdm->GetSetType((*mdr)->left);
+            ++mdr;
+        }
+    }
+
+    {
         AutoDelete<MemoryOutputStream> mos=new MemoryOutputStream;
         AutoDelete<DataOutputStream> dos=new LEDataOutputStream(mos);
 
@@ -103,7 +115,7 @@ bool MakeBinaryMaterial(const OSString &output_filename,ShaderMap &sm)
             constexpr uint MATERIAL_FILE_HEADER_LENGTH=sizeof(MATERIAL_FILE_HEADER)-1;
             
             dos->Write(MATERIAL_FILE_HEADER,MATERIAL_FILE_HEADER_LENGTH);
-            dos->WriteUint8(2);                                                      //version
+            dos->WriteUint8(3);                                                      //version
 
             dos->WriteUint32(shader_stage_bits);
         }

@@ -94,7 +94,7 @@ public:
         shader_section = ss;
 
         if(ss==ShaderSection::PerFrame)     desc_set_type=DescriptorSetType::PerFrame;     else
-        if(ss==ShaderSection::PerMaterial)  desc_set_type=DescriptorSetType::PerMaterial;  else
+        if(ss==ShaderSection::PerMaterial)  desc_set_type=DescriptorSetType::PerMaterialInstance;  else
         if(ss==ShaderSection::PerObject)    desc_set_type=DescriptorSetType::PerObject;    else
         if(ss==ShaderSection::Instance)     desc_set_type=DescriptorSetType::Instance;     else
         if(ss==ShaderSection::Skeleton)     desc_set_type=DescriptorSetType::Skeleton;     else

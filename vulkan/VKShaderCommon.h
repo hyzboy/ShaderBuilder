@@ -92,10 +92,10 @@ namespace vk_shader
     {
         Error=-1,
 
-        Global=0,     ///<全局参数(如太阳光等)
-        PerFrame,   ///<每帧参数(如摄像机等)
-        PerMaterial,
-        PerObject,  ///<每个物体参数(如模型矩阵等)
+        Global=0,           ///<全局参数(如太阳光等)
+        PerFrame,           ///<每帧参数(如摄像机等)
+        PerMaterialInstance,///<每材质实例独有参数
+        PerObject,          ///<每个物体参数(如模型矩阵等)
 
         Instance,
         Skeleton,

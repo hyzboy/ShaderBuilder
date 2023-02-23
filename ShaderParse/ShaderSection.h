@@ -18,7 +18,10 @@ enum class ShaderSection
     Instance,
     Skeleton,
 
-    Code
+    Code,
+
+    Attrib,
+    UBO,
 };
 
 ShaderSection ParseShaderSection(const char *str);

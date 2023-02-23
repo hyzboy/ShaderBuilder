@@ -52,7 +52,8 @@ SET(SHADER_PARSE_SOURCE ShaderParse/ShaderSection.h
 SOURCE_GROUP("Shader Parse" FILES ${SHADER_PARSE_SOURCE})
 
 SET(SHADER_LOAD_SOURCE  ShaderGen/LoadMat.cpp
-                        ShaderGen/LoadShader.cpp)
+                        ShaderGen/LoadShader.cpp
+                        ShaderGen/LoadUBO.cpp)
 
 SOURCE_GROUP("Shader Generate" FILES ${SHADER_LOAD_SOURCE})
 

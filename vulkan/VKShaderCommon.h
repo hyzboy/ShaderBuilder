@@ -175,6 +175,7 @@ namespace vk_shader
     {
         UTF8String name;
         uint8_t input_attachment_index;
+        uint8_t binding;
     };
 
     struct ShaderPushConstant

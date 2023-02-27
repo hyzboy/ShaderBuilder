@@ -13,7 +13,7 @@ ShaderGen *CreateShaderGen(ShaderDescriptorManager *sdm,const OSString &path,Sha
     switch(sdm->GetStageBits())
     {
         case ssbVertex:     return CreateShaderGenVertex(sdm,path);
-        case ssbFragment:   return CreateShaderGenFragment(sdm, path, prev);
+        case ssbFragment:   return CreateShaderGenFragment(sdm,path,prev);
         default:
         {
             LOG_ERROR(U8_TEXT("CreateShaderGen() unsupport stage bits: ")+sdm->GetStageName());
@@ -61,6 +61,7 @@ void ShaderGen::ProcSubpassInput()
 
     for(auto si:si_list)
     {
+        Add("layout(input_attachment_index="+UTF8String::numberOf(si->input_attachment_index)+",binding="+UTF8String::numberOf(si->binding)+") uniform subpassInput "+si->name+";\n");
     }        
 }
 

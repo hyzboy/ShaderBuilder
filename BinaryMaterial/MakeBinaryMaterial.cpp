@@ -110,7 +110,7 @@ bool MakeBinaryMaterial(const OSString &output_filename,ShaderMap &sm,const Mate
         AutoDelete<MemoryOutputStream> mos=new MemoryOutputStream;
         AutoDelete<DataOutputStream> dos=new LEDataOutputStream(mos);
 
-        {        
+        {
             constexpr char MATERIAL_FILE_HEADER[]=u8"Material\x1A";
             constexpr uint MATERIAL_FILE_HEADER_LENGTH=sizeof(MATERIAL_FILE_HEADER)-1;
             

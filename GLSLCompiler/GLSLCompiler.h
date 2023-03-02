@@ -1,4 +1,4 @@
-#ifndef HGL_GLSL_COMPILER_INCLUDE
+﻿#ifndef HGL_GLSL_COMPILER_INCLUDE
 #define HGL_GLSL_COMPILER_INCLUDE
 
 #include<hgl/type/String.h>
@@ -27,8 +27,8 @@ namespace glsl_compiler
     {
         char name[SHADER_RESOURCE_NAME_MAX_LENGTH];
         uint8_t location;
-        uint32_t basetype;      //���ڸĶ�Ӧhgl/graph/VertexAttrib�е�enum class VertexAttribBaseType
-        uint32_t vec_size;
+        uint8_t basetype;      //现在改对应hgl/graph/VertexAttrib.h中的enum class VertexAttribType::BaseType
+        uint8_t vec_size;
     };//
 
     struct ShaderStageData

@@ -21,7 +21,7 @@ namespace glsl_compiler
     using namespace hgl;
     using namespace vk_shader;    
     
-    constexpr size_t SHADER_RESOURCE_NAME_MAX_LENGTH=128;
+    constexpr size_t SHADER_RESOURCE_NAME_MAX_LENGTH=32;
 
     struct ShaderStage
     {

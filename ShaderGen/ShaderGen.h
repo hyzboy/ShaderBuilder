@@ -48,7 +48,7 @@ protected:
 
 public:
 
-    const ShaderStageBits GetStageBits()const{return sdm->GetStageBits();}
+    const VkShaderStageFlagBits GetStageBits()const{return sdm->GetStageBits();}
 
     const int GetStageOutputCount()const;
 

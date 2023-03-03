@@ -1,9 +1,12 @@
 ﻿#pragma once
 
+#include<hgl/graph/VKShaderDescriptor.h>
+#include<hgl/graph/VKDescriptorSetType.h>
 #include"vulkan/VKShaderCommon.h"
 #include<hgl/type/Map.h>
 
 using namespace hgl;
+using namespace hgl::graph;
 using namespace vk_shader;
 
 /**
@@ -21,12 +24,12 @@ class MaterialDescriptorManager
 
         ObjectMap<UTF8String,ShaderDescriptor>  descriptor_map;
 
-        List<ShaderUBOData *>                   ubo_list;
+        List<UBODescriptor *>                   ubo_list;
         List<ShaderObjectData *>                object_list;
 
     public:
 
-        const ShaderDescriptor *AddDescriptor(ShaderStageBits ssb,ShaderDescriptor *new_sd);                       ///<添加一个描述符，如果它本身存在，则返回false
+        const ShaderDescriptor *AddDescriptor(VkShaderStageFlagBits ssb,ShaderDescriptor *new_sd);                       ///<添加一个描述符，如果它本身存在，则返回false
     };
 
     using ShaderDescriptorSetArray=ShaderDescriptorSet[size_t(DescriptorSetType::RANGE_SIZE)];
@@ -40,8 +43,8 @@ public:
     MaterialDescriptorManager();
     ~MaterialDescriptorManager()=default;
 
-    const ShaderUBOData *AddUBO(ShaderStageBits ssb,DescriptorSetType type,ShaderUBOData *sd);
-    const ShaderObjectData *AddObject(ShaderStageBits ssb,DescriptorSetType type,ShaderObjectData *sd);
+    const UBODescriptor *AddUBO(VkShaderStageFlagBits ssb,DescriptorSetType type,UBODescriptor *sd);
+    const ShaderObjectData *AddObject(VkShaderStageFlagBits ssb,DescriptorSetType type,ShaderObjectData *sd);
 
     const DescriptorSetType GetSetType(const AnsiString &)const;
 

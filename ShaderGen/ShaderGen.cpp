@@ -12,8 +12,8 @@ ShaderGen *CreateShaderGen(ShaderDescriptorManager *sdm,const OSString &path,Sha
 
     switch(sdm->GetStageBits())
     {
-        case ssbVertex:     return CreateShaderGenVertex(sdm,path);
-        case ssbFragment:   return CreateShaderGenFragment(sdm,path,prev);
+        case VK_SHADER_STAGE_VERTEX_BIT:     return CreateShaderGenVertex(sdm,path);
+        case VK_SHADER_STAGE_FRAGMENT_BIT:   return CreateShaderGenFragment(sdm,path,prev);
         default:
         {
             LOG_ERROR(U8_TEXT("CreateShaderGen() unsupport stage bits: ")+sdm->GetStageName());

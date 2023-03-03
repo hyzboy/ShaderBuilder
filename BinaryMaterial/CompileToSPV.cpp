@@ -16,7 +16,7 @@ bool CompileToSPV(MaterialDataInfo &mdi)
     {
         sdi=(*sp)->right;
 
-        stage_name=vk_shader::GetShaderStageName(sdi->shader_stage_bit);
+        stage_name=GetShaderStageName(sdi->shader_stage_bit);
 
         if(!mdi.shader_map.Get(sdi->shader_stage_bit,sdi))
         {

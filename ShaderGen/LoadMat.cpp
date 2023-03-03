@@ -53,7 +53,7 @@ bool LoadMat(MaterialDataInfo *mdi)
                 return(false);
             }
             
-            mdi->shader_map.Add((vk_shader::ShaderStageBits)type,new ShaderDataInfo((vk_shader::ShaderStageBits)type,fullname));
+            mdi->shader_map.Add((VkShaderStageFlagBits)type,new ShaderDataInfo((VkShaderStageFlagBits)type,fullname));
         }
     }
 

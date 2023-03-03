@@ -1,5 +1,8 @@
 #include"ShaderGen.h"
 #include<hgl/filesystem/FileSystem.h>
+#include<hgl/graph/VertexAttrib.h>
+
+using namespace hgl::graph;
 
 class ShaderGenVertex:public ShaderGen
 {
@@ -31,7 +34,7 @@ private:
                 "{\n";
 
         for(auto *ss:sdm->GetShaderStageIO().output)
-            codes+="\t"+ss->type+"\t"+UTF8String(ss->name)+";\n";
+            codes+="\t"+UTF8String(GetShaderStageTypeName(ss))+"\t"+UTF8String(ss->name)+";\n";
 
         codes+= "};\n"
                 "#endif//"+output_struct_name+"_GLSL\n";
@@ -60,7 +63,7 @@ public:
         if(!io.input.IsEmpty())
         {
             for(auto *ss:io.input)
-                Add("layout(location="+UTF8String::numberOf(ss->location)+") in "+ss->type+"\t"+UTF8String(ss->name)+";\n");
+                Add("layout(location="+UTF8String::numberOf(ss->location)+") in "+UTF8String(GetShaderStageTypeName(ss))+"\t"+UTF8String(ss->name)+";\n");
 
             AddLineBreak();
         }

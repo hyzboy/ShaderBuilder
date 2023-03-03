@@ -5,8 +5,10 @@
 #include"GLSLParse/GLSLTokenizer.h"
 #include"vulkan/VKShaderCommon.h"
 #include"ShaderData/ShaderDescriptorManager.h"
+#include<hgl/graph/VKDescriptorSetType.h>
 
 using namespace vk_shader;
+using namespace hgl::graph;
 
 class SSP_Data:public ShaderSectionParse
 {
@@ -42,7 +44,7 @@ private:
 
                 LOG_INFO("Find UBO: "+type_name+" "+name);
 
-                ShaderUBOData *ubo=new ShaderUBOData;
+                UBODescriptor *ubo=new UBODescriptor;
 
                 ubo->type=type_name;
                 ubo->name=name;

@@ -20,7 +20,7 @@ const int MaterialDescriptorResource::Comp(const MaterialDescriptorResource &msr
     return(desc_type-msr.desc_type);
 }
 
-void StatDescriptorResource(MDRList &mdr_list,const vk_shader::ShaderStageBits &ssb,const glsl_compiler::ShaderResourceData<glsl_compiler::Descriptor> *srd,const uint32_t type)
+void StatDescriptorResource(MDRList &mdr_list,const VkShaderStageFlagBits &ssb,const glsl_compiler::ShaderResourceData<glsl_compiler::Descriptor> *srd,const uint32_t type)
 {
     const char *desc_type_name=vk_shader::descriptor_type_name[type];
 

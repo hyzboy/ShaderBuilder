@@ -21,13 +21,13 @@ const DescriptorSetType MaterialDescriptorManager::GetSetType(const AnsiString &
         if(sds.descriptor_map.KeyExist(name))
             return(sds.set_type);
 
-    return DescriptorSetType::Error;
+    return DescriptorSetType::Global;
 }
 
 /**
 * 添加一个描述符，如果它本身存在，则返回false
 */
-const ShaderDescriptor *MaterialDescriptorManager::ShaderDescriptorSet::AddDescriptor(ShaderStageBits ssb,ShaderDescriptor *new_sd)
+const ShaderDescriptor *MaterialDescriptorManager::ShaderDescriptorSet::AddDescriptor(VkShaderStageFlagBits ssb,ShaderDescriptor *new_sd)
 {
     ShaderDescriptor *sd;
     
@@ -49,7 +49,7 @@ const ShaderDescriptor *MaterialDescriptorManager::ShaderDescriptorSet::AddDescr
     }
 }
 
-const ShaderUBOData *MaterialDescriptorManager::AddUBO(ShaderStageBits ssb,DescriptorSetType type,ShaderUBOData *sd)
+const UBODescriptor *MaterialDescriptorManager::AddUBO(VkShaderStageFlagBits ssb,DescriptorSetType type,UBODescriptor *sd)
 {
     RANGE_CHECK_RETURN_NULLPTR(type);
     if(!sd)return(nullptr);
@@ -60,11 +60,11 @@ const ShaderUBOData *MaterialDescriptorManager::AddUBO(ShaderStageBits ssb,Descr
     
     if(!obj)return(nullptr);
 
-    sds->ubo_list.Add((ShaderUBOData *)obj);
-    return((ShaderUBOData *)obj);
+    sds->ubo_list.Add((UBODescriptor *)obj);
+    return((UBODescriptor *)obj);
 }
 
-const ShaderObjectData *MaterialDescriptorManager::AddObject(ShaderStageBits ssb,DescriptorSetType type,ShaderObjectData *sd)
+const ShaderObjectData *MaterialDescriptorManager::AddObject(VkShaderStageFlagBits ssb,DescriptorSetType type,ShaderObjectData *sd)
 {
     RANGE_CHECK_RETURN_NULLPTR(type);
     if(!sd)return(nullptr);

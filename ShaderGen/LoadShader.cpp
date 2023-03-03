@@ -76,13 +76,13 @@ bool LoadShader(MaterialDataInfo *cvd)
 {
     if(!cvd)return(false);
 
-    if(!cvd->shader_map.KeyExist(vk_shader::ssbFragment))
+    if(!cvd->shader_map.KeyExist(VK_SHADER_STAGE_FRAGMENT_BIT))
     {
         LOG_ERROR("can't find fragment shader.");
         return(false);
     }
 
-    if(!cvd->shader_map.KeyExist(vk_shader::ssbVertex))
+    if(!cvd->shader_map.KeyExist(VK_SHADER_STAGE_VERTEX_BIT))
     {
         LOG_ERROR("can't find fragment shader.");
         return(false);

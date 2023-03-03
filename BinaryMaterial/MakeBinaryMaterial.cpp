@@ -8,7 +8,7 @@
 using namespace hgl;
 using namespace hgl::io;
 
-using ShaderStageList=List<vk_shader::ShaderStageBits>;
+using ShaderStageList=List<VkShaderStageFlagBits>;
 using ShaderDataList=List<ShaderDataInfo *>;
 
 void StatDescriptor(MDRList &mdr_list,ShaderDataInfo *sdi);

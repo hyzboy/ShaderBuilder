@@ -89,7 +89,7 @@ private:
         
         LOG_INFO("Find const: "+type_name+" "+name+" = "+default_value);
 
-        ShaderConstValue *cv=new ShaderConstValue;
+        ConstValueDescriptor *cv=new ConstValueDescriptor;
 
         cv->type=type_name;
         cv->name=name;

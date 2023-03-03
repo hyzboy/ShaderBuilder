@@ -135,8 +135,13 @@ public:
         {
             ShaderStage *ss=new ShaderStage;
 
+            VertexAttribType vat;
+
+            ParseVertexAttribType(&vat,v->type);
+
             strcpy(ss->name,v->name);
-            ss->type=v->type;
+            ss->basetype=(uint8)vat.basetype;
+            ss->vec_size=       vat.vec_size;
 
             if(shader_section==ShaderSection::Input)
                 sdm->AddInput(ss);

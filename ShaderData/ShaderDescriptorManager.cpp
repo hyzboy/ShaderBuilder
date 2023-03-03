@@ -1,12 +1,12 @@
 #include"ShaderDescriptorManager.h"
 
-ShaderDescriptorManager::ShaderDescriptorManager(ShaderStageBits cur,MaterialDescriptorManager *mdm)
+ShaderDescriptorManager::ShaderDescriptorManager(VkShaderStageFlagBits cur,MaterialDescriptorManager *mdm)
 {
-    descriptor_set_manager=mdm;
+    material_descriptor_manager=mdm;
 
     stage_io.cur=cur;
-    stage_io.prev=ssbNone;
-    stage_io.next=ssbNone;
+    stage_io.prev=(VkShaderStageFlagBits)0;
+    stage_io.next=(VkShaderStageFlagBits)0;
     
     hgl_zero(push_constant);
 }
@@ -45,9 +45,9 @@ bool ShaderDescriptorManager::AddOutput(ShaderStage *ss)
     return(true);
 }
 
-bool ShaderDescriptorManager::AddUBO(DescriptorSetType type,ShaderUBOData *sd)
+bool ShaderDescriptorManager::AddUBO(DescriptorSetType type,UBODescriptor *sd)
 {
-    const ShaderUBOData *obj=descriptor_set_manager->AddUBO(stage_io.cur,type,sd);
+    const UBODescriptor *obj=material_descriptor_manager->AddUBO(stage_io.cur,type,sd);
 
     if(!obj)
         return(false);
@@ -58,7 +58,7 @@ bool ShaderDescriptorManager::AddUBO(DescriptorSetType type,ShaderUBOData *sd)
 
 bool ShaderDescriptorManager::AddObject(DescriptorSetType type,ShaderObjectData *sd)
 {
-    const ShaderObjectData *obj=descriptor_set_manager->AddObject(stage_io.cur,type,sd);
+    const ShaderObjectData *obj=material_descriptor_manager->AddObject(stage_io.cur,type,sd);
 
     if(!obj)
         return(false);
@@ -67,7 +67,7 @@ bool ShaderDescriptorManager::AddObject(DescriptorSetType type,ShaderObjectData 
     return obj;
 }
 
-bool ShaderDescriptorManager::AddConstValue(ShaderConstValue *sd)
+bool ShaderDescriptorManager::AddConstValue(ConstValueDescriptor *sd)
 {
     if(!sd)return(false);
 
@@ -87,7 +87,7 @@ bool ShaderDescriptorManager::AddSubpassInput(const UTF8String name,uint8_t inde
         if(si->name.Comp(name))return(false);
     }
 
-    ShaderSubpassInput *ssi=new ShaderSubpassInput;
+    SubpassInputDescriptor *ssi=new SubpassInputDescriptor;
 
     ssi->name=name;
     ssi->input_attachment_index=index;
@@ -119,7 +119,7 @@ void ShaderDescriptorManager::DebugOutput(int index)
         LOG_INFO("\tStage Input "+UTF8String::numberOf(stage_io.input.GetCount()));
 
         for(auto *ss:stage_io.input)
-            LOG_INFO("\t\tlayout(location="+UTF8String::numberOf(ss->location)+") in "+ss->type+"\t"+UTF8String(ss->name));
+            LOG_INFO("\t\tlayout(location="+UTF8String::numberOf(ss->location)+") in "+UTF8String(GetShaderStageTypeName(ss))+"\t"+UTF8String(ss->name));
     }
 
     if(stage_io.output.GetCount()>0)
@@ -127,7 +127,7 @@ void ShaderDescriptorManager::DebugOutput(int index)
         LOG_INFO("\tStage Output "+UTF8String::numberOf(stage_io.output.GetCount()));
 
         for(auto *ss:stage_io.output)
-            LOG_INFO("\t\tlayout(location="+UTF8String::numberOf(ss->location)+") out "+ss->type+"\t"+UTF8String(ss->name));
+            LOG_INFO("\t\tlayout(location="+UTF8String::numberOf(ss->location)+") out "+UTF8String(GetShaderStageTypeName(ss))+"\t"+UTF8String(ss->name));
     }
     
     if(ubo_list.GetCount()>0)

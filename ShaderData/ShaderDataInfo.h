@@ -1,6 +1,7 @@
 #pragma once
 
 #include"vulkan/VKShaderCommon.h"
+#include<vulkan/vulkan.h>
 #include<hgl/type/Map.h>
 
 class ShaderDescriptorManager;
@@ -13,7 +14,7 @@ namespace glsl_compiler
 
 struct ShaderDataInfo
 {
-    vk_shader::ShaderStageBits shader_stage_bit;
+    VkShaderStageFlagBits shader_stage_bit;
 
     OSString filename;
     ShaderDescriptorManager *sdm;
@@ -22,8 +23,8 @@ struct ShaderDataInfo
 
 public:
 
-    ShaderDataInfo(const vk_shader::ShaderStageBits ssb,const OSString &fn);
+    ShaderDataInfo(const VkShaderStageFlagBits ssb,const OSString &fn);
     ~ShaderDataInfo();
 };
 
-using ShaderMap=ObjectMap<vk_shader::ShaderStageBits,ShaderDataInfo>;
+using ShaderMap=ObjectMap<VkShaderStageFlagBits,ShaderDataInfo>;
